@@ -1,0 +1,35 @@
+body{
+    background-color: black;
+}
+h1{
+    color: white;
+    text-align: center;
+    font-size: 500%;
+    margin-bottom: 10%;
+    margin-top: 5%;
+}
+p{
+    color: white;
+    text-align: center;
+    font-size: 300%;
+}
+a{
+    text-decoration: none;
+    color: black;
+}
+button.left{
+    background-color: blue;
+    width: 10%;
+    font-size: 150%;
+    margin-top: 1%;
+    margin-left: 40%;
+    margin-right: 0%;
+}
+button.right{
+    background-color: blue;
+    width: 10%;
+    font-size: 150%;
+    margin-top: 1%;
+    margin-left: 0%;
+    margin-right: 39%;
+}
