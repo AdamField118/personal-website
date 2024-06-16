@@ -1,6 +1,6 @@
 import './style2.css';
 import * as THREE from './three.module.js';
-import { OrbitControls } from './OrbitControls';
+import { OrbitControls } from './OrbitControls.js';
 
 // Setup
 
