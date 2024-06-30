@@ -6,6 +6,10 @@ canvas {
   left: 0;
 }
 
+body {
+  scrollbar-color: black grey;
+}
+
 :root {
   --dark-bg: rgba(15, 15, 15, 0.95);
   --spacing: 350px;
@@ -34,14 +38,6 @@ h1, h2, h3, blockquote {
   font-weight: 700;
   font-style: normal;
 }
-
-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-}
-
-
 
   header {
     background: var(--dark-bg);
