@@ -125,6 +125,7 @@ function animate() {
 
   // controls.update();
 
+  camera.apsect(window.devicePixelRatio);
   renderer.render(scene, camera);
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
