@@ -125,7 +125,8 @@ function animate() {
 
   // controls.update();
 
-  camera.aspect(window.devicePixelRatio);
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
   renderer.render(scene, camera);
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
