@@ -4,7 +4,7 @@ canvas {
   position: fixed;
   top: 0;
   left: 0;
-  scrollbar-color: black grey;
+  scrollbar-color: grey black;
 }
 
 :root {
@@ -14,7 +14,7 @@ canvas {
   font-family: brandon-grotesque, sans-serif;
   font-weight: 400;
   font-style: normal;
-  scrollbar-color: black grey;
+  scrollbar-color: grey black;
 }
 
 
@@ -26,7 +26,7 @@ main {
   width: 90%;
   margin: 0px auto;
   padding: 120px 0px;
-  scrollbar-color: black grey;
+  scrollbar-color: grey black;
   
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -36,7 +36,7 @@ h1, h2, h3, blockquote {
   font-family: elevon, sans-serif;
   font-weight: 700;
   font-style: normal;
-  scrollbar-color: black grey;
+  scrollbar-color: grey black;
 }
 
   header {
@@ -45,7 +45,7 @@ h1, h2, h3, blockquote {
     font-size: 2.5rem;
     padding: 2rem;
     margin-bottom: var(--spacing);
-    scrollbar-color: black grey;
+    scrollbar-color: grey black;
   }
 
   section {
@@ -55,7 +55,7 @@ h1, h2, h3, blockquote {
     font-size: 1.25rem;
     line-height: 1.5;
     margin-bottom: var(--spacing);
-    scrollbar-color: black grey;
+    scrollbar-color: grey black;
   }
 
   blockquote {
@@ -64,7 +64,7 @@ h1, h2, h3, blockquote {
     grid-column: 2 / span 9;
     margin-bottom: var(--spacing);
     max-width: 1000px;
-    scrollbar-color: black grey;
+    scrollbar-color: grey black;
   }
 
   blockquote p {
@@ -73,15 +73,15 @@ h1, h2, h3, blockquote {
     display: inline;
     line-height: 1.1;
     background-color: grey;
-    scrollbar-color: black grey;
+    scrollbar-color: grey black;
   }
   a{
     text-decoration: none;
     color: black;
-    scrollbar-color: black grey;
+    scrollbar-color: grey black;
   }
 
   .left {
     grid-column: 6 / 12;
-    scrollbar-color: black grey;
+    scrollbar-color: grey black;
   }
