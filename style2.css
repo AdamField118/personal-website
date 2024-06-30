@@ -6,7 +6,7 @@ canvas {
   left: 0;
 }
 
-body {
+.scrollbar {
   scrollbar-color: black grey;
 }
 
