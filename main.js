@@ -124,8 +124,9 @@ function animate() {
   moon.rotation.x += 0.002;
 
   // controls.update();
-  renderer.render(scene, camera);
   camera.updateProjectionMatrix();
+  renderer.render(scene, camera);
+  renderer.setSize(window.innerWidth, window.innerHeight);
 }
 
 animate();
