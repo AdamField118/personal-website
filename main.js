@@ -124,10 +124,9 @@ function animate() {
   moon.rotation.x += 0.002;
 
   // controls.update();
-
+  renderer.render(scene, camera);
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
-  renderer.render(scene, camera);
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
