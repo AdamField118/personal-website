@@ -1,5 +1,6 @@
 body{
     background-color: black;
+    scrollbar-color: black grey;
 }
 h1{
     color: white;
@@ -7,15 +8,18 @@ h1{
     font-size: 500%;
     margin-bottom: 10%;
     margin-top: 5%;
+    scrollbar-color: black grey;
 }
 p{
     color: white;
     text-align: center;
     font-size: 300%;
+    scrollbar-color: black grey;
 }
 a{
     text-decoration: none;
     color: black;
+    scrollbar-color: black grey;
 }
 button.left{
     background-color: blue;
@@ -24,6 +28,7 @@ button.left{
     margin-top: 1%;
     margin-left: 40%;
     margin-right: 0%;
+    scrollbar-color: black grey;
 }
 button.right{
     background-color: blue;
@@ -32,4 +37,5 @@ button.right{
     margin-top: 1%;
     margin-left: 0%;
     margin-right: 39%;
+    scrollbar-color: black grey;
 }
