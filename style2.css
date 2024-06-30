@@ -6,10 +6,6 @@ canvas {
   left: 0;
 }
 
-.scrollbar {
-  scrollbar-color: black grey;
-}
-
 :root {
   --dark-bg: rgba(15, 15, 15, 0.95);
   --spacing: 350px;
@@ -28,6 +24,7 @@ main {
   width: 90%;
   margin: 0px auto;
   padding: 120px 0px;
+  scrollbar-color: black grey;
   
   display: grid;
   grid-template-columns: repeat(12, 1fr);
