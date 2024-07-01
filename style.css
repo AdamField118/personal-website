@@ -29,6 +29,7 @@ button.left{
     margin-left: 40%;
     margin-right: 0%;
     scrollbar-color: grey black;
+    border-radius: 24px;
 }
 button.right{
     background-color: blue;
