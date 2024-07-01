@@ -4,7 +4,6 @@ canvas {
   position: fixed;
   top: 0;
   left: 0;
-  scrollbar-color: grey black;
 }
 
 :root {
@@ -26,7 +25,6 @@ main {
   width: 90%;
   margin: 0px auto;
   padding: 120px 0px;
-  scrollbar-color: grey black;
   
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -36,52 +34,50 @@ h1, h2, h3, blockquote {
   font-family: sans-serif;
   font-weight: 700;
   font-style: normal;
-  scrollbar-color: grey black;
 }
 
-  header {
-    background: var(--dark-bg);
-    grid-column: 2 / span 5;
-    font-size: 2.5rem;
-    padding: 2rem;
-    margin-bottom: var(--spacing);
-    scrollbar-color: grey black;
-  }
+header {
+  background: var(--dark-bg);
+  grid-column: 2 / span 5;
+  font-size: 2.5rem;
+  padding: 2rem;
+  margin-bottom: var(--spacing);
+}
 
-  section {
-    grid-column: 2 / 8;
-    padding: 1rem;
-    background: var(--dark-bg);
-    font-size: 1.25rem;
-    line-height: 1.5;
-    margin-bottom: var(--spacing);
-    scrollbar-color: grey black;
-  }
+section {
+  grid-column: 2 / 8;
+  padding: 1rem;
+  background: var(--dark-bg);
+  font-size: 1.25rem;
+  line-height: 1.5;
+  margin-bottom: var(--spacing);
+}
 
-  blockquote {
-    margin: 0;
-    padding: 0;
-    grid-column: 2 / span 9;
-    margin-bottom: var(--spacing);
-    max-width: 1000px;
-    scrollbar-color: grey black;
-  }
+blockquote {
+  margin: 0;
+  padding: 0;
+  grid-column: 2 / span 9;
+  margin-bottom: var(--spacing);
+  max-width: 1000px;
+}
 
-  blockquote p {
-    color: black;
-    font-size: 3rem;
-    display: inline;
-    line-height: 1.1;
-    background-color: grey;
-    scrollbar-color: grey black;
-  }
-  a{
-    text-decoration: none;
-    color: black;
-    scrollbar-color: grey black;
-  }
+blockquote p {
+  color: black;
+  font-size: 3rem;
+  display: inline;
+  line-height: 1.1;
+  background-color: grey;
+}
+a{
+  text-decoration: none;
+  color: black;
+}
+a.links{
+  text-decoration: none;
+  font-family: sans-serif;
+  color: white;
+}
 
-  .left {
-    grid-column: 6 / 12;
-    scrollbar-color: grey black;
-  }
+.left {
+  grid-column: 6 / 12;
+}
