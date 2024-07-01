@@ -1,6 +1,5 @@
 body{
     background-color: black;
-    scrollbar-color: grey black;
 }
 h1{
     color: white;
@@ -9,10 +8,9 @@ h1{
     font-size: 500%;
     margin-bottom: 10%;
     margin-top: 5%;
-    scrollbar-color: grey black;
 }
-iframe {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.video {
+    aspect-ratio: 16/9;
+    width: 50%;
+    margin-left: 25%;
 }
