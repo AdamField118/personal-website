@@ -12,7 +12,7 @@ h1{
     scrollbar-color: grey black;
 }
 iframe {
-    width: 50%;
-    height: 150%;
-    margin-left: 5%;
+    /*width: 50%;
+    height: 150%;*/
+    margin-left: 20%;
 }
