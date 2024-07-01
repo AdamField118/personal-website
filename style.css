@@ -21,22 +21,20 @@ a{
     color: black;
     scrollbar-color: grey black;
 }
-button.left{
+button {
     background-color: blue;
     width: 10%;
-    font-size: 150%;
+    font-size: 100%;
     margin-top: 1%;
+    border-radius: 24px;
+    
+    scrollbar-color: grey black;
+}
+button.left{
     margin-left: 40%;
     margin-right: 0%;
-    scrollbar-color: grey black;
-    border-radius: 24px;
 }
 button.right{
-    background-color: blue;
-    width: 10%;
-    font-size: 150%;
-    margin-top: 1%;
     margin-left: 0%;
     margin-right: 39%;
-    scrollbar-color: grey black;
 }
