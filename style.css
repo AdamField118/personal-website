@@ -34,6 +34,9 @@ button {
 
     scrollbar-color: grey black;
 }
+button:hover{
+    background-color: lightskyblue;
+}
 button.left{
     margin-left: 40%;
     margin-right: 0%;
