@@ -5,6 +5,7 @@ body{
 h1{
     color: white;
     text-align: center;
+    font-family: sans-serif;
     font-size: 500%;
     margin-bottom: 10%;
     margin-top: 5%;
@@ -13,21 +14,24 @@ h1{
 p{
     color: white;
     text-align: center;
+    font-family: sans-serif;
     font-size: 300%;
     scrollbar-color: grey black;
 }
 a{
     text-decoration: none;
+    font-family: sans-serif;
     color: black;
     scrollbar-color: grey black;
 }
 button {
+    font-family: sans-serif;
     background-color: blue;
     width: 10%;
     font-size: 100%;
     margin-top: 1%;
     border-radius: 24px;
-    
+
     scrollbar-color: grey black;
 }
 button.left{
