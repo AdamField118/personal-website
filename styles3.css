@@ -1,0 +1,19 @@
+body{
+    background-color: black;
+    scrollbar-color: grey black;
+}
+h1{
+    color: white;
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 500%;
+    margin-bottom: 10%;
+    margin-top: 5%;
+    scrollbar-color: grey black;
+}
+iframe {
+    width: 50%;
+    height: 50%;
+    margin-top: 50%;
+    margin-left: 50%;
+}
