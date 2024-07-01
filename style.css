@@ -37,6 +37,9 @@ button {
 button:hover{
     background-color: lightskyblue;
 }
+button:active{
+    background-color: blue;
+}
 button.left{
     margin-left: 39%;
     margin-right: 0%;
