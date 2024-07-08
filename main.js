@@ -130,8 +130,7 @@ function animate() {
   torus.rotation.z += 0.01;
 
   moon.rotation.x += 0.002;
-
-  // controls.update();
+  
   camera.updateProjectionMatrix();
   renderer.render(scene, camera);
   renderer.setSize(window.innerWidth, window.innerHeight);
