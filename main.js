@@ -1,5 +1,5 @@
-import * as THREE from './packages/three.module.js';
-import { OrbitControls } from './packages/OrbitControls.js';
+import * as THREE from 'https://cdn.skypack.dev/three@0.132.2';
+import { OrbitControls } from 'https://cdn.skypack.dev/three@0.132.2/examples/jsm/controls/OrbitControls.js';
 
 // Setup
 
@@ -30,7 +30,7 @@ scene.add(torus);
 
 // Lights
 
-const pointLight = new THREE.PointLight(0xffffff, 100);
+const pointLight = new THREE.PointLight(0xffffff, 0.7);
 pointLight.position.set(0, 0, 0);
 
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.75);

@@ -1,0 +1,265 @@
+/* General reset and basic styling */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f4f4f4;
+    color: #333;
+    font-size: 16px;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header */
+header {
+    background-color: #00458b;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2rem;
+}
+
+/* Navigation Bar */
+nav {
+    background-color: #003366;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+
+.filter-section {
+    margin: 20px;
+    text-align: center;
+}
+
+stage-header {
+    background-color: #003d72; /* Match your navigation bar color */
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000; /* Ensures it stays above other content */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
+}
+stage-header a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: inline-block;
+}
+
+stage-header a:hover {
+    background-color: #002a5e;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+}
+
+nav a:hover {
+    background-color: #002244;
+    border-radius: 5px;
+}
+
+/* Main Container */
+.container {
+    display: flex;
+    flex-grow: 1;
+    padding: 20px;
+}
+
+/* Sidebar */
+.sidebar {
+    background-color: #e6e6e6;
+    padding: 20px;
+    width: 250px;
+}
+
+.sidebar h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar ul li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    color: #00458b;
+    text-decoration: none;
+}
+
+.sidebar ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Content */
+.content {
+    background-color: #fff;
+    padding: 20px;
+    flex-grow: 1;
+    margin-left: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.content h2 {
+    font-size: 2rem;
+    color: #00458b;
+}
+
+.content p {
+    margin-bottom: 20px;
+}
+
+/* Masonry Layout */
+.card-container {
+    columns: 3;
+    column-gap: 20px;
+    max-width: 98%;
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 1px;
+    break-inside: avoid;
+    display: inline-block;
+}
+
+.card h3, .card p {
+    margin: 10px 0;
+}
+
+.card a {
+    display: block;
+    text-decoration: none;
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    display: block;
+}
+
+.card iframe {
+    width: 100%; /* Full width of the card */
+    height: 280px; /* Maintain aspect ratio */
+}
+
+.card:hover, .card:focus {
+    transform: scale(1.05); /* Increase size on hover */
+    z-index: 10; /* Bring to the front on hover */
+}
+
+/* Basic styling for content */
+#simulation-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 0px; /* Add padding if needed */
+}
+#simulation {
+    position: relative;
+    width: 600px;
+    height: 400px;
+    border: 1px solid #333;
+    background-color: #f0f0f0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .simulations-container {
+        columns: 2;
+    }
+}
+
+@media (max-width: 600px) {
+    .simulations-container {
+        columns: 1;
+    }
+    
+    nav {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    nav a {
+        margin: 5px 0;
+    }
+}
+
+/* Footer */
+footer {
+    background-color: #00458b;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    position: relative;
+    width: 100%;
+}
+stage-footer {
+    background-color: #00458b;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    bottom: 0;
+    width: 100%;
+    position: fixed;
+}
+
+/* Buttons */
+button, .btn {
+    background-color: #00458b;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+button:hover, .btn:hover {
+    background-color: #003366;
+}
+
+button:focus, .btn:focus {
+    outline: none;
+    box-shadow: 0 0 5px #003366;
+}
+
+/* Focus and Hover States for Links */
+a:focus, button:focus {
+    outline: 2px dashed #ffdd57;
+    outline-offset: 4px;
+}
+
+a:hover, a:focus {
+    color: #ffdd57;
+}
