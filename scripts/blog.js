@@ -39,7 +39,7 @@ function renderMarkdown(content) {
 
 // Array of markdown file paths
 const markdownFiles = [
-    '../blog-posts/test.md'
+    "../blog-posts/test.md"
 ];
 
 // Function to parse front matter
