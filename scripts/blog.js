@@ -39,7 +39,7 @@ function renderMarkdown(content) {
 
 // Array of markdown file paths
 const markdownFiles = [
-    "../blog-posts/test.md"
+    "../blog_posts/test.md"
 ];
 
 // Function to parse front matter
@@ -95,7 +95,7 @@ async function loadMarkdownFiles() {
     for (const file of markdownFiles) {
         try {
             loadingIndicator.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Loading ${loadedCount + 1}/${markdownFiles.length} posts...`;
-            
+
             const response = await fetch(file);
             if (!response.ok) {
                 throw new Error(`Failed to fetch ${file}: ${response.status} ${response.statusText}`);
