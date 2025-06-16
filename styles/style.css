@@ -1,9 +1,26 @@
-/* Combined CSS - style.css with blog-specific additions */
 *, *::before, *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+body, body * {
     font-family: 'Arial', sans-serif;
+}
+
+i[class^="fa-"] {
+    font-style: normal;
+}
+
+i[class^="fa-"]::before {
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    display: inline-block;
+}
+
+.fab::before {
+    font-family: 'Font Awesome 6 Brands';
+    font-weight: 400;
 }
 
 body {
@@ -14,10 +31,9 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    overflow-x: hidden; /* Added from blog.css */
+    overflow-x: hidden;
 }
 
-/* Header */
 header {
     background-color: #00458b;
     color: #fff;
@@ -27,11 +43,10 @@ header {
 
 header h1 {
     font-size: 2rem;
-    max-width: 1200px; /* Added from blog.css */
-    margin: 0 auto; /* Added from blog.css */
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-/* Navigation */
 nav {
     background-color: #003366;
     display: flex;
@@ -73,7 +88,6 @@ stage-header a:hover {
     background-color: #002a5e;
 }
 
-/* Main Containers */
 .container {
     display: flex;
     flex-grow: 1;
@@ -88,7 +102,6 @@ stage-header a:hover {
     flex: 1;
 }
 
-/* Sidebar */
 .sidebar {
     background-color: #e6e6e6;
     padding: 20px;
@@ -117,7 +130,6 @@ stage-header a:hover {
     text-decoration: underline;
 }
 
-/* Content Area */
 .content {
     background-color: #fff;
     padding: 20px;
@@ -135,8 +147,6 @@ stage-header a:hover {
     margin-bottom: 20px;
 }
 
-/* Blog-specific Styles */
-/* Controls */
 .controls {
     display: flex;
     justify-content: center;
@@ -174,7 +184,6 @@ stage-header a:hover {
     background-color: #1a2a6c;
 }
 
-/* Blog Card Layout */
 .content-container .card-container {
     columns: 3;
     column-gap: 20px;
@@ -202,7 +211,6 @@ stage-header a:hover {
     z-index: 10;
 }
 
-/* Blog Post Elements */
 .post-header {
     display: flex;
     justify-content: space-between;
@@ -265,7 +273,6 @@ stage-header a:hover {
     white-space: nowrap;
 }
 
-/* Loading & Error States */
 .loading {
     text-align: center;
     padding: 30px;
@@ -282,7 +289,6 @@ stage-header a:hover {
     color: #d32f2f;
 }
 
-/* Expanded Post */
 .post-full {
     position: fixed;
     top: 0;
@@ -371,29 +377,96 @@ stage-header a:hover {
 }
 
 .post-full-body code {
-    background: #f1f1f1;
+    background: #f4f4f4;
+    color: #2d2d2d;
     padding: 2px 6px;
     border-radius: 4px;
-    font-family: monospace;
+    font-family: 'Courier New', Consolas, Monaco, monospace;
+    font-size: 0.9em;
+    font-weight: 600;
 }
 
 .post-full-body pre {
-    background: #2d2d2d;
-    color: #f8f8f2;
-    padding: 15px;
-    border-radius: 5px;
+    background: #f4f4f4;
+    border-radius: 8px;
     overflow-x: auto;
     margin: 20px 0;
     max-width: 100%;
+    line-height: 1.4;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    position: relative;
 }
 
 .post-full-body pre code {
     background: transparent;
-    padding: 0;
+    color: #2d2d2d;
+    padding: 16px 20px;
     border-radius: 0;
+    display: block;
+    line-height: 1.5;
+    font-family: 'Courier New', Consolas, Monaco, monospace;
+    font-size: 0.9em;
+    font-weight: normal;
+    white-space: pre;
+    overflow-x: auto;
 }
 
-/* Close Button */
+.post-full-body pre[class*="language-"] {
+    background: #f4f4f4;
+    border-radius: 8px;
+    margin: 20px 0;
+    overflow: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.post-full-body code[class*="language-"] {
+    background: #f4f4f4;
+    font-family: 'Courier New', Consolas, Monaco, monospace;
+    font-size: 0.9em;
+    line-height: 1.5;
+    text-shadow: none;
+}
+
+.language-javascript .token.keyword { color: #66d9ef; }
+.language-javascript .token.string { color: #a6e22e; }
+.language-javascript .token.function { color: #fd971f; }
+.language-javascript .token.number { color: #ae81ff; }
+.language-javascript .token.comment { color: #75715e; }
+
+.language-html .token.tag { color: #f92672; background-color: transparent; }
+.language-html .token.attr-name { color: #a6e22e; background-color: transparent; }
+.language-html .token.attr-value { color: #e6db74; background-color: transparent; }
+
+.language-css .token.selector { color: #a6e22e; }
+.language-css .token.property { color: #66d9ef; }
+.language-css .token.string { color: #e6db74; }
+
+.language-python .token.keyword { color: #66d9ef; }
+.language-python .token.string { color: #a6e22e; }
+.language-python .token.function { color: #fd971f; }
+.language-python .token.number { color: #ae81ff; }
+.language-python .token.comment { color: #75715e; }
+
+.language-c .token.keyword { color: #66d9ef; }
+.language-c .token.string { color: #a6e22e; }
+.language-c .token.function { color: #fd971f; }
+.language-c .token.number { color: #ae81ff; }
+.language-c .token.comment { color: #75715e; }
+
+.language-java .token.keyword { color: #66d9ef; }
+.language-java .token.string { color: #a6e22e; }
+.language-java .token.function { color: #fd971f; }
+.language-java .token.number { color: #ae81ff; }
+.language-java .token.comment { color: #75715e; }
+
+.language-latex .token.command { color: #f92672; }
+.language-latex .token.special { color: #66d9ef; }
+.language-latex .token.environment { color: #a6e22e; }
+.language-latex .token.comment { color: #75715e; }
+.language-latex .token.parameter { color: #fd971f; }
+.language-latex .token.bold { font-weight: bold; }
+.language-latex .token.italic { font-style: italic; }
+
 .close-btn {
     position: fixed;
     top: 20px;
@@ -426,7 +499,6 @@ stage-header a:hover {
     transform: rotate(90deg) scale(1.1);
 }
 
-/* Card Layout (General) */
 .card-container {
     columns: 3;
     column-gap: 20px;
@@ -473,7 +545,6 @@ stage-header a:hover {
     z-index: 10;
 }
 
-/* Simulation */
 #simulation-container {
     padding: 20px;
     max-width: 1200px;
@@ -493,13 +564,11 @@ stage-header a:hover {
     background-color: #f0f0f0;
 }
 
-/* Filter */
 .filter-section {
     margin: 20px;
     text-align: center;
 }
 
-/* Buttons */
 button, .btn {
     background-color: #00458b;
     color: #fff;
@@ -519,7 +588,6 @@ button:focus, .btn:focus {
     box-shadow: 0 0 5px #003366;
 }
 
-/* Footer */
 footer {
     background-color: #00458b;
     color: #fff;
@@ -539,7 +607,6 @@ stage-footer {
     position: fixed;
 }
 
-/* Focus States */
 a:focus, button:focus {
     outline: 2px dashed #ffdd57;
     outline-offset: 4px;
@@ -566,7 +633,6 @@ a:hover, a:focus {
 
 /* Mobile Layout (600px and below) */
 @media (max-width: 600px) {
-    /* Navigation */
     nav {
         flex-direction: column;
         align-items: center;
@@ -576,7 +642,6 @@ a:hover, a:focus {
         margin: 5px 0;
     }
 
-    /* Card Layout */
     .simulations-container {
         columns: 1;
     }
@@ -585,16 +650,8 @@ a:hover, a:focus {
         columns: 1;
     }
 
-    /* Main Content Area */
     .container {
         flex-direction: column;
-    }
-
-    .content {
-        order: 1;
-        width: 100%;
-        margin-left: 0;
-        margin-bottom: 20px;
     }
 
     .sidebar {
@@ -602,13 +659,11 @@ a:hover, a:focus {
         width: 100%;
     }
 
-    /* Simulation */
     #simulation {
         width: 100%;
         height: 300px;
     }
     
-    /* Blog adjustments */
     .card {
         padding: 15px;
     }
@@ -673,4 +728,23 @@ a:hover, a:focus {
     .post-full-title {
         font-size: 1.5rem;
     }
+}
+
+/* ========== FONT AWESOME FIXES ========== */
+@font-face {
+  font-family: 'Font Awesome 6 Free';
+  font-style: normal;
+  font-weight: 900;
+  font-display: block;
+  src: url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2") format("woff2"),
+       url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'Font Awesome 6 Brands';
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.woff2") format("woff2"),
+       url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.ttf") format("truetype");
 }

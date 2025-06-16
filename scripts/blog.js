@@ -5,46 +5,60 @@ const sortNewestBtn = document.getElementById('sort-newest');
 const sortOldestBtn = document.getElementById('sort-oldest');
 const loadingIndicator = document.getElementById('loadingIndicator');
 
-// Store all loaded posts
 let allPosts = [];
 
-// Format date to readable format
 function formatDate(dateString) {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     return new Date(dateString).toLocaleDateString(undefined, options);
 }
 
-// Generate HTML for markdown content
 function renderMarkdown(content) {
-    // Improved markdown to HTML conversion
     let html = content
+        .replace(/```([\w-]*)\s*\n?([\s\S]*?)```/g, (match, lang, code) => {
+            const trimmedCode = code.trim();
+            
+            const escapedCode = trimmedCode
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+                
+            return lang 
+                ? `<pre><code class="language-${lang}">${escapedCode}</code></pre>`
+                : `<pre><code>${escapedCode}</code></pre>`;
+        })
         .replace(/^### (.*$)/gim, '<h3>$1</h3>')
         .replace(/^## (.*$)/gim, '<h2>$1</h2>')
         .replace(/^# (.*$)/gim, '<h1>$1</h1>')
         .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
         .replace(/\*(.*?)\*/gim, '<em>$1</em>')
-        .replace(/`(.*?)`/gim, '<code>$1</code>')
-        .replace(/```([\s\S]*?)```/gim, '<pre><code>$1</code></pre>')
-        .replace(/> (.*$)/gim, '<blockquote>$1</blockquote>')
+        .replace(/`(.*?)`/gim, (match, code) => {
+            return `<code>${code
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')}</code>`;
+        })
+        .replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>')
         .replace(/^- (.*$)/gim, '<li>$1</li>')
-        .replace(/(<li>.*)/gim, '<ul>$1</ul>')
+        .replace(/(\n<ul>)?<li>.*<\/li>/gim, '<ul>$&</ul>')
         .replace(/^\d+\. (.*$)/gim, '<li>$1</li>')
-        .replace(/(<li>.*)/gim, '<ol>$1</ol>')
+        .replace(/(\n<ol>)?<li>.*<\/li>/gim, '<ol>$&</ol>')
         .replace(/\n\n/g, '</p><p>')
         .replace(/\n/g, '<br>');
-    
-    // Wrap any loose text in paragraphs
-    return `<p>${html}</p>`.replace(/<p><\/p>/g, '');
+
+    html = `<p>${html}</p>`
+        .replace(/<p><\/p>/g, '')
+        .replace(/<p>(<\/?(?:pre|h\d|blockquote|ul|ol)[^>]*>)/g, '$1')
+        .replace(/(<\/?(?:pre|h\d|blockquote|ul|ol)[^>]*>)<\/p>/g, '$1');
+
+    return html;
 }
 
-// Array of markdown file paths - UPDATED FOR YOUR STRUCTURE
 const markdownFiles = [
-    "/blog_posts/test.md"  // Root-relative path
+    "/blog_posts/example_blog.md"
 ];
 
-// Function to parse front matter
 function parseFrontMatter(content) {
-    // Check if content starts with front matter
     if (!content.startsWith('---')) {
         console.error('Front matter not found at start of file');
         return {
@@ -75,26 +89,22 @@ function parseFrontMatter(content) {
         }
     });
     
-    // Ensure required metadata fields
     if (!metadata.title) metadata.title = 'Untitled Post';
     if (!metadata.date) metadata.date = new Date().toISOString().split('T')[0];
     if (!metadata.tags) metadata.tags = '';
     if (!metadata.snippet) {
-        // Auto-generate snippet from first 100 characters
         metadata.snippet = contentBody.substring(0, 100) + (contentBody.length > 100 ? '...' : '');
     }
     
     return { metadata, content: contentBody };
 }
 
-// Function to load and process markdown files
 async function loadMarkdownFiles() {
     const posts = [];
     let loadedCount = 0;
     
     for (const file of markdownFiles) {
         try {
-            // Construct absolute path for debugging
             const absolutePath = new URL(file, window.location.origin).href;
             console.log(`Fetching: ${absolutePath}`);
             loadingIndicator.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Loading ${loadedCount + 1}/${markdownFiles.length} posts...`;
@@ -107,7 +117,6 @@ async function loadMarkdownFiles() {
             const text = await response.text();
             const { metadata, content } = parseFrontMatter(text);
             
-            // Parse tags from comma-separated string
             const tags = metadata.tags 
                 ? metadata.tags.split(',').map(tag => tag.trim()) 
                 : [];
@@ -123,7 +132,6 @@ async function loadMarkdownFiles() {
             loadedCount++;
         } catch (error) {
             console.error(`Error loading ${file}:`, error);
-            // Create a placeholder for the failed post
             posts.push({
                 title: `Error: ${file}`,
                 date: new Date().toISOString().split('T')[0],
@@ -139,7 +147,6 @@ async function loadMarkdownFiles() {
     return posts;
 }
 
-// Render all posts
 function renderPosts(posts) {
     postsContainer.innerHTML = '';
     
@@ -175,7 +182,6 @@ function renderPosts(posts) {
     });
 }
 
-// Show full post in expanded view
 function showFullPost(post) {
     const postFull = document.createElement('div');
     postFull.className = 'post-full';
@@ -197,66 +203,57 @@ function showFullPost(post) {
     
     document.body.appendChild(postFull);
     
-    // Show close button
     closeBtn.classList.add('visible');
     
-    // Show post with animation
     setTimeout(() => {
         postFull.classList.add('active');
+        if (window.Prism) {
+            Prism.highlightAll();
+        } else {
+            console.warn("Prism not loaded. Syntax highlighting disabled.");
+        }
     }, 10);
     
-    // Prevent body scrolling
     document.body.style.overflow = 'hidden';
     
-    // Add escape key listener
     document.addEventListener('keydown', handleEscapeKey);
 }
 
-// Close full post view
 function closeFullPost() {
     const postFull = document.getElementById('postFull');
     if (postFull) {
-        // Hide with animation
         postFull.classList.remove('active');
         
-        // Remove after animation completes
         setTimeout(() => {
             postFull.remove();
         }, 300);
     }
     
-    // Hide close button
     closeBtn.classList.remove('visible');
     
-    // Restore body scrolling
     document.body.style.overflow = '';
     
-    // Remove escape key listener
     document.removeEventListener('keydown', handleEscapeKey);
 }
 
-// Handle escape key press
 function handleEscapeKey(event) {
     if (event.key === 'Escape') {
         closeFullPost();
     }
 }
 
-// Sort posts by date (newest first)
 function sortNewestFirst(posts) {
     return [...posts].sort((a, b) => 
         new Date(b.date) - new Date(a.date)
     );
 }
 
-// Sort posts by date (oldest first)
 function sortOldestFirst(posts) {
     return [...posts].sort((a, b) => 
         new Date(a.date) - new Date(b.date)
     );
 }
 
-// Event Listeners
 closeBtn.addEventListener('click', closeFullPost);
 
 sortNewestBtn.addEventListener('click', () => {
@@ -273,7 +270,6 @@ sortOldestBtn.addEventListener('click', () => {
     sortNewestBtn.classList.remove('active');
 });
 
-// Initialize the blog
 loadMarkdownFiles().then(posts => {
     allPosts = posts;
     const sortedPosts = sortNewestFirst(allPosts);
