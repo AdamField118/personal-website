@@ -15,7 +15,7 @@ function formatDate(dateString) {
 function renderMarkdown(content) {
     let html = content
         .replace(/```([\w-]*)\s*\n?([\s\S]*?)```/g, (match, lang, code) => {
-            const trimmedCode = code.trim();
+            const trimmedCode = code.replace(/^\n/, '');
             
             const escapedCode = trimmedCode
                 .replace(/&/g, '&amp;')
