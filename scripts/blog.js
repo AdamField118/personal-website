@@ -37,9 +37,9 @@ function renderMarkdown(content) {
     return `<p>${html}</p>`.replace(/<p><\/p>/g, '');
 }
 
-// Array of markdown file paths
+// Array of markdown file paths - UPDATED FOR YOUR STRUCTURE
 const markdownFiles = [
-    "../blog_posts/test.md"
+    "/blog_posts/test.md"  // Root-relative path
 ];
 
 // Function to parse front matter
@@ -94,6 +94,9 @@ async function loadMarkdownFiles() {
     
     for (const file of markdownFiles) {
         try {
+            // Construct absolute path for debugging
+            const absolutePath = new URL(file, window.location.origin).href;
+            console.log(`Fetching: ${absolutePath}`);
             loadingIndicator.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Loading ${loadedCount + 1}/${markdownFiles.length} posts...`;
 
             const response = await fetch(file);

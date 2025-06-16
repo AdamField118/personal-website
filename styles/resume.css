@@ -81,3 +81,15 @@ a.links{
 .left {
   grid-column: 6 / 12;
 }
+
+@media (max-width: 600px) {
+  blockquote p {
+    font-size: 1rem;
+  }
+  section {
+    font-size: 0.6rem;
+  }
+  header {
+    font-size: 1rem;
+  }
+}
