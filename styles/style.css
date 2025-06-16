@@ -41,15 +41,15 @@ nav {
 }
 
 stage-header {
-    background-color: #003d72; /* Match your navigation bar color */
+    background-color: #003d72;
     color: #fff;
     padding: 10px;
     text-align: center;
-    position: fixed;
+    position: sticky;
     top: 0;
     width: 100%;
-    z-index: 1000; /* Ensures it stays above other content */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow for better visibility */
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 stage-header a {
     color: #fff;
