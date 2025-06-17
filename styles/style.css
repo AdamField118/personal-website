@@ -63,6 +63,7 @@ nav a {
 nav a:hover {
     background-color: #002244;
     border-radius: 5px;
+    color: #ffdd57;
 }
 
 stage-header {
@@ -147,6 +148,83 @@ stage-header a:hover {
     margin-bottom: 20px;
 }
 
+.card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    margin-bottom: 20px;
+    break-inside: avoid;
+}
+
+.card-link:hover, 
+.card-link:focus {
+    text-decoration: none;
+    color: inherit;
+}
+
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    max-width: 98%;
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-link:hover .card {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+.card-link:active .card {
+    transform: scale(1.03);
+}
+
+.card-link:focus .card {
+    outline: 2px dashed #ffdd57;
+    outline-offset: 4px;
+}
+
+.card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.card h3 {
+    padding: 15px 15px 0 15px;
+    margin: 0;
+    color: #00458b;
+    font-size: 1.2rem;
+}
+
+.card p {
+    padding: 10px 15px 15px 15px;
+    margin: 0;
+    flex-grow: 1;
+    text-align: left;
+    color: #555;
+}
+
+.card a {
+    display: block;
+    color: #333;
+    text-decoration: none;
+}
+
 .controls {
     display: flex;
     justify-content: center;
@@ -205,8 +283,8 @@ stage-header a:hover {
     cursor: pointer;
 }
 
-.content-container .card:hover, 
-.content-container .card:focus {
+.card:hover, 
+.card:focus {
     transform: scale(1.05);
     z-index: 10;
 }
@@ -499,52 +577,6 @@ stage-header a:hover {
     transform: rotate(90deg) scale(1.1);
 }
 
-.card-container {
-    columns: 3;
-    column-gap: 20px;
-    max-width: 98%;
-}
-
-.card {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    text-align: center;
-    width: 100%;
-    margin-bottom: 1px;
-    break-inside: avoid;
-    display: inline-block;
-}
-
-.card h3, .card p {
-    margin: 10px 0;
-}
-
-.card a {
-    display: block;
-    text-decoration: none;
-}
-
-.card img {
-    width: 100%;
-    height: auto;
-    border-radius: 5px;
-    display: block;
-}
-
-.card iframe {
-    width: 100%;
-    height: 280px;
-}
-
-.card:hover, .card:focus {
-    transform: scale(1.05);
-    z-index: 10;
-}
-
 #simulation-container {
     padding: 20px;
     max-width: 1200px;
@@ -610,11 +642,7 @@ stage-footer {
 a:focus, button:focus {
     outline: 2px dashed #ffdd57;
     outline-offset: 4px;
-}
-
-a:hover, a:focus {
-    color: #ffdd57;
-}
+} 
 
 /* ========== MEDIA QUERIES ========== */
 
@@ -627,6 +655,10 @@ a:hover, a:focus {
         }
         .content-container .card-container {
             columns: 2;
+        }
+        
+        .card-container {
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         }
     }
 }
@@ -697,6 +729,25 @@ a:hover, a:focus {
     .post-full-meta {
         flex-direction: column;
         gap: 8px;
+    }
+
+    .card-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .card h3,
+    .content-container .card h3 {
+        align-items: center;
+        font-size: 0.8rem;
+    }
+
+    .card p,
+    .content-container .card p {
+        display: none;
+    }
+    
+    .post-snippet {
+        display: none;
     }
 }
 

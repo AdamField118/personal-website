@@ -8,21 +8,17 @@
 </head>
 <body>
 
-    <!-- Header -->
     <header>
         <h1>Adam's Website</h1>
     </header>
     
-    <!-- Navigation Bar -->
     <stage-header>
         <a href="./index.html">Welcome Page</a>
         <a href="./pages/blog.html">Blog Page</a>
         <a href="./pages/resume.html">Dynamic Resume</a>
     </stage-header>
-    <!-- Main Container -->
     <div class="container">
 
-        <!-- Sidebar -->
         <aside class="sidebar">
             <h2>Profile</h2>
             <img src="./images/adam.jpg" alt="Adam Pic" height="200px" width="200px">
@@ -40,7 +36,6 @@
             </p>
         </aside>
 
-        <!-- Content Area -->
         <section class="content">
             <h2>Welcome!</h2>
             <p>
@@ -48,57 +43,27 @@
             </p>
             <section class="card-container">
                 <div class="card" data-topic="resume">
-                    <a href="./resume.html">
+                    <a href="./pages/resume.html">
                         <img src="./images/resume.png" alt="dynamic resume screenshot">
+                        <div class="card-content">
+                            <h3>Dynamic Resume!</h3>
+                            <p>I made this while learning three.js and webGL shaders!</p>
+                        </div>
                     </a>
-                    <h3>Dynamic Resume!</h3>
-                    <p>I made this while learning three.js and webGL shaders!</p>
                 </div>
-                <div class="card" data-topic="personal">
+                <div class="card" data-topic="resume">
                     <a href="https://adamfield118.github.io/Undergraduate-Physics-Portfolio/">
                         <img src="./images/sim_website.png" alt="Physics Sim Website">
+                        <div class="card-content">
+                            <h3>Physics Portfolio Website!</h3>
+                            <p>A dream since I was in High School, I always wanted to make my own physics simulation website inspired by popular ones used in classes. This is where that dream is slowly becoming a reality!</p>
+                        </div>
                     </a>
-                    <h3>Phyiscs Portfolio Website!</h3>
-                    <p>A dream since I was in High School, I always wanted to make my own physics simulation website inspired by popular ones used in classes. This is where that dream is slowly becoming a reality!
-                    </p>
                 </div>
-                <!-- 
-                I want to add cards for the chaotic pendulum, and anything else I can think of at the time!
-
-                <div class="card" data-topic="ocw">
-                    <a href="../pages/stage.html?simulation=test_GL">
-                        <img src="" alt="Test Sim">
-                    </a>
-                    <h3>Test Sim</h3>
-                    <p>Developing a new sim style.</p>
-                </div>
-                <div class="card" data-topic="astro" :hover :focus>
-                    <a href="../pages/stage.html?simulation=Reflection_Refraction">
-                        <img src="../images/reflrefr.png" alt="Reflection Refraction Simulation">
-                    </a>
-                    <h3>Reflection and Refraction</h3>
-                    <p>Change your incident angle and see the results.</p>
-                </div>
-                <div class="card" data-topic="electricity">
-                    <a href="../pages/stage.html?simulation=RLC">
-                        <img src="../images/rlc.png" alt="RLC Circuit Simulation">
-                    </a>
-                    <h3>RLC Circuit</h3>
-                    <p>Change your resistance, inductance, and capacitance and see how the circuit changes!</p>
-                </div>
-                <div class="card" data-topic="ocw">
-                    <a href="../pages/stage.html?simulation=test_GL">
-                        <img src="" alt="Test Sim">
-                    </a>
-                    <h3>Test Sim</h3>
-                    <p>Developing a new sim style.</p>
-                </div>
-                -->
             </section>
         </section>
     </div>
 
-    <!-- Footer -->
     <footer>
         <p>Created by Adam Field</p>
     </footer>
