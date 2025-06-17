@@ -7,9 +7,19 @@ const loadingIndicator = document.getElementById('loadingIndicator');
 
 let allPosts = [];
 
+// Updated date parsing function for Safari compatibility
+function parseDate(dateString) {
+    const parts = dateString.split('-');
+    const year = parseInt(parts[0]);
+    const month = parseInt(parts[1]) - 1;  // Months are 0-indexed
+    const day = parseInt(parts[2]);
+    return new Date(year, month, day);
+}
+
 function formatDate(dateString) {
+    const date = parseDate(dateString);
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString(undefined, options);
+    return date.toLocaleDateString(undefined, options);
 }
 
 function renderMarkdown(content) {
@@ -242,15 +252,16 @@ function handleEscapeKey(event) {
     }
 }
 
+
 function sortNewestFirst(posts) {
     return [...posts].sort((a, b) => 
-        new Date(b.date) - new Date(a.date)
+        parseDate(b.date) - parseDate(a.date)
     );
 }
 
 function sortOldestFirst(posts) {
     return [...posts].sort((a, b) => 
-        new Date(a.date) - new Date(b.date)
+        parseDate(a.date) - parseDate(b.date)
     );
 }
 
