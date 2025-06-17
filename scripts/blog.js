@@ -162,7 +162,8 @@ function renderMarkdown(content) {
 }
 
 const markdownFiles = [
-    "/blog-posts/example-blog.md"
+    "/blog-posts/example-blog.md",
+    "/blog-posts/blog-1.md"
 ];
 
 function parseFrontMatter(content) {
