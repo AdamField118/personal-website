@@ -48,25 +48,6 @@ header h1 {
 }
 
 nav {
-    background-color: #003366;
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 20px;
-}
-
-nav a {
-    color: #fff;
-    text-decoration: none;
-    padding: 10px 20px;
-}
-
-nav a:hover {
-    background-color: #002244;
-    border-radius: 5px;
-    color: #ffdd57;
-}
-
-stage-header {
     background-color: #003d72;
     color: #fff;
     padding: 10px;
@@ -78,14 +59,14 @@ stage-header {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-stage-header a {
+nav a {
     color: #fff;
     text-decoration: none;
     padding: 10px 15px;
     display: inline-block;
 }
 
-stage-header a:hover {
+nav a:hover {
     background-color: #002a5e;
 }
 
@@ -205,7 +186,7 @@ stage-header a:hover {
     outline-offset: 4px;
 }
 
-.card img {
+.card img, .card iframe {
     width: 100%;
     height: 200px;
     object-fit: cover;
@@ -692,14 +673,6 @@ a:focus, button:focus {
 
 /* Mobile Layout (600px and below) */
 @media (max-width: 600px) {
-    nav {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    nav a {
-        margin: 5px 0;
-    }
 
     .simulations-container {
         columns: 1;
@@ -788,7 +761,7 @@ a:focus, button:focus {
         font-size: 1.5rem;
     }
     
-    stage-header a {
+    nav a {
         padding: 8px 10px;
         font-size: 0.9rem;
     }
@@ -852,7 +825,8 @@ a:focus, button:focus {
     }
     
     nav {
-        background-color: #1e3a5f;
+        background-color: #1e4a82;
+        color: #fff;
     }
     
     nav a {
@@ -860,20 +834,6 @@ a:focus, button:focus {
     }
     
     nav a:hover {
-        background-color: #0f2544;
-        color: #ffdd57;
-    }
-    
-    stage-header {
-        background-color: #1e4a82;
-        color: #fff;
-    }
-    
-    stage-header a {
-        color: #fff;
-    }
-    
-    stage-header a:hover {
         background-color: #153a6e;
     }
     
