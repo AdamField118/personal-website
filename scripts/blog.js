@@ -23,49 +23,58 @@ function formatDate(dateString) {
 }
 
 function renderMarkdown(content) {
-    let html = content
-        // Handle code blocks with improved indentation preservation
-        .replace(/```([\w-]*)\s*\n?([\s\S]*?)```/g, (match, lang, code) => {
-            // Don't trim the leading newline - preserve original formatting
-            let processedCode = code;
+    // Step 1: Extract and placeholder code blocks to protect them from processing
+    const codeBlocks = [];
+    let html = content.replace(/```([\w-]*)\s*\n?([\s\S]*?)```/g, (match, lang, code) => {
+        // Remove only the very first newline if it exists
+        let processedCode = code;
+        if (processedCode.startsWith('\n')) {
+            processedCode = processedCode.substring(1);
+        }
+        
+        // Remove trailing whitespace but preserve internal formatting
+        processedCode = processedCode.replace(/\s+$/, '');
+        
+        // Convert tabs to 4 spaces for consistent rendering
+        processedCode = processedCode.replace(/\t/g, '    ');
+        
+        // Escape HTML entities but preserve whitespace and newlines exactly
+        const escapedCode = processedCode
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
             
-            // Remove only the very first newline if it exists (common in markdown)
-            if (processedCode.startsWith('\n')) {
-                processedCode = processedCode.substring(1);
-            }
+        const codeBlockHtml = lang 
+            ? `<pre><code class="language-${lang}">${escapedCode}</code></pre>`
+            : `<pre><code>${escapedCode}</code></pre>`;
             
-            // Remove trailing newlines/whitespace
-            processedCode = processedCode.replace(/\s+$/, '');
-            
-            // Preserve all indentation and whitespace within the code
-            const escapedCode = processedCode
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;');
-                
-            return lang 
-                ? `<pre><code class="language-${lang}">${escapedCode}</code></pre>`
-                : `<pre><code>${escapedCode}</code></pre>`;
-        })
-        // Headers (unchanged)
+        // Store the processed code block and return a placeholder
+        const placeholder = `__CODEBLOCK_${codeBlocks.length}__`;
+        codeBlocks.push(codeBlockHtml);
+        return placeholder;
+    });
+
+    // Step 2: Process the rest of the markdown (without code blocks)
+    html = html
+        // Headers
         .replace(/^### (.*$)/gim, '<h3>$1</h3>')
         .replace(/^## (.*$)/gim, '<h2>$1</h2>')
         .replace(/^# (.*$)/gim, '<h1>$1</h1>')
-        // Bold and italic (unchanged)
+        // Bold and italic
         .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
         .replace(/\*(.*?)\*/gim, '<em>$1</em>')
-        // Inline code (unchanged)
+        // Inline code
         .replace(/`(.*?)`/gim, (match, code) => {
             return `<code>${code
                 .replace(/&/g, '&amp;')
                 .replace(/</g, '&lt;')
                 .replace(/>/g, '&gt;')}</code>`;
         })
-        // Blockquotes (unchanged)
+        // Blockquotes
         .replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>');
 
-    // Handle lists properly - simpler approach
+    // Step 3: Handle lists
     // First, convert markdown unordered lists to ordered list items
     html = html.replace(/^- (.*$)/gim, '<li>$1</li>');
     
@@ -107,16 +116,21 @@ function renderMarkdown(content) {
     
     html = processedLines.join('\n');
 
-    // Continue with the rest of the processing
+    // Step 4: Process paragraphs and line breaks (but not inside code blocks)
     html = html
         .replace(/\n\n/g, '</p><p>')
         .replace(/\n/g, '<br>');
 
-    // Wrap in paragraphs and clean up
+    // Step 5: Wrap in paragraphs and clean up
     html = `<p>${html}</p>`
         .replace(/<p><\/p>/g, '')
         .replace(/<p>(<\/?(?:pre|h\d|blockquote|ol)[^>]*>)/g, '$1')
         .replace(/(<\/?(?:pre|h\d|blockquote|ol)[^>]*>)<\/p>/g, '$1');
+
+    // Step 6: Restore the protected code blocks
+    codeBlocks.forEach((codeBlock, index) => {
+        html = html.replace(`__CODEBLOCK_${index}__`, codeBlock);
+    });
 
     return html;
 }
