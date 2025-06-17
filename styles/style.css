@@ -822,3 +822,365 @@ a:focus, button:focus {
   src: url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.woff2") format("woff2"),
        url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.ttf") format("truetype");
 }
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1a1a1a;
+        color: #e4e4e4;
+    }
+    
+    header {
+        background-color: #2d5aa0;
+        color: #fff;
+    }
+    
+    nav {
+        background-color: #1e3a5f;
+    }
+    
+    nav a {
+        color: #fff;
+    }
+    
+    nav a:hover {
+        background-color: #0f2544;
+        color: #ffdd57;
+    }
+    
+    stage-header {
+        background-color: #1e4a82;
+        color: #fff;
+    }
+    
+    stage-header a {
+        color: #fff;
+    }
+    
+    stage-header a:hover {
+        background-color: #153a6e;
+    }
+    
+    .sidebar {
+        background-color: #2a2a2a;
+        color: #e4e4e4;
+    }
+    
+    .sidebar h2 {
+        color: #fff;
+    }
+    
+    .sidebar ul li a {
+        color: #7db3f0;
+    }
+    
+    .sidebar ul li a:hover {
+        color: #a8c8f0;
+    }
+    
+    .content {
+        background-color: #242424;
+        color: #e4e4e4;
+    }
+    
+    .content h2 {
+        color: #7db3f0;
+    }
+    
+    .card {
+        background-color: #2a2a2a;
+        border: 1px solid #404040;
+        color: #e4e4e4;
+    }
+    
+    .card h3 {
+        color: #7db3f0;
+    }
+    
+    .card p {
+        color: #c4c4c4;
+    }
+    
+    .card a {
+        color: #e4e4e4;
+    }
+    
+    .content-container .card {
+        background-color: #2a2a2a;
+        border: 1px solid #404040;
+    }
+    
+    .post-date {
+        color: #a0a0a0;
+    }
+
+    .post-snippet {
+        color: #c4c4c4;
+    }
+
+    .post-footer {
+        border-top: 1px solid #404040;
+    }
+
+    .tag {
+        background-color: #1e4a82;
+        color: #b8d4ff;
+    }
+
+    .read-more {
+        color: #7db3f0;
+    }
+
+    .loading {
+        color: #7db3f0;
+    }
+
+    .error {
+        background: #2a1a1a;
+        border-left: 4px solid #f44336;
+        color: #ff6b6b;
+    }
+
+    .post-full {
+        background: #1a1a1a;
+    }
+
+    .post-full-header {
+        border-bottom: 2px solid #404040;
+    }
+
+    .post-full-title {
+        color: #7db3f0;
+    }
+
+    .post-full-meta {
+        color: #a0a0a0;
+    }
+
+    .post-full-body {
+        color: #e4e4e4;
+    }
+
+    .post-full-body h2 {
+        color: #7db3f0;
+        border-bottom: 1px solid #404040;
+    }
+
+    .post-full-body blockquote {
+        background: #252525;
+        border-left: 4px solid #7db3f0;
+        color: #c4c4c4;
+    }
+
+    .post-full-body pre {
+        background-color: #1e1e1e;
+        border: 1px solid #404040;
+        color: #e4e4e4;
+    }
+
+    .post-full-body code {
+        background-color: #2a2a2a;
+        color: #e4e4e4;
+    }
+
+    .post-full-body pre[class*="language-"] {
+        background: #1e1e1e;
+    }
+
+    .post-full-body code[class*="language-"] {
+        background: #1e1e1e;
+        color: #e4e4e4;
+    }
+
+    .post-full-body pre,
+    .post-full-body code,
+    .post-full-body pre[class*="language-"] code,
+    .post-full-body code[class*="language-"],
+    .post-full-body .token {
+        color: #eee !important;
+    }
+
+    /* Comprehensive syntax highlighting for dark mode */
+    .language-javascript .token.comment,
+    .language-python .token.comment,
+    .language-c .token.comment,
+    .language-java .token.comment,
+    .language-latex .token.comment { 
+        color: #6a9955 !important; 
+    }
+    
+    .language-javascript .token.string,
+    .language-python .token.string,
+    .language-c .token.string,
+    .language-java .token.string { 
+        color: #ce9178 !important; 
+    }
+    
+    .language-javascript .token.keyword,
+    .language-python .token.keyword,
+    .language-c .token.keyword,
+    .language-java .token.keyword { 
+        color: #569cd6 !important; 
+    }
+
+    .language-javascript .token.function,
+    .language-python .token.function,
+    .language-c .token.function,
+    .language-java .token.function { 
+        color: #dcdcaa !important; 
+    }
+
+    .language-javascript .token.number,
+    .language-python .token.number,
+    .language-c .token.number,
+    .language-java .token.number { 
+        color: #b5cea8 !important; 
+    }
+
+    /* HTML specific tokens */
+    .language-html .token.tag { 
+        color: #569cd6 !important; 
+        background-color: transparent !important; 
+    }
+    
+    .language-html .token.attr-name { 
+        color: #9cdcfe !important; 
+        background-color: transparent !important; 
+    }
+    
+    .language-html .token.attr-value { 
+        color: #ce9178 !important; 
+        background-color: transparent !important; 
+    }
+
+    .language-html .token.punctuation { 
+        color: #d4d4d4 !important; 
+        background-color: transparent !important; 
+    }
+
+    /* CSS specific tokens */
+    .language-css .token.selector { 
+        color: #d7ba7d !important; 
+    }
+    
+    .language-css .token.property { 
+        color: #9cdcfe !important; 
+    }
+    
+    .language-css .token.string { 
+        color: #ce9178 !important; 
+    }
+
+    .language-css .token.punctuation { 
+        color: #d4d4d4 !important; 
+    }
+
+    /* LaTeX specific tokens */
+    .language-latex .token.command { 
+        color: #569cd6 !important; 
+    }
+    
+    .language-latex .token.special { 
+        color: #9cdcfe !important; 
+    }
+    
+    .language-latex .token.environment { 
+        color: #4ec9b0 !important; 
+    }
+    
+    .language-latex .token.parameter { 
+        color: #dcdcaa !important; 
+    }
+
+    /* Generic tokens that might be showing as black */
+    .language-javascript .token.punctuation,
+    .language-python .token.punctuation,
+    .language-c .token.punctuation,
+    .language-java .token.punctuation,
+    .language-html .token.punctuation,
+    .language-css .token.punctuation,
+    .language-latex .token.punctuation { 
+        color: #d4d4d4 !important; 
+    }
+
+    .language-javascript .token.operator,
+    .language-python .token.operator,
+    .language-c .token.operator,
+    .language-java .token.operator { 
+        color: #d4d4d4 !important; 
+    }
+
+    .language-javascript .token.boolean,
+    .language-python .token.boolean,
+    .language-c .token.boolean,
+    .language-java .token.boolean { 
+        color: #569cd6 !important; 
+    }
+
+    /* Fallback for any unspecified tokens */
+    .language-javascript .token,
+    .language-python .token,
+    .language-c .token,
+    .language-java .token,
+    .language-html .token,
+    .language-css .token,
+    .language-latex .token,
+    .language-tex .token { 
+        color: #d4d4d4 !important; 
+    }
+
+    .close-btn {
+        background: #2d5aa0;
+        color: white;
+    }
+
+    .close-btn:hover {
+        background: #c53030;
+    }
+
+    .sort-btn {
+        background-color: #2d5aa0;
+        color: #fff;
+    }
+
+    .sort-btn:hover, .sort-btn:focus {
+        background-color: #1e4a82;
+        box-shadow: 0 0 5px #1e4a82;
+    }
+
+    .sort-btn.active {
+        background-color: #4a69bd;
+    }
+
+    button, .btn {
+        background-color: #2d5aa0;
+        color: #fff;
+    }
+
+    button:hover, .btn:hover {
+        background-color: #1e4a82;
+    }
+
+    button:focus, .btn:focus {
+        box-shadow: 0 0 5px #1e4a82;
+    }
+
+    #simulation-container {
+        background-color: #242424;
+        border: 1px solid #404040;
+    }
+
+    #simulation {
+        border: 1px solid #404040;
+        background-color: #2a2a2a;
+    }
+
+    footer {
+        background-color: #2d5aa0;
+        color: #fff;
+    }
+
+    stage-footer {
+        background-color: #2d5aa0;
+        color: #fff;
+    }
+}
