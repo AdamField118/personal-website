@@ -822,8 +822,16 @@ a:focus, button:focus {
   src: url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.woff2") format("woff2"),
        url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.ttf") format("truetype");
 }
+:root {
+    color-scheme: light dark;  /* Required for Safari dark mode support :cite[7] */
+}
 
 @media (prefers-color-scheme: dark) {
+    /* Safari-specific fixes */
+    :root {
+        -webkit-tap-highlight-color: transparent; /* Improve tap highlight in Safari */
+    }
+    
     body {
         background-color: #1a1a1a;
         color: #e4e4e4;
