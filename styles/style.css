@@ -436,13 +436,15 @@ stage-header a:hover {
     margin-bottom: 20px;
 }
 
-.post-full-body ul, .post-full-body ol {
-    margin-left: 20px;
-    margin-bottom: 20px;
+.post-full-body ol {
+    margin: 0em;
+    padding-left: 1.0em;
 }
 
-.post-full-body li {
-    margin-bottom: 8px;
+.post-full-body ol li {
+    margin: 0;
+    padding: 0em;
+    line-height: 0;
 }
 
 .post-full-body blockquote {
@@ -454,39 +456,39 @@ stage-header a:hover {
     color: #555;
 }
 
-.post-full-body code {
-    background: #f4f4f4;
-    color: #2d2d2d;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-family: 'Courier New', Consolas, Monaco, monospace;
-    font-size: 0.9em;
-    font-weight: 600;
-}
-
 .post-full-body pre {
-    background: #f4f4f4;
-    border-radius: 8px;
+    background-color: #f6f8fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    padding: 16px;
     overflow-x: auto;
-    margin: 20px 0;
-    max-width: 100%;
-    line-height: 1.4;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    position: relative;
+    margin: 1em 0;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+    font-size: 14px;
+    line-height: 1.45;
 }
 
 .post-full-body pre code {
-    background: transparent;
-    color: #2d2d2d;
-    padding: 16px 20px;
-    border-radius: 0;
-    display: block;
-    line-height: 1.5;
-    font-family: 'Courier New', Consolas, Monaco, monospace;
-    font-size: 0.9em;
-    font-weight: normal;
-    white-space: pre;
-    overflow-x: auto;
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: inherit !important;
+    color: inherit !important;
+    white-space: pre !important; /* This is crucial for preserving indentation */
+    word-wrap: normal !important;
+    word-break: normal !important;
+    tab-size: 4; /* Ensure consistent tab rendering */
+    -moz-tab-size: 4;
+    -webkit-tab-size: 4;
+}
+
+.post-full-body code {
+    background-color: rgba(175, 184, 193, 0.2);
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+    font-size: 85%;
 }
 
 .post-full-body pre[class*="language-"] {

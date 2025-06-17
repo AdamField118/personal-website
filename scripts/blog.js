@@ -24,10 +24,21 @@ function formatDate(dateString) {
 
 function renderMarkdown(content) {
     let html = content
+        // Handle code blocks with improved indentation preservation
         .replace(/```([\w-]*)\s*\n?([\s\S]*?)```/g, (match, lang, code) => {
-            const trimmedCode = code.replace(/^\n/, '');
+            // Don't trim the leading newline - preserve original formatting
+            let processedCode = code;
             
-            const escapedCode = trimmedCode
+            // Remove only the very first newline if it exists (common in markdown)
+            if (processedCode.startsWith('\n')) {
+                processedCode = processedCode.substring(1);
+            }
+            
+            // Remove trailing newlines/whitespace
+            processedCode = processedCode.replace(/\s+$/, '');
+            
+            // Preserve all indentation and whitespace within the code
+            const escapedCode = processedCode
                 .replace(/&/g, '&amp;')
                 .replace(/</g, '&lt;')
                 .replace(/>/g, '&gt;')
@@ -37,29 +48,75 @@ function renderMarkdown(content) {
                 ? `<pre><code class="language-${lang}">${escapedCode}</code></pre>`
                 : `<pre><code>${escapedCode}</code></pre>`;
         })
+        // Headers (unchanged)
         .replace(/^### (.*$)/gim, '<h3>$1</h3>')
         .replace(/^## (.*$)/gim, '<h2>$1</h2>')
         .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+        // Bold and italic (unchanged)
         .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
         .replace(/\*(.*?)\*/gim, '<em>$1</em>')
+        // Inline code (unchanged)
         .replace(/`(.*?)`/gim, (match, code) => {
             return `<code>${code
                 .replace(/&/g, '&amp;')
                 .replace(/</g, '&lt;')
                 .replace(/>/g, '&gt;')}</code>`;
         })
-        .replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>')
-        .replace(/^- (.*$)/gim, '<li>$1</li>')
-        .replace(/(\n<ul>)?<li>.*<\/li>/gim, '<ul>$&</ul>')
-        .replace(/^\d+\. (.*$)/gim, '<li>$1</li>')
-        .replace(/(\n<ol>)?<li>.*<\/li>/gim, '<ol>$&</ol>')
+        // Blockquotes (unchanged)
+        .replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>');
+
+    // Handle lists properly - simpler approach
+    // First, convert markdown unordered lists to ordered list items
+    html = html.replace(/^- (.*$)/gim, '<li>$1</li>');
+    
+    // Also handle existing numbered lists
+    html = html.replace(/^\d+\. (.*$)/gim, '<li>$1</li>');
+    
+    // Split into lines and process list items
+    const lines = html.split('\n');
+    const processedLines = [];
+    let inList = false;
+    
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        const isListItem = line.trim().match(/^<li>.*<\/li>$/);
+        
+        if (isListItem && !inList) {
+            // Starting a new list
+            processedLines.push('<ol>');
+            processedLines.push(line);
+            inList = true;
+        } else if (isListItem && inList) {
+            // Continue current list
+            processedLines.push(line);
+        } else if (!isListItem && inList) {
+            // End current list
+            processedLines.push('</ol>');
+            processedLines.push(line);
+            inList = false;
+        } else {
+            // Regular line
+            processedLines.push(line);
+        }
+    }
+    
+    // Close list if we ended while in a list
+    if (inList) {
+        processedLines.push('</ol>');
+    }
+    
+    html = processedLines.join('\n');
+
+    // Continue with the rest of the processing
+    html = html
         .replace(/\n\n/g, '</p><p>')
         .replace(/\n/g, '<br>');
 
+    // Wrap in paragraphs and clean up
     html = `<p>${html}</p>`
         .replace(/<p><\/p>/g, '')
-        .replace(/<p>(<\/?(?:pre|h\d|blockquote|ul|ol)[^>]*>)/g, '$1')
-        .replace(/(<\/?(?:pre|h\d|blockquote|ul|ol)[^>]*>)<\/p>/g, '$1');
+        .replace(/<p>(<\/?(?:pre|h\d|blockquote|ol)[^>]*>)/g, '$1')
+        .replace(/(<\/?(?:pre|h\d|blockquote|ol)[^>]*>)<\/p>/g, '$1');
 
     return html;
 }
