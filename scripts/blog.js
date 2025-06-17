@@ -23,9 +23,30 @@ function formatDate(dateString) {
 }
 
 function renderMarkdown(content) {
-    // Step 1: Extract and placeholder code blocks to protect them from processing
+    // Step 1: Extract and placeholder LaTeX blocks to protect them from processing
+    const latexBlocks = [];
+    
+    // Handle $ blocks first (display/block math)
+    let html = content.replace(/\$\$([\s\S]*?)\$\$/g, (match, latex) => {
+        const processedLatex = latex.trim();
+        const latexHtml = `<div class="latex-display">$$${processedLatex}$$</div>`;
+        const placeholder = `__LATEXBLOCK_${latexBlocks.length}__`;
+        latexBlocks.push(latexHtml);
+        return placeholder;
+    });
+    
+    // Handle inline $ LaTeX (but avoid matching $ which we already processed)
+    html = html.replace(/(?<!\$)\$(?!\$)((?:[^$]|\\\$)+?)\$(?!\$)/g, (match, latex) => {
+        const processedLatex = latex.trim();
+        const latexHtml = `<span class="latex-inline">$${processedLatex}$</span>`;
+        const placeholder = `__LATEXBLOCK_${latexBlocks.length}__`;
+        latexBlocks.push(latexHtml);
+        return placeholder;
+    });
+
+    // Step 2: Extract and placeholder code blocks to protect them from processing
     const codeBlocks = [];
-    let html = content.replace(/```([\w-]*)\s*\n?([\s\S]*?)```/g, (match, lang, code) => {
+    html = html.replace(/```([\w-]*)\s*\n?([\s\S]*?)```/g, (match, lang, code) => {
         // Remove only the very first newline if it exists
         let processedCode = code;
         if (processedCode.startsWith('\n')) {
@@ -55,7 +76,7 @@ function renderMarkdown(content) {
         return placeholder;
     });
 
-    // Step 2: Process the rest of the markdown (without code blocks)
+    // Step 3: Process the rest of the markdown (without code blocks and LaTeX)
     html = html
         // Headers
         .replace(/^### (.*$)/gim, '<h3>$1</h3>')
@@ -74,7 +95,7 @@ function renderMarkdown(content) {
         // Blockquotes
         .replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>');
 
-    // Step 3: Handle lists
+    // Step 4: Handle lists
     // First, convert markdown unordered lists to ordered list items
     html = html.replace(/^- (.*$)/gim, '<li>$1</li>');
     
@@ -116,20 +137,25 @@ function renderMarkdown(content) {
     
     html = processedLines.join('\n');
 
-    // Step 4: Process paragraphs and line breaks (but not inside code blocks)
+    // Step 5: Process paragraphs and line breaks (but not inside code blocks or LaTeX)
     html = html
         .replace(/\n\n/g, '</p><p>')
         .replace(/\n/g, '<br>');
 
-    // Step 5: Wrap in paragraphs and clean up
+    // Step 6: Wrap in paragraphs and clean up
     html = `<p>${html}</p>`
         .replace(/<p><\/p>/g, '')
-        .replace(/<p>(<\/?(?:pre|h\d|blockquote|ol)[^>]*>)/g, '$1')
-        .replace(/(<\/?(?:pre|h\d|blockquote|ol)[^>]*>)<\/p>/g, '$1');
+        .replace(/<p>(<\/?(?:pre|h\d|blockquote|ol|div)[^>]*>)/g, '$1')
+        .replace(/(<\/?(?:pre|h\d|blockquote|ol|div)[^>]*>)<\/p>/g, '$1');
 
-    // Step 6: Restore the protected code blocks
+    // Step 7: Restore the protected code blocks
     codeBlocks.forEach((codeBlock, index) => {
         html = html.replace(`__CODEBLOCK_${index}__`, codeBlock);
+    });
+
+    // Step 8: Restore the protected LaTeX blocks
+    latexBlocks.forEach((latexBlock, index) => {
+        html = html.replace(`__LATEXBLOCK_${index}__`, latexBlock);
     });
 
     return html;
@@ -292,6 +318,18 @@ function showFullPost(post) {
             Prism.highlightAll();
         } else {
             console.warn("Prism not loaded. Syntax highlighting disabled.");
+        }
+        // Render LaTeX with MathJax
+        if (window.MathJax && window.MathJax.typesetPromise) {
+            console.log('Rendering MathJax...');
+            MathJax.typesetPromise().then(() => {
+                console.log('MathJax rendering complete');
+            }).catch((err) => {
+                console.error('MathJax rendering error:', err);
+            });
+        } else {
+            console.warn("MathJax not loaded or not ready. LaTeX rendering disabled.");
+            console.log('MathJax object:', window.MathJax);
         }
     }, 10);
     
