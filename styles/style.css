@@ -164,11 +164,14 @@ nav a:hover {
     border: 1px solid #ddd;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease, scale 0.3s ease;
     text-align: center;
     height: 100%;
     display: flex;
     flex-direction: column;
+    /* Animation initial state */
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
 }
 
 .card-link:hover .card {
@@ -264,18 +267,41 @@ nav a:hover {
     border-radius: 5px;
     padding: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease, scale 0.3s ease;
     text-align: center;
     width: 100%;
     margin-bottom: 20px;
     break-inside: avoid;
     display: inline-block;
     cursor: pointer;
+    /* Animation initial state */
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
 }
 
 .card:hover, 
 .card:focus {
     transform: scale(1.05);
+    z-index: 10;
+}
+
+/* Card animation states for filtering */
+.card.card-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.card.card-hidden {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+    pointer-events: none;
+}
+
+/* Enhanced hover effects for visible cards */
+.card-link:hover .card.card-visible,
+.card:hover.card-visible {
+    transform: translateY(0) scale(1.05);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     z-index: 10;
 }
 
@@ -609,6 +635,28 @@ nav a:hover {
     text-align: center;
 }
 
+.filter-select {
+    max-width: 90%;
+    transition: width 0.2s ease, box-shadow 0.2s ease;
+}
+
+.filter-select:focus {
+    box-shadow: 0 0 8px rgba(0, 69, 139, 0.3);
+    outline: none;
+}
+
+.hidden-measurer {
+    position: absolute;
+    visibility: hidden;
+    height: auto;
+    width: auto;
+    white-space: nowrap;
+    font-family: inherit;
+    font-size: inherit;
+    padding: 8px 12px;
+    border: 2px solid transparent;
+}
+
 button, .btn {
     background-color: #00458b;
     color: #fff;
@@ -702,7 +750,16 @@ a:focus, button:focus {
     }
     
     .card {
-        padding: 15px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    }
+    
+    .card.card-hidden {
+        transform: translateY(-5px) scale(0.98);
+    }
+    
+    .card-link:hover .card.card-visible,
+    .card:hover.card-visible {
+        transform: translateY(0) scale(1.02);
     }
     
     .post-header {
@@ -879,6 +936,10 @@ a:focus, button:focus {
     
     .card a {
         color: #e4e4e4;
+    }
+
+    .filter-select:focus {
+        box-shadow: 0 0 8px rgba(125, 179, 240, 0.3);
     }
     
     .content-container .card {

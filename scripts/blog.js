@@ -7,6 +7,34 @@ const loadingIndicator = document.getElementById('loadingIndicator');
 
 let allPosts = [];
 
+// ANIMATION-ONLY FUNCTIONS - These are the ONLY new additions
+function animateCardsIn(cards, staggerDelay = 100) {
+    cards.forEach((card, index) => {
+        // Start hidden
+        card.classList.remove('card-visible');
+        card.classList.add('card-hidden');
+        
+        // Animate in with stagger
+        setTimeout(() => {
+            card.classList.remove('card-hidden');
+            card.classList.add('card-visible');
+        }, index * staggerDelay);
+    });
+}
+
+function animateCardsOut(cards, callback) {
+    cards.forEach((card, index) => {
+        setTimeout(() => {
+            card.classList.remove('card-visible');
+            card.classList.add('card-hidden');
+        }, index * 50);
+    });
+    
+    // Execute callback after all animations complete
+    setTimeout(callback, cards.length * 50 + 300);
+}
+// END ANIMATION-ONLY FUNCTIONS
+
 // Updated date parsing function for Safari compatibility
 function parseDate(dateString) {
     const parts = dateString.split('-');
@@ -255,7 +283,30 @@ async function loadMarkdownFiles() {
     return posts;
 }
 
+// ONLY modification: Added animation wrapper around your original function
 function renderPosts(posts) {
+    // Check if we should animate (if there are existing cards)
+    const existingCards = Array.from(postsContainer.querySelectorAll('.card'));
+    const shouldAnimate = existingCards.length > 0;
+    
+    if (shouldAnimate) {
+        // Animate out existing cards first, then render new ones
+        animateCardsOut(existingCards, () => {
+            renderPostsOriginal(posts);
+            // Animate in the new cards
+            const newCards = Array.from(postsContainer.querySelectorAll('.card'));
+            setTimeout(() => animateCardsIn(newCards, 100), 50);
+        });
+    } else {
+        // First load - render normally then animate in
+        renderPostsOriginal(posts);
+        const newCards = Array.from(postsContainer.querySelectorAll('.card'));
+        setTimeout(() => animateCardsIn(newCards, 100), 50);
+    }
+}
+
+// Your EXACT original renderPosts function, renamed but unchanged
+function renderPostsOriginal(posts) {
     postsContainer.innerHTML = '';
     
     if (posts.length === 0) {
@@ -361,7 +412,6 @@ function handleEscapeKey(event) {
         closeFullPost();
     }
 }
-
 
 function sortNewestFirst(posts) {
     return [...posts].sort((a, b) => 

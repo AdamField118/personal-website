@@ -41,6 +41,20 @@
             <p>
                 Below you can find a bunch of project's I've done that I am proud of!
             </p>
+
+            <!-- Filter Dropdown -->
+            <section class="filter-section">
+                <label for="filter">Filter by Topic:</label>
+                <select id="filter" class="filter-select">
+                    <option value="all">All</option>
+                    <option value="project">Projects</option>
+                    <option value="resume">Resume & Portfolio</option>
+                    <option value="paper">Research Papers</option>
+                    <option value="video">Videos</option>
+                    <option value="misc">Miscellaneous</option>
+                </select>
+            </section>
+
             <section class="card-container">
                 <div class="card" data-topic="project">
                     <a href="https://portfolio.adamfield.org">
@@ -86,12 +100,17 @@
                     </div>
                 </div>
             </section>
+
+            <div class="hidden-measurer" id="measurer"></div>
+
         </section>
     </div>
 
     <footer>
         <p>Created by Adam Field</p>
     </footer>
+
+    <script src="./scripts/filter.js"></script>
 
 </body>
 </html>
