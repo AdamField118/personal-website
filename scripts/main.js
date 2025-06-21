@@ -1,5 +1,5 @@
-import * as THREE from 'https://cdn.skypack.dev/three@0.132.2';
-import { OrbitControls } from 'https://cdn.skypack.dev/three@0.132.2/examples/jsm/controls/OrbitControls.js';
+// import * as THREE from 'https://unpkg.com/three@0.132.2/build/three.module.js';
+// import { OrbitControls } from 'https://unpkg.com/three@0.132.2/examples/jsm/controls/OrbitControls.js';
 
 // Setup
 
@@ -7,10 +7,26 @@ const scene = new THREE.Scene();
 //hi
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.01, 1000);
 
-const renderer = new THREE.WebGLRenderer({
-  canvas: document.querySelector('#bg'),
-  antialiasing: true,
-});
+const canvas = document.querySelector('#bg');
+
+let renderer;
+
+try {
+  renderer = new THREE.WebGLRenderer({
+    canvas: canvas,
+    antialias: true,
+  });
+} catch (error) {
+  // WebGL failed, show a message to the user
+  canvas.style.display = 'none';
+  document.body.insertAdjacentHTML('afterbegin', 
+    '<div style="background: red; color: white; padding: 20px; text-align: center; position: fixed; top: 0; width: 100%; z-index: 1000;">' +
+    'WebGL is not supported or disabled in your browser. Please enable hardware acceleration in Firefox settings.' +
+    'If on Firefox, type about:config into your address bar, then make webgl.force-enabled=true and webgl.disabled=false' +
+    '</div>'
+  );
+  throw error;
+}
 
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
