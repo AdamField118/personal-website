@@ -15,7 +15,7 @@ This is a list!
 - item 1  
 - item 2  
 - item 3  
-And this is a blockqute!  
+And this is a blockquote!  
 > "Try Harder" - Someone  
 ### A Subsubheading  
 This is block math  
