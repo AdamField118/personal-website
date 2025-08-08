@@ -110,6 +110,10 @@ function renderMarkdown(content) {
         .replace(/^### (.*$)/gim, '<h3>$1</h3>')
         .replace(/^## (.*$)/gim, '<h2>$1</h2>')
         .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+        // Images (must be before links)
+        .replace(/!\[([^\]]+)\]\(([^)]+)\)/gim, '<img src="$2" alt="$1">')
+        // Links
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2">$1</a>')
         // Bold and italic
         .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
         .replace(/\*(.*?)\*/gim, '<em>$1</em>')
@@ -168,7 +172,9 @@ function renderMarkdown(content) {
     // Step 5: Process paragraphs and line breaks (but not inside code blocks or LaTeX)
     html = html
         .replace(/\n\n/g, '</p><p>')
-        .replace(/\n/g, '<br>');
+        .replace(/\n(?!<li>|<\/ol>)/g, '<br>')  // Don't add <br> before <li> or </ol>
+        .replace(/(<ol>)\n/g, '$1')             // Remove newline after <ol>
+        .replace(/(<\/li>)\n/g, '$1');          // Remove newline after </li>
 
     // Step 6: Wrap in paragraphs and clean up
     html = `<p>${html}</p>`
@@ -191,7 +197,10 @@ function renderMarkdown(content) {
 
 const markdownFiles = [
     "/blog-posts/example-blog.md",
-    "/blog-posts/blog-1.md"
+    "/blog-posts/blog-1.md",
+    "/blog-posts/blog-2.md",
+    "/blog-posts/blog-3.md",
+    "/blog-posts/blog-4.md"
 ];
 
 function parseFrontMatter(content) {
@@ -414,15 +423,23 @@ function handleEscapeKey(event) {
 }
 
 function sortNewestFirst(posts) {
-    return [...posts].sort((a, b) => 
-        parseDate(b.date) - parseDate(a.date)
-    );
+    return [...posts].sort((a, b) => {
+        const dateComparison = parseDate(b.date) - parseDate(a.date);
+        if (dateComparison === 0) {
+            return a.title.localeCompare(b.title);
+        }
+        return dateComparison;
+    });
 }
 
 function sortOldestFirst(posts) {
-    return [...posts].sort((a, b) => 
-        parseDate(a.date) - parseDate(b.date)
-    );
+    return [...posts].sort((a, b) => {
+        const dateComparison = parseDate(a.date) - parseDate(b.date);
+        if (dateComparison === 0) {
+            return a.title.localeCompare(b.title);
+        }
+        return dateComparison;
+    });
 }
 
 closeBtn.addEventListener('click', closeFullPost);

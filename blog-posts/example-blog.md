@@ -1,7 +1,7 @@
 ---
 title: "Example Blog"
 date: "2025-06-16"
-tags: "tutorial"
+tags: "tutorial, example"
 snippet: "A short showcase of blog posts"
 ---
 

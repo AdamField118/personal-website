@@ -448,6 +448,18 @@ nav a:hover {
     font-size: 1.8rem;
 }
 
+.post-full-body img {
+    background: #252525;
+    width: 20em;
+    height: auto;
+    display: block; 
+    margin: auto;
+}
+
+.post-full-body a {
+    color: #7db3f0;
+}
+
 .post-full-body p {
     margin-bottom: 20px;
 }
@@ -460,7 +472,8 @@ nav a:hover {
 .post-full-body ol li {
     margin: 0;
     padding: 0em;
-    line-height: 0;
+    line-height: 1.6em;
+    overflow-wrap: break-word;
 }
 
 .post-full-body blockquote {
@@ -1172,11 +1185,47 @@ a:focus, button:focus {
         color: #7db3f0;
         border-bottom: 1px solid #404040;
     }
+    
+    .post-full-body img {
+        background: #252525;
+        width: 20em;
+        height: auto;
+        display: block; 
+        margin: auto;
+    }
+
+    .post-full-body a {
+        color: #7db3f0;
+    }
 
     .post-full-body blockquote {
         background: #252525;
         border-left: 4px solid #7db3f0;
         color: #c4c4c4;
+    }
+
+    .post-full-body ol, ul {
+        width: 100%;
+        max-width: 100%;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        white-space: normal !important;
+    }
+
+    .post-full-body li {
+        width: 100%;
+        max-width: 100%;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        white-space: normal !important;
+        display: list-item !important;
+        margin-bottom: 8px;
+        line-height: 1.6;
+    }
+
+    .post-full-body li p {
+        margin: 0;
+        display: inline;
     }
 
     .post-full-body pre {
