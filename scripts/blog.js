@@ -7,7 +7,7 @@ const loadingIndicator = document.getElementById('loadingIndicator');
 
 let allPosts = [];
 
-// ANIMATION-ONLY FUNCTIONS - These are the ONLY new additions
+// ANIMATION-ONLY FUNCTIONS
 function animateCardsIn(cards, staggerDelay = 100) {
     cards.forEach((card, index) => {
         // Start hidden
@@ -200,7 +200,8 @@ const markdownFiles = [
     "/blog-posts/blog-1.md",
     "/blog-posts/blog-2.md",
     "/blog-posts/blog-3.md",
-    "/blog-posts/blog-4.md"
+    "/blog-posts/blog-4.md",
+    "/blog-posts/blog-5.md"
 ];
 
 function parseFrontMatter(content) {

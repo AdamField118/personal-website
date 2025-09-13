@@ -32,7 +32,7 @@
                 <b>Major:</b> Physics
             </p>
             <p>
-                <b>Research Interests:</b> Gravitational Lensing
+                <b>Research Interests:</b> Gravitational Lensing, Computational Astrophysics, Neural Networks, Computational Thermodynamics
             </p>
         </aside>
 
@@ -47,17 +47,35 @@
                 <label for="filter">Filter by Topic:</label>
                 <select id="filter" class="filter-select">
                     <option value="all">All</option>
+                    <option value="research">Research</option>
                     <option value="project">Projects</option>
                     <option value="resume">Resume & Portfolio</option>
-                    <option value="paper">Research Papers</option>
                     <option value="video">Videos</option>
                     <option value="misc">Miscellaneous</option>
                 </select>
             </section>
 
             <section class="card-container">
+                <div class="card" data-topic="research">
+                    <a href="https://github.com/s-Sayan/ShearNet" target="_blank">
+                        <img src="./assets/shearnet.png" alt="ShearNet Project">
+                        <div class="card-content">
+                            <h3>ShearNet</h3>
+                            <p>A neural network-based galaxy shear estimation with JAX GPU acceleration, simulation, and benchmarking tools. Implementing deconvolution neural network for metacalibration, drastically improving bias estimation.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="card" data-topic="research">
+                    <a href="https://github.com/jacksonhenry3/RPS_GPU_webui" target="_blank">
+                        <img src="./assets/rps.gif" alt="RPS Work">
+                        <div class="card-content">
+                            <h3>Computational Thermodynamics</h3>
+                            <p>Extending research on community formation, implementing zero-sum game simulations. Working on alternative characterizations of system entropy, new network topologies, and better visualizations of evolution.</p>
+                        </div>
+                    </a>
+                </div>
                 <div class="card" data-topic="project">
-                    <a href="https://portfolio.adamfield.org">
+                    <a href="https://github.com/AdamField118/Chaotic_Pendulum" target="_blank">
                         <img src="./assets/chaotic.png" alt="Choatic Pendulum Project">
                         <div class="card-content">
                             <h3>Modeling of a Chaotic Pendulum</h3>
@@ -66,7 +84,7 @@
                     </a>
                 </div>
                 <div class="card" data-topic="resume">
-                    <a href="https://adamfield118.github.io/Undergraduate-Physics-Portfolio/">
+                    <a href="https://portfolio.adamfield.org" target="_blank">
                         <img src="./assets/sim_website.png" alt="Physics Sim Website">
                         <div class="card-content">
                             <h3>Physics Portfolio Website!</h3>
@@ -74,8 +92,8 @@
                         </div>
                     </a>
                 </div>
-                <div class="card" data-topic="paper">
-                    <a href="./assets/Final Paper - General Relativity.pdf">
+                <div class="card" data-topic="project">
+                    <a href="./assets/Final Paper - General Relativity.pdf" target="_blank">
                         <img src="./assets/GRPaper.png" alt="GR Final">
                         <div class="card-content">
                             <h3>An Overview of Weak Gravitational Lensing</h3>
@@ -93,7 +111,7 @@
                     </a>
                 </div>
                 <div class="card" data-topic="video">
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/aL-T0qftY9s?si=0mY3-pyOp2QvvedZ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/aL-T0qftY9s?si=0mY3-pyOp2QvvedZ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen target="_blank"></iframe>
                     <div class="card-content">
                         <h3>How to use SRS Synthesized Function Generator and RIGOL Oscilloscope</h3>
                         <p>For my Oscillation & Waves course as a project alternative to quiz 3</p>
