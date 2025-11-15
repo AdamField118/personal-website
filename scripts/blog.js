@@ -222,13 +222,13 @@ function renderMarkdown(content) {
 }
 
 const markdownFiles = [
-    "/blog-posts/example-blog.md",
+    // "/blog-posts/example-blog.md",
     "/blog-posts/blog-1.md",
     "/blog-posts/blog-2.md",
     "/blog-posts/blog-3.md",
     "/blog-posts/blog-4.md",
     "/blog-posts/blog-5.md",
-    "/blog-posts/interactive-demo.md",
+    // "/blog-posts/interactive-demo.md",
     "/blog-posts/blog-6.md"
 ];
 
