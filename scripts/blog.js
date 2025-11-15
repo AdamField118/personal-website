@@ -51,30 +51,9 @@ function formatDate(dateString) {
 }
 
 function renderMarkdown(content) {
-    // Step 1: Extract and placeholder LaTeX blocks to protect them from processing
-    const latexBlocks = [];
-    
-    // Handle $ blocks first (display/block math)
-    let html = content.replace(/\$\$([\s\S]*?)\$\$/g, (match, latex) => {
-        const processedLatex = latex.trim();
-        const latexHtml = `<div class="latex-display">$$${processedLatex}$$</div>`;
-        const placeholder = `__LATEXBLOCK_${latexBlocks.length}__`;
-        latexBlocks.push(latexHtml);
-        return placeholder;
-    });
-    
-    // Handle inline $ LaTeX (but avoid matching $ which we already processed)
-    html = html.replace(/(?<!\$)\$(?!\$)((?:[^$]|\\\$)+?)\$(?!\$)/g, (match, latex) => {
-        const processedLatex = latex.trim();
-        const latexHtml = `<span class="latex-inline">$${processedLatex}$</span>`;
-        const placeholder = `__LATEXBLOCK_${latexBlocks.length}__`;
-        latexBlocks.push(latexHtml);
-        return placeholder;
-    });
-
-    // Step 2: Extract and placeholder code blocks to protect them from processing
+    // Step 0: Extract and placeholder code blocks FIRST (highest priority)
     const codeBlocks = [];
-    html = html.replace(/```([\w-]*)\s*\n?([\s\S]*?)```/g, (match, lang, code) => {
+    let html = content.replace(/```([\w-]*)\s*\n?([\s\S]*?)```/g, (match, lang, code) => {
         // Remove only the very first newline if it exists
         let processedCode = code;
         if (processedCode.startsWith('\n')) {
@@ -104,7 +83,49 @@ function renderMarkdown(content) {
         return placeholder;
     });
 
-    // Step 3: Process the rest of the markdown (without code blocks and LaTeX)
+    // Step 1: Extract and placeholder inline code (to protect code containers in backticks)
+    const inlineCode = [];
+    html = html.replace(/`(.*?)`/gim, (match, code) => {
+        const escapedCode = code
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+        const inlineHtml = `<code>${escapedCode}</code>`;
+        const placeholder = `__INLINECODE_${inlineCode.length}__`;
+        inlineCode.push(inlineHtml);
+        return placeholder;
+    });
+
+    // Step 2: Extract and placeholder code containers (after inline code is protected)
+    const codeContainers = [];
+    html = html.replace(/\[codeContainer\]\(([^)]+)\)/g, (match, scriptPath) => {
+        const placeholder = `__CODECONTAINER_${codeContainers.length}__`;
+        codeContainers.push(scriptPath);
+        return placeholder;
+    });
+
+    // Step 3: Extract and placeholder LaTeX blocks to protect them from processing
+    const latexBlocks = [];
+    
+    // Handle $$ blocks first (display/block math)
+    html = html.replace(/\$\$([\s\S]*?)\$\$/g, (match, latex) => {
+        const processedLatex = latex.trim();
+        const latexHtml = `<div class="latex-display">$$${processedLatex}$$</div>`;
+        const placeholder = `__LATEXBLOCK_${latexBlocks.length}__`;
+        latexBlocks.push(latexHtml);
+        return placeholder;
+    });
+    
+    // Handle inline $ LaTeX (but avoid matching $$ which we already processed)
+    html = html.replace(/(?<!\$)\$(?!\$)((?:[^$]|\\\$)+?)\$(?!\$)/g, (match, latex) => {
+        const processedLatex = latex.trim();
+        const latexHtml = `<span class="latex-inline">$${processedLatex}$</span>`;
+        const placeholder = `__LATEXBLOCK_${latexBlocks.length}__`;
+        latexBlocks.push(latexHtml);
+        return placeholder;
+    });
+
+    // Step 4: Process the rest of the markdown (without code blocks, inline code, code containers, or LaTeX)
     html = html
         // Headers
         .replace(/^### (.*$)/gim, '<h3>$1</h3>')
@@ -117,17 +138,11 @@ function renderMarkdown(content) {
         // Bold and italic
         .replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
         .replace(/\*(.*?)\*/gim, '<em>$1</em>')
-        // Inline code
-        .replace(/`(.*?)`/gim, (match, code) => {
-            return `<code>${code
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')}</code>`;
-        })
         // Blockquotes
         .replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>');
 
-    // Step 4: Handle lists
+    // Step 5: Handle lists
+    // Step 5: Handle lists
     // First, convert markdown unordered lists to ordered list items
     html = html.replace(/^- (.*$)/gim, '<li>$1</li>');
     
@@ -169,27 +184,38 @@ function renderMarkdown(content) {
     
     html = processedLines.join('\n');
 
-    // Step 5: Process paragraphs and line breaks (but not inside code blocks or LaTeX)
+    // Step 6: Process paragraphs and line breaks (but not inside code blocks or LaTeX)
     html = html
         .replace(/\n\n/g, '</p><p>')
         .replace(/\n(?!<li>|<\/ol>)/g, '<br>')  // Don't add <br> before <li> or </ol>
         .replace(/(<ol>)\n/g, '$1')             // Remove newline after <ol>
         .replace(/(<\/li>)\n/g, '$1');          // Remove newline after </li>
 
-    // Step 6: Wrap in paragraphs and clean up
+    // Step 7: Wrap in paragraphs and clean up
     html = `<p>${html}</p>`
         .replace(/<p><\/p>/g, '')
         .replace(/<p>(<\/?(?:pre|h\d|blockquote|ol|div)[^>]*>)/g, '$1')
         .replace(/(<\/?(?:pre|h\d|blockquote|ol|div)[^>]*>)<\/p>/g, '$1');
 
-    // Step 7: Restore the protected code blocks
+    // Step 8: Restore the protected code blocks
     codeBlocks.forEach((codeBlock, index) => {
         html = html.replace(`__CODEBLOCK_${index}__`, codeBlock);
     });
 
-    // Step 8: Restore the protected LaTeX blocks
+    // Step 9: Restore the protected LaTeX blocks
     latexBlocks.forEach((latexBlock, index) => {
         html = html.replace(`__LATEXBLOCK_${index}__`, latexBlock);
+    });
+
+    // Step 10: Create code container divs with data attributes for script loading
+    codeContainers.forEach((scriptPath, index) => {
+        const containerHtml = `<div class="code-container" data-script="${scriptPath}" id="codeContainer-${index}"></div>`;
+        html = html.replace(`__CODECONTAINER_${index}__`, containerHtml);
+    });
+
+    // Step 11: Restore inline code (last, after all other processing)
+    inlineCode.forEach((code, index) => {
+        html = html.replace(`__INLINECODE_${index}__`, code);
     });
 
     return html;
@@ -201,7 +227,8 @@ const markdownFiles = [
     "/blog-posts/blog-2.md",
     "/blog-posts/blog-3.md",
     "/blog-posts/blog-4.md",
-    "/blog-posts/blog-5.md"
+    "/blog-posts/blog-5.md",
+    "/blog-posts/interactive-demo.md"
 ];
 
 function parseFrontMatter(content) {
@@ -351,6 +378,40 @@ function renderPostsOriginal(posts) {
     });
 }
 
+// Load scripts for code containers after rendering
+async function loadCodeContainerScripts(container) {
+    const codeContainers = container.querySelectorAll('.code-container');
+    
+    for (const codeContainer of codeContainers) {
+        const scriptPath = codeContainer.dataset.script;
+        if (scriptPath) {
+            try {
+                // Create a new script element
+                const script = document.createElement('script');
+                script.src = scriptPath;
+                script.async = true;
+                
+                // Store reference to the container globally so the script can access it
+                const containerId = codeContainer.id;
+                window.currentCodeContainer = codeContainer;
+                window.currentCodeContainerId = containerId;
+                
+                // Load the script
+                await new Promise((resolve, reject) => {
+                    script.onload = resolve;
+                    script.onerror = () => reject(new Error(`Failed to load script: ${scriptPath}`));
+                    document.head.appendChild(script);
+                });
+                
+                console.log(`Successfully loaded script: ${scriptPath}`);
+            } catch (error) {
+                console.error(`Error loading script for code container:`, error);
+                codeContainer.innerHTML = `<div class="error">Failed to load interactive content: ${error.message}</div>`;
+            }
+        }
+    }
+}
+
 function showFullPost(post) {
     const postFull = document.createElement('div');
     postFull.className = 'post-full';
@@ -374,7 +435,7 @@ function showFullPost(post) {
     
     closeBtn.classList.add('visible');
     
-    setTimeout(() => {
+    setTimeout(async () => {
         postFull.classList.add('active');
         if (window.Prism) {
             Prism.highlightAll();
@@ -393,6 +454,9 @@ function showFullPost(post) {
             console.warn("MathJax not loaded or not ready. LaTeX rendering disabled.");
             console.log('MathJax object:', window.MathJax);
         }
+        
+        // Load code container scripts after everything is rendered
+        await loadCodeContainerScripts(postFull);
     }, 10);
     
     document.body.style.overflow = 'hidden';
