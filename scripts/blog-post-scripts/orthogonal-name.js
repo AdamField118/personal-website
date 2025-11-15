@@ -23,7 +23,7 @@
         <div class="controls">
             <label style="display: flex; align-items: center; gap: 10px;">
                 Polynomial Degree (N): <span id="n-value" style="font-weight: bold; min-width: 30px;">10</span>
-                <input type="range" id="n-slider" min="10" max="30" value="10" style="flex: 1; min-width: 200px;" />
+                <input type="range" id="n-slider" min="10" max="50" value="10" style="flex: 1; min-width: 200px;" />
             </label>
         </div>
         
@@ -69,7 +69,7 @@
     // State variables
     let imageData = null;  // 2D array of the original image
     let coefficients = null;  // 2D array of expansion coefficients
-    let maxN = 30;  // Maximum degree computed
+    let maxN = 50;  // Maximum degree computed
     
     // ============================================================================
     // LEGENDRE POLYNOMIAL EVALUATION
@@ -120,6 +120,24 @@
     // ============================================================================
     // TEXT RENDERING
     // ============================================================================
+
+
+    function fitFontSizeToWidth(ctx, text, maxWidth, fontFamily = "Arial", fontWeight = "bold") {
+        let fontSize = 100; // start large and shrink
+
+        while (fontSize > 0) {
+            ctx.font = `${fontWeight} ${fontSize}px ${fontFamily}`;
+            const metrics = ctx.measureText(text);
+
+            if (metrics.width <= maxWidth-10) { // small padding
+                return fontSize;
+            }
+
+            fontSize--;
+        }
+
+        return 1; // failsafe
+    }
     
     /**
      * Render text to canvas and return as 2D array
@@ -131,7 +149,7 @@
         
         // Draw text
         originalCtx.fillStyle = 'black';
-        originalCtx.font = 'bold 80px Arial';
+        originalCtx.font = `bold ${fitFontSizeToWidth(originalCtx, text, size)}px Arial`;
         originalCtx.textAlign = 'center';
         originalCtx.textBaseline = 'middle';
         originalCtx.fillText(text, size / 2, size / 2);
