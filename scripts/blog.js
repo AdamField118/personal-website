@@ -4,6 +4,8 @@ const closeBtn = document.getElementById('closeBtn');
 const sortNewestBtn = document.getElementById('sort-newest');
 const sortOldestBtn = document.getElementById('sort-oldest');
 const loadingIndicator = document.getElementById('loadingIndicator');
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
 
 let allPosts = [];
 
@@ -373,7 +375,14 @@ function renderPostsOriginal(posts) {
         
         postElement.addEventListener('click', () => {
             showFullPost(post);
+            urlParams.set('blog', post.title);
+            const newUrl = window.location.pathname + '?' + urlParams.toString();
+            window.history.pushState({ path: newUrl }, '', newUrl);
         });
+
+        if (urlParams.get('blog')==post.title) {
+            showFullPost(post)
+        }
         
         postsContainer.appendChild(postElement);
     });
@@ -480,6 +489,10 @@ function closeFullPost() {
     document.body.style.overflow = '';
     
     document.removeEventListener('keydown', handleEscapeKey);
+
+    urlParams.delete('blog')
+    const newUrl = window.location.pathname + urlParams.toString();
+    window.history.pushState({ path: newUrl }, '', newUrl);
 }
 
 function handleEscapeKey(event) {
