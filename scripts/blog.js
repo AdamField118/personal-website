@@ -231,7 +231,8 @@ const markdownFiles = [
     "/blog-posts/blog-4.md",
     "/blog-posts/blog-5.md",
     // "/blog-posts/interactive-demo.md",
-    "/blog-posts/blog-6.md"
+    "/blog-posts/blog-6.md",
+    "/blog-posts/blog-7.md"
 ];
 
 function parseFrontMatter(content) {
