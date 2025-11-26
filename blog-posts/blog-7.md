@@ -1,7 +1,7 @@
 ---
 title: "Conservation of Energy: Why Δ(v²) ≠ (Δv)²"
 date: "2025-11-17"
-tags: "Physics, Classical Mechanics, Education"
+tags: "Classical Mechanics, Education"
 snippet: "A rigorous demonstration of a common misconception in applying conservation of energy to moving particles."
 ---
 
