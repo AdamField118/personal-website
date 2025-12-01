@@ -384,6 +384,7 @@ function renderPostsOriginal(posts) {
             urlParams.set('blog', post.title);
             const newUrl = window.location.pathname + '?' + urlParams.toString();
             window.history.pushState({ path: newUrl }, '', newUrl);
+            document.title = post.title;
         });
 
         if (urlParams.get('blog')==post.title) {
@@ -499,6 +500,7 @@ function closeFullPost() {
     urlParams.delete('blog')
     const newUrl = window.location.pathname + urlParams.toString();
     window.history.pushState({ path: newUrl }, '', newUrl);
+    document.title = "Adam's Blog Page";
 }
 
 function handleEscapeKey(event) {
