@@ -11,10 +11,6 @@ snippet: "A rigorous derivation of weak gravitational lensing from first princip
 
 Gravitational lensing provides a direct probe of the matter distribution in the universe. We present a complete derivation of weak lensing theory from first principles, starting with the geodesic equation in curved spacetime, deriving the deflection angle in the weak-field limit, developing the thin-lens formalism, and constructing the convergence-shear formalism used in modern surveys. We connect the theoretical framework to practical observational challenges and discuss neural network approaches to shear estimation.
 
-**Prerequisites:** Special relativity, general relativity (geodesic equation, weak-field metric), multivariable calculus. Some familiarity with tensor notation helpful but not required.
-
-**Warning:** This is a graduate-level treatment. We will not skip mathematical steps.
-
 ## 1. Motivation: Weighing the Invisible
 
 Galaxy clusters are the largest gravitationally bound structures in the universe, with masses $M \sim 10^{14} - 10^{15} \, M_{\odot}$. Most of this mass ($\sim 85\%$) is **dark matter**, which does not emit, absorb, or scatter light. How do we measure it?
