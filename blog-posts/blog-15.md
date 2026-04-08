@@ -7,13 +7,11 @@ snippet: "A companion blog to our undergraduate talk on weak gravitational lensi
 
 # Weak Lensing: Investigating Dark Matter in Galaxy Clusters
 
-This post is a written companion to the talk I gave with my collaborator **Natalie** for Professor Kallan Berglund's class, covering the weak gravitational lensing pipeline we worked on together with Northeastern University. The talk had two halves: Natalie presented the physics motivation, the nature of dark matter, and how gravitational lensing works conceptually, while I covered the computational pipeline and active research directions. I have tried to preserve that structure here. **Sections 1 through 4 cover Natalie's material** and closely follow her presentation, so the intellectual content, framing, and explanations there are hers. Sections 5 onwards cover my portion.
-
----
+This post is a written companion to the talk I gave with my collaborator **Natalie** for Professor Källan Berglund's class, covering the weak gravitational lensing pipeline we worked on together with Northeastern University. The talk had two halves: Natalie presented the physics motivation, the nature of dark matter, and how gravitational lensing works conceptually, while I covered the computational pipeline and active research directions. I have tried to preserve that structure here. **Sections 1 through 4 cover Natalie's material** and closely follow her presentation, so the intellectual content, framing, and explanations there are hers. Sections 5 onwards cover my portion.
 
 ## 1. Why Study Dark Matter? *(Natalie's section)*
 
-The night sky can feel complete. Stars, galaxies, nebulae: it seems like a lot. But all of that, everything we can detect with telescopes across the entire electromagnetic spectrum, makes up only about **5% of the universe**. The remaining 95% consists of dark energy (around 68%) and dark matter (around 27%). We genuinely do not know what the bulk of the universe is made of.
+Stars, galaxies, nebulae, everything we can detect with telescopes across the entire electromagnetic spectrum, makes up only about **5% of the universe**. The remaining 95% consists of dark energy (around 68%) and dark matter (around 27%). We genuinely do not know what the bulk of the universe is made of.
 
 Dark matter is worth studying because it is directly gravitationally influential. It shapes the large-scale structure of the cosmos: where galaxies form, how they cluster, how they evolve. Any complete theory of cosmology must account for it. The catch is that dark matter does not fit neatly into any category we have. It does not emit, absorb, or scatter light at any wavelength, which means every standard observational tool fails.
 
@@ -41,23 +39,23 @@ This is the key: **the path of light encodes information about the mass distribu
 
 Consider a distant background galaxy, a massive galaxy cluster partway between it and us, and our telescope. In the absence of the cluster, light from the background galaxy would travel in a straight line and we would infer its position correctly. With the cluster present, the light path bends. When we trace the arriving light rays back in straight lines (which is all a telescope does) we infer a source position that differs from where the galaxy actually is.
 
-The interactive demo below lets you explore this geometry directly. Adjust the lens mass and impact parameter to see how the deflection angle changes, and watch how the apparent position diverges from the true one.
+The interactive demo below lets you explore this geometry directly. Adjust the lens mas to see how the deflection angle changes, and watch how the apparent position diverges from the true one.
 
 [codeContainer](../scripts/blog-post-scripts/light-deflection-demo.js)
 
-*Figure 1: Light bending around a massive lens. The true source position and apparent position diverge because the deflection bends the path of light. At very small impact parameters, the two images on either side of the lens merge into an Einstein ring. Einstein's prediction for a solar-mass object at the solar radius is about 1.75 arcseconds of deflection, confirmed by Eddington in 1919.*
+*Demo 1: Light bending around a massive lens. The true source position and apparent position diverge because the deflection bends the path of light. At very small impact parameters, the two images on either side of the lens merge into an Einstein ring. Einstein's prediction for a solar-mass object at the solar radius is about 1.75 arcseconds of deflection, confirmed by Eddington in 1919.*
 
 This apparent displacement is gravitational lensing. Its strength depends on how massive and concentrated the cluster is, and on the geometric distances involved (the angular diameter distances $D_L$, $D_S$, and $D_{LS}$). Formally, the **lens equation** relating true source position $\boldsymbol{\beta}$ to observed image position $\boldsymbol{\theta}$ is
 
 $$\boldsymbol{\beta} = \boldsymbol{\theta} - \frac{D_{LS}}{D_S} \boldsymbol{\alpha}(\boldsymbol{\theta}), \qquad\boldsymbol{(1)}$$
 
-where $\boldsymbol{\alpha}$ is the physical deflection angle. See my earlier post on [Weak Gravitational Lensing from first principles](/blog-posts/blog-13.md) for the full derivation starting from the geodesic equation.
+where $\boldsymbol{\alpha}$ is the physical deflection angle. See my earlier post on [Weak Gravitational Lensing from first principles](https://adamfield.org/pages/blog.html?blog=Weak+Gravitational+Lensing%3A+From+the+Geodesic+Equation+to+Mass+Reconstruction) for the full derivation starting from the geodesic equation.
 
 ### 4.2 The Convergence and Shear
 
 For a lens with projected surface mass density $\Sigma(\boldsymbol{\theta})$, we define the **convergence**
 
-$$\kappa(\boldsymbol{\theta}) = \frac{\Sigma(D_L \boldsymbol{\theta})}{\Sigma_\text{crit}}, \qquad \Sigma_\text{crit} = \frac{c^2}{4\pi G} \frac{D_S}{D_L D_{LS}}. \qquad\boldsymbol{(2)}$$
+$$\kappa(\boldsymbol{\theta}) = \frac{\Sigma(D_L \boldsymbol{\theta})}{\Sigma_\mathrm{crit}}, \qquad \Sigma_\mathrm{crit} = \frac{c^2}{4\pi G} \frac{D_S}{D_L D_{LS}}. \qquad\boldsymbol{(2)}$$
 
 The convergence governs isotropic magnification: a circular source seen through a region of high $\kappa$ appears larger but keeps its shape. What distorts the shape is **shear**, $\boldsymbol{\gamma} = (\gamma_1, \gamma_2)$, which comes from the anisotropic part of the lens mapping.
 
@@ -79,7 +77,7 @@ The demo below shows this tangential shear pattern for different mass configurat
 
 [codeContainer](../scripts/blog-post-scripts/shear-pattern-demo.js)
 
-*Figure 2: Shear field for a point mass lens. Each ellipse's orientation indicates the direction of stretching; its elongation represents the shear magnitude $\gamma$. Note the characteristic tangential alignment around the lens center.*
+*Demo 2: Shear field for a point mass lens. Each ellipse's orientation indicates the direction of stretching; its elongation represents the shear magnitude $\gamma$. Note the characteristic tangential alignment around the lens center.*
 
 ### 4.3 Weak Lensing vs. Strong Lensing
 
@@ -87,21 +85,17 @@ When $\kappa, \gamma \ll 1$, we are in the **weak lensing** regime. Individual g
 
 Our project works in the weak regime, which is far more statistically powerful. Weak lensing can be measured around any sufficiently massive structure across the sky, not just the handful of clusters massive enough to produce strong lensing.
 
----
-
 ## 5. The SuperBIT Telescope *(Natalie's section, with some additions)*
 
-The data we worked with came from the **Super-pressure Balloon-borne Imaging Telescope (SuperBIT)**, a collaboration described in Shaaban et al. (2022) and Saha et al. (2026). The key innovation is the platform: a 0.5 m telescope lifted into the stratosphere by a pressurized balloon, floating at roughly **33 km altitude**, above approximately **98%** of the Earth's atmosphere (Saha et al. 2026).
+The data we worked with came from the **Super-pressure Balloon-borne Imaging Telescope (SuperBIT)**, a collaboration described in Shaaban et al. (2022), McCleary et. al. (2024), and Saha et al. (2026). The key innovation is the platform: a 0.5 m telescope lifted into the stratosphere by a pressurized balloon, floating at roughly **33 km altitude**, above approximately **98%** of the Earth's atmosphere (Saha et al. 2026).
 
-At that altitude, atmospheric turbulence is negligible and there is no atmospheric absorption in the ultraviolet. This gives SuperBIT image quality approaching what you would get from a space telescope, at a fraction of the cost (the mission ran to approximately $5 million, extraordinarily cheap by space-science standards).
+At that altitude, atmospheric turbulence is negligible and there is no atmospheric absorption in the ultraviolet. This gives SuperBIT image quality approaching what you would get from a space telescope, at a fraction of the cost (the mission ran to approximately 5 million USD, extraordinarily cheap by space-science standards).
 
 There is an interesting wrinkle about how SuperBIT observes that is the main subject of Paper I (Shaaban et al. 2022). Conventional wisdom says weak lensing surveys should observe at **red or near-infrared** wavelengths, to detect more high-redshift galaxies. SuperBIT does the opposite: it primarily observes at **blue wavelengths** in the F480W band (366 to 575 nm). This is counter-intuitive, but three effects combine to favor blue light in the stratosphere. The diffraction-limited PSF is smaller in the blue, making galaxies easier to resolve. The stratospheric sky background is dramatically lower in the blue compared to the near-infrared. And SuperBIT's Sony IMX-455 CMOS detector has superior quantum efficiency in the blue. Together, Shaaban et al. (2022) show that three hours of blue-band observations yields roughly three times as many usable lensing sources as the same time in a red band. It is a genuinely counter-intuitive result that took careful simulation to establish.
 
 The trade-off with the balloon platform is some risk: the balloon membrane is thin, and there have historically been cases of balloon failure and telescope loss. But the cost structure makes this a viable risk for an observatory that can be reflown.
 
-During the 2023 flight (launched from Wanaka, New Zealand on April 16, 2023), SuperBIT circumnavigated the Southern Hemisphere five times over 45 nights and imaged 30 merging galaxy clusters. For each cluster, the survey strategy consisted of **three hours per cluster in the F400W and F480W bands plus 90 minutes in F600W**, corresponding to roughly **36 exposures of 5 minutes each** in the primary science bands (Saha et al. 2026). Each exposure is saved as a **FITS file** (Flexible Image Transport System), which stores the pixel data alongside metadata: telescope pointing, exposure time, filter, and astrometric calibration. Because the science camera has no shutter, the team retained only frames acquired at sun elevations below $-6.5^\circ$ to prevent solar contamination.
-
----
+During the 2023 flight (launched from Wanaka, New Zealand on April 16, 2023), SuperBIT circumnavigated the Southern Hemisphere five times over 45 nights and imaged 30 merging galaxy clusters. For each cluster, the survey strategy consisted of **three hours per cluster in the F400W and F480W bands plus 90 minutes in F600W**, corresponding to roughly **36 exposures of 5 minutes each** in the primary science bands (Saha et al. 2026). Each exposure is saved as a **FITS file** (Flexible Image Transport System), which stores the pixel data alongside metadata: telescope pointing, exposure time, filter, and astrometric calibration. Because the science camera has no shutter, the team retained only frames acquired at sun elevations below -6.5 degrees to prevent solar contamination.
 
 ## 6. The Pipeline: From Raw Images to Mass Maps
 
@@ -111,7 +105,7 @@ Any single 5-minute exposure of a galaxy cluster field is noisy on its own. **Co
 
 The noise benefit is clear from basic statistics. If each pixel in a single frame has noise $\sigma$, stacking $N = 36$ independent frames reduces pixel noise as
 
-$$\sigma_\text{coadd} \sim \frac{\sigma}{\sqrt{N}}. \qquad\boldsymbol{(6)}$$
+$$\sigma_\mathrm{coadd} \sim \frac{\sigma}{\sqrt{N}}. \qquad\boldsymbol{(6)}$$
 
 Going from one to 36 frames gives a factor of 6 improvement in depth, revealing faint background galaxies that are completely invisible in any individual exposure.
 
@@ -145,25 +139,25 @@ With PSF-corrected galaxy stamps in hand, we run a **shape measurer**. The stand
 
 The ellipticity $(e_1, e_2)$ is related to the **reduced shear** $g_i = \gamma_i / (1 - \kappa)$ by
 
-$$e_i^\text{obs} \approx e_i^s + g_i, \qquad\boldsymbol{(7)}$$
+$$e_i^{\mathrm{obs}} \approx e_i^s + g_i, \qquad\boldsymbol{(7)}$$
 
 where $e_i^s$ is the galaxy's **intrinsic shape**, the ellipticity it would have in the absence of lensing. This is the fundamental challenge of weak lensing: we cannot separate intrinsic shape from shear for a single galaxy.
 
 The solution is statistics. Real galaxies have random intrinsic orientations, so $\langle e_i^s \rangle = 0$ over a large ensemble. Averaging over $N$ galaxies,
 
-$$\langle e_i^\text{obs} \rangle = g_i + \frac{1}{N} \sum e_i^s \approx g_i \qquad \text{for large } N. \qquad\boldsymbol{(8)}$$
+$$\langle e_i^{\mathrm{obs}} \rangle = g_i + \frac{1}{N} \sum e_i^s \approx g_i \qquad \text{for large } N. \qquad\boldsymbol{(8)}$$
 
 The intrinsic ellipticity dispersion is $\sigma_e \approx 0.3$ per component. To detect a shear signal of $g \sim 0.01$ at $5\sigma$ significance, we need roughly
 
 $$N \gtrsim 25 \left(\frac{\sigma_e}{g}\right)^2 \sim 22{,}500 \text{ galaxies.} \qquad\boldsymbol{(9)}$$
 
-This is why weak lensing requires wide-field surveys with high source density. SuperBIT achieves an average effective source density of $n_\text{eff} \approx 11$ arcmin$^{-2}$ across its 30 cluster targets (Saha et al. 2026).
+This is why weak lensing requires wide-field surveys with high source density. SuperBIT achieves an average effective source density of $n_{\mathrm{eff}} \approx 11$ arcmin⁻² across its 30 cluster targets (Saha et al. 2026).
 
 ### 6.5 Metacalibration
 
 NGMIX, like any shape estimator, has **bias**: it does not return the true shear, but something systematically offset from it. Schematically,
 
-$$\hat{g} = (1 + m)\, g_\text{true} + c, \qquad\boldsymbol{(10)}$$
+$$\hat{g} = (1 + m)\, g_{\mathrm{true}} + c, \qquad\boldsymbol{(10)}$$
 
 where $m$ is the multiplicative bias and $c$ is the additive bias.
 
@@ -173,7 +167,7 @@ $$R^\gamma_{ij} = \frac{e^+_i - e^-_i}{\Delta \gamma_j}, \qquad\boldsymbol{(11)}
 
 which encodes how sensitive the estimator is to shear. This is a property of the estimator and noise, not the astrophysics. The corrected shear is then
 
-$$\langle \gamma \rangle \approx \langle R^\gamma \rangle^{-1} \left( \langle e \rangle - \langle c^\text{total} \rangle \right). \qquad\boldsymbol{(12)}$$
+$$\langle \gamma \rangle \approx \langle R^\gamma \rangle^{-1} \left( \langle e \rangle - \langle c^{\mathrm{total}} \rangle \right). \qquad\boldsymbol{(12)}$$
 
 Metacalibration works because real galaxies have no preferred orientation on average, so any average ellipticity must arise from shear. Saha et al. (2026) introduce a refinement: rather than using a single global response value, they compute the response in a 2D grid over signal-to-noise ratio and galaxy-to-PSF size ratio, assigning each galaxy a response from its grid cell. This gridded calibration reduces the overall multiplicative shear bias from about 6.3% to 1.1% in their fiducial simulations, with a final measured bias of $(1.1 \pm 7.8)$% on the real data.
 
@@ -195,8 +189,6 @@ $$\rho(r) = \frac{\rho_s}{(r/r_s)(1 + r/r_s)^2}, \qquad\boldsymbol{(14)}$$
 
 where $\rho_s$ is a characteristic density and $r_s$ is the scale radius. Fitting this profile to $\gamma_t(R)$ recovers the cluster mass $M_{200}$.
 
----
-
 ## 7. The Full Pipeline at a Glance
 
 **Natalie's part (data context):**
@@ -213,8 +205,6 @@ where $\rho_s$ is a characteristic density and $r_s$ is the scale radius. Fittin
 7. **Metacalibration** — measure response matrix $\mathcal{R}$, correct bias with gridded calibration
 8. **Kaiser-Squires inversion** — $(\gamma_1, \gamma_2) \to \kappa(\boldsymbol{\theta})$ via Fourier space
 9. **NFW profile fitting** — recover cluster mass $M_{200}$
-
----
 
 ## 8. Active Research
 
@@ -240,8 +230,6 @@ My undergraduate thesis project at WPI aims to build a complete end-to-end pipel
 
 Chaining these together produces a full pipeline from co-added telescope images to mass maps, driven predominantly by neural networks rather than classical algorithms. Whether this pipeline outperforms the classical one in practice (particularly for faint, blended, and low signal-to-noise sources) is the central scientific question.
 
----
-
 ## 9. Conclusions
 
 Weak gravitational lensing offers one of the few direct, mass-model-independent probes of dark matter. By measuring the tiny coherent distortions that galaxy clusters imprint on the shapes of background galaxies, we can reconstruct the projected mass distribution, including the dark matter that contributes the majority of it.
@@ -258,25 +246,27 @@ If you have questions about any of this, feel free to reach out.
 
 1. **Shaaban, M. M., Gill, A. S., McCleary, J., et al. (2022).** "Weak Lensing in the Blue: A Counter-intuitive Strategy for Stratospheric Observations." *AJ*, 164, 245.
 
-2. **Saha, S., McCleary, J. E., Everett, S. W., et al. (2026).** "Lensing in the Blue III: Weak Lensing Shape Catalogs of 30 Merging Galaxy Clusters." *arXiv:2603.18376*
+2. **McCleary, J. E., Everett, S. W., Shaaban, M. M., et al. (2023).** "Lensing in the Blue. II. Estimating the Sensitivity of Stratospheric Balloons to Weak Gravitational Lensing." AJ, 166, 134.
 
-3. **Bertin, E. & Arnouts, S. (1996).** "SExtractor: Software for source extraction." *A&AS*, 117, 393.
+3. **Saha, S., McCleary, J. E., Everett, S. W., et al. (2026).** "Lensing in the Blue III: Weak Lensing Shape Catalogs of 30 Merging Galaxy Clusters." *arXiv:2603.18376*
 
-4. **Bertin, E. (2011).** PSFEx. Astronomical Data Analysis Software and Systems XX, 435.
+4. **Bertin, E. & Arnouts, S. (1996).** "SExtractor: Software for source extraction." *A&AS*, 117, 393.
 
-5. **Sheldon, E. S. (2014).** "An implementation of Bayesian lensing shear measurement." *MNRAS*, 444, L25.
+5. **Bertin, E. (2011).** PSFEx. Astronomical Data Analysis Software and Systems XX, 435.
 
-6. **Huff, E. & Mandelbaum, R. (2017).** "Metacalibration: Direct self-calibration of biases in shear measurement." *arXiv:1702.02600*
+6. **Sheldon, E. S. (2014).** "An implementation of Bayesian lensing shear measurement." *MNRAS*, 444, L25.
 
-7. **Sheldon, E. S. & Huff, E. M. (2017).** "Practical Weak-lensing Shear Measurement with Metacalibration." *ApJ*, 841, 24.
+7. **Huff, E. & Mandelbaum, R. (2017).** "Metacalibration: Direct self-calibration of biases in shear measurement." *arXiv:1702.02600*
 
-8. **Kaiser, N. & Squires, G. (1993).** "Mapping the dark matter with weak gravitational lensing." *ApJ*, 404, 441.
+8. **Sheldon, E. S. & Huff, E. M. (2017).** "Practical Weak-lensing Shear Measurement with Metacalibration." *ApJ*, 841, 24.
 
-9. **Navarro, J. F., Frenk, C. S., & White, S. D. M. (1997).** "A Universal Density Profile from Hierarchical Clustering." *ApJ*, 490, 493.
+9. **Kaiser, N. & Squires, G. (1993).** "Mapping the dark matter with weak gravitational lensing." *ApJ*, 404, 441.
 
-10. **Mandelbaum, R. (2018).** "Weak Lensing for Precision Cosmology." *ARAA*, 56, 393.
+10. **Navarro, J. F., Frenk, C. S., & White, S. D. M. (1997).** "A Universal Density Profile from Hierarchical Clustering." *ApJ*, 490, 493.
 
-11. **ShearNet GitHub:** [github.com/s-Sayan/ShearNet](https://github.com/s-Sayan/ShearNet)
+11. **Mandelbaum, R. (2018).** "Weak Lensing for Precision Cosmology." *ARAA*, 56, 393.
+
+12. **ShearNet GitHub:** [github.com/s-Sayan/ShearNet](https://github.com/s-Sayan/ShearNet)
 
 ---
 

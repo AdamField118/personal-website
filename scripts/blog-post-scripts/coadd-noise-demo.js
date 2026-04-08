@@ -1,194 +1,150 @@
-// Co-addition noise demo
-// Shows how stacking N exposures reduces noise as 1/sqrt(N)
+// Co-addition noise demo — unified dark style
+// Fix: instead of accumulating N frames (which had rendering bugs),
+// we directly render with sigma_eff = sigma / sqrt(N). This is the exact
+// mathematical result of averaging N independent frames.
 
-(function() {
+(function () {
     const container = window.currentCodeContainer;
     if (!container) return;
 
+    const W = 320;  // canvas pixel dimensions
+
     container.innerHTML = `
-        <h3>Co-addition: Stacking Frames Reduces Noise</h3>
-        <p>Each individual exposure is noisy. Stacking N frames reduces pixel noise by a factor of &radic;N, revealing faint galaxies hidden in the noise of a single exposure.</p>
-
-        <div class="controls" style="flex-direction: column; align-items: stretch; gap: 12px;">
-            <label style="display: flex; flex-direction: column;">
-                Number of stacked exposures (N): <span id="coN" style="font-weight: bold; color: #00458b;">1</span>
-                <input type="range" id="coN-slider" min="1" max="36" step="1" value="1" style="width: 100%;" />
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:12px;">
+            <label style="font-size:0.93rem;display:flex;flex-direction:column;gap:4px;">
+                Stacked exposures (N):&nbsp;<span id="ca-nv"
+                    style="font-weight:bold;color:#f5c518;font-size:1.05rem;">1</span>
+                <input type="range" id="ca-ns" min="1" max="36" step="1" value="1"
+                       style="width:100%;max-width:440px;" />
             </label>
-            <label style="display: flex; flex-direction: column;">
-                Single-frame noise &sigma;: <span id="coSig" style="font-weight: bold; color: #00458b;">0.30</span>
-                <input type="range" id="coSig-slider" min="0.10" max="0.60" step="0.05" value="0.30" style="width: 100%;" />
+            <label style="font-size:0.93rem;display:flex;flex-direction:column;gap:4px;">
+                Single-frame noise &sigma;:&nbsp;<span id="ca-sv"
+                    style="font-weight:bold;color:#f5c518;font-size:1.05rem;">0.35</span>
+                <input type="range" id="ca-ss" min="0.10" max="0.65" step="0.05" value="0.35"
+                       style="width:100%;max-width:440px;" />
             </label>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 18px;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:700px;margin:0 auto;">
             <div>
-                <h4 style="margin: 0 0 8px 0; text-align: center; font-size: 0.95rem;">Single exposure</h4>
-                <canvas id="co-single" width="280" height="280" style="width:100%; border:1px solid #ccc; background:#111; image-rendering:pixelated; display:block;"></canvas>
+                <div style="font-size:0.85rem;color:#aaa;text-align:center;margin-bottom:6px;">
+                    Single exposure</div>
+                <canvas id="ca-single" width="${W}" height="${W}"
+                    style="width:100%;display:block;border-radius:5px;"></canvas>
             </div>
             <div>
-                <h4 style="margin: 0 0 8px 0; text-align: center; font-size: 0.95rem;">Co-add (N = <span id="co-label">1</span>)</h4>
-                <canvas id="co-stack" width="280" height="280" style="width:100%; border:1px solid #ccc; background:#111; image-rendering:pixelated; display:block;"></canvas>
+                <div style="font-size:0.85rem;color:#aaa;text-align:center;margin-bottom:6px;">
+                    Co-add (<span id="ca-nl">1</span> frames)</div>
+                <canvas id="ca-stack" width="${W}" height="${W}"
+                    style="width:100%;display:block;border-radius:5px;"></canvas>
             </div>
         </div>
 
-        <div style="margin-top: 14px; padding: 10px 14px; background: #f0f4ff; color: #000; border-radius: 5px; font-size: 0.9rem;">
-            Effective noise after stacking: &sigma;<sub>coadd</sub> = &sigma;/&radic;N =
-            <strong id="co-eff" style="color: #00458b;">0.300</strong> &nbsp;|&nbsp;
-            Signal-to-noise improvement: <strong id="co-snr" style="color: #00458b;">&times;1.00</strong>
+        <div id="ca-stats"
+            style="margin-top:12px;padding:9px 13px;background:#0d1117;color:#cdd9e5;
+                   border-radius:5px;font-size:0.85rem;font-family:monospace;line-height:1.8;">
         </div>
     `;
 
-    const singleCanvas = container.querySelector('#co-single');
-    const stackCanvas  = container.querySelector('#co-stack');
-    const sCtx = singleCanvas.getContext('2d');
-    const cCtx = stackCanvas.getContext('2d');
-    const nSlider   = container.querySelector('#coN-slider');
-    const sigSlider = container.querySelector('#coSig-slider');
-    const nDisp     = container.querySelector('#coN');
-    const sigDisp   = container.querySelector('#coSig');
-    const labelDisp = container.querySelector('#co-label');
-    const effDisp   = container.querySelector('#co-eff');
-    const snrDisp   = container.querySelector('#co-snr');
+    const singleCanvas = container.querySelector('#ca-single');
+    const stackCanvas  = container.querySelector('#ca-stack');
+    const nSlider  = container.querySelector('#ca-ns');
+    const sigSlider= container.querySelector('#ca-ss');
+    const nDisp    = container.querySelector('#ca-nv');
+    const sigDisp  = container.querySelector('#ca-sv');
+    const nLabel   = container.querySelector('#ca-nl');
+    const stats    = container.querySelector('#ca-stats');
 
-    const W = 280;
-
-    // --- Fixed RNG so galaxy positions are reproducible ---
-    function seededRand(seed) {
-        let s = seed;
-        return function() {
-            s = (s * 1664525 + 1013904223) & 0xffffffff;
-            return (s >>> 0) / 0xffffffff;
+    // ── LCG random number generator ─────────────────────────────────────
+    function makeLCG(seed) {
+        let s = seed >>> 0;
+        return function () {
+            s = (Math.imul(s, 1664525) + 1013904223) >>> 0;
+            return s / 0x100000000;
         };
     }
 
-    // --- Build noiseless field ---
-    function makeTrueField() {
-        const rng = seededRand(42);
-        const field = new Float32Array(W * W);
-
-        // Sky background
-        for (let k = 0; k < field.length; k++) field[k] = 0.03;
-
-        // Galaxy positions and properties (fixed)
-        const galaxies = [];
-        for (let i = 0; i < 14; i++) {
-            galaxies.push({
-                x: rng() * W,
-                y: rng() * W,
-                amp: 6 + rng() * 28,
-                sx: 4 + rng() * 10,
-                sy: 4 + rng() * 10,
-                theta: rng() * Math.PI,
-                e: rng() * 0.5
-            });
-        }
-
-        for (let j = 0; j < W; j++) {
-            for (let i = 0; i < W; i++) {
-                let val = field[j * W + i];
-                for (const g of galaxies) {
-                    const dx = i - g.x;
-                    const dy = j - g.y;
-                    const cos_t = Math.cos(g.theta);
-                    const sin_t = Math.sin(g.theta);
-                    const u =  cos_t * dx + sin_t * dy;
-                    const v = -sin_t * dx + cos_t * dy;
-                    const sx = g.sx;
-                    const sy = g.sy * (1 + g.e);
-                    const r2 = (u * u) / (sx * sx) + (v * v) / (sy * sy);
-                    val += g.amp * Math.exp(-r2 / 2);
-                }
-                field[j * W + i] = val;
-            }
-        }
-        return field;
-    }
-
-    // --- Gaussian random (Box-Muller) ---
+    // Box-Muller Gaussian
     function gauss(rng) {
         const u1 = rng() + 1e-12, u2 = rng();
         return Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
     }
 
-    // --- Render a Float32 field to canvas ---
-    function render(ctx, field, sigmaExtra) {
-        const rng = seededRand(Math.floor(sigmaExtra * 1000 + performance.now()) | 0);
+    // ── Build a fixed noiseless galaxy field (done once) ─────────────────
+    function buildField() {
+        const rng   = makeLCG(42);
+        const field = new Float32Array(W * W);
+        field.fill(0.04);  // sky background
+
+        for (let i = 0; i < 14; i++) {
+            const cx  = rng() * W,   cy  = rng() * W;
+            const amp = 6 + rng() * 30;
+            const sx  = 4 + rng() * 10, sy = 4 + rng() * 10;
+            const th  = rng() * Math.PI;
+            const cos_t = Math.cos(th), sin_t = Math.sin(th);
+
+            for (let gy = 0; gy < W; gy++) {
+                for (let gx = 0; gx < W; gx++) {
+                    const dx = gx - cx, dy = gy - cy;
+                    const u = cos_t * dx + sin_t * dy;
+                    const v = -sin_t * dx + cos_t * dy;
+                    field[gy * W + gx] += amp * Math.exp(-(u*u)/(2*sx*sx) - (v*v)/(2*sy*sy));
+                }
+            }
+        }
+        return field;
+    }
+
+    // ── Render: true field + Gaussian noise of given sigma ───────────────
+    // seed makes the noise pattern repeatable (stable between renders).
+    function renderWithNoise(ctx, field, sigma, seed) {
+        const rng = makeLCG(seed);
         const img = ctx.createImageData(W, W);
         const px  = img.data;
 
-        let maxF = 0;
-        for (let k = 0; k < field.length; k++) if (field[k] > maxF) maxF = field[k];
-        if (maxF < 0.001) maxF = 1;
-        const noiseScale = 4 * sigmaExtra;
-        const scale = 220 / (maxF + noiseScale);
+        // Dynamic-range scale: map peak signal to ~210, 4-sigma noise fits in 255
+        let peak = 0;
+        for (let k = 0; k < field.length; k++) if (field[k] > peak) peak = field[k];
+        const scale = 210 / (peak + 4 * sigma + 0.001);
 
         for (let k = 0; k < field.length; k++) {
-            const noisy = field[k] + gauss(rng) * sigmaExtra;
-            const v = Math.min(255, Math.max(0, Math.round(noisy * scale)));
-            // Slight blue tint for the dark sky feel
+            const val = field[k] + gauss(rng) * sigma;
+            const v   = Math.max(0, Math.min(255, Math.round(val * scale)));
             px[4*k]   = v;
             px[4*k+1] = v;
-            px[4*k+2] = Math.min(255, v + 15);
+            px[4*k+2] = Math.min(255, v + 15);   // slight blue tint
             px[4*k+3] = 255;
         }
         ctx.putImageData(img, 0, 0);
     }
 
-    // --- Render summed field divided by N ---
-    function renderSum(ctx, sumField, N, sigma) {
-        const rng = seededRand(9999);
-        const img = ctx.createImageData(W, W);
-        const px  = img.data;
-
-        let maxF = 0;
-        for (let k = 0; k < sumField.length; k++) {
-            const v = sumField[k] / N;
-            if (v > maxF) maxF = v;
-        }
-        if (maxF < 0.001) maxF = 1;
-        const effSigma = sigma / Math.sqrt(N);
-        const scale = 220 / (maxF + 4 * effSigma);
-
-        for (let k = 0; k < sumField.length; k++) {
-            const v = Math.min(255, Math.max(0, Math.round((sumField[k] / N) * scale)));
-            px[4*k]   = v;
-            px[4*k+1] = v;
-            px[4*k+2] = Math.min(255, v + 15);
-            px[4*k+3] = 255;
-        }
-        ctx.putImageData(img, 0, 0);
-    }
-
-    const trueField = makeTrueField();
+    const trueField = buildField();
 
     function update() {
         const N   = parseInt(nSlider.value);
         const sig = parseFloat(sigSlider.value);
 
-        nDisp.textContent   = N;
-        sigDisp.textContent = sig.toFixed(2);
-        labelDisp.textContent = N;
-        effDisp.textContent = (sig / Math.sqrt(N)).toFixed(3);
-        snrDisp.textContent = '\u00d7' + Math.sqrt(N).toFixed(2);
+        nDisp.textContent  = N;
+        sigDisp.textContent= sig.toFixed(2);
+        nLabel.textContent = N;
 
-        // Single frame
-        render(sCtx, trueField, sig);
+        const effSig = sig / Math.sqrt(N);
 
-        // Co-add: accumulate N noisy frames
-        const rngSeed = seededRand(Date.now() & 0xffff);
-        const sum = new Float32Array(W * W);
-        for (let frame = 0; frame < N; frame++) {
-            const frameRng = seededRand(frame * 12345 + 99);
-            for (let k = 0; k < trueField.length; k++) {
-                sum[k] += trueField[k] + gauss(frameRng) * sig;
-            }
-        }
-        renderSum(cCtx, sum, N, sig);
+        // Single frame: full noise, fixed seed → stable noisy reference image
+        renderWithNoise(singleCanvas.getContext('2d'), trueField, sig, 7777);
+
+        // Co-add: noise reduced by 1/sqrt(N), same underlying field
+        renderWithNoise(stackCanvas.getContext('2d'), trueField, effSig, 7778);
+
+        stats.innerHTML =
+            `&sigma;<sub>single</sub> = <strong style="color:#f5c518">${sig.toFixed(2)}</strong>`+
+            `&emsp;|&emsp;`+
+            `&sigma;<sub>coadd</sub> = &sigma;/&radic;N = <strong style="color:#69f0ae">${effSig.toFixed(3)}</strong>`+
+            `&emsp;|&emsp;`+
+            `SNR improvement: <strong style="color:#69c9ff">&times;${Math.sqrt(N).toFixed(2)}</strong>`;
     }
 
     nSlider.addEventListener('input', update);
     sigSlider.addEventListener('input', update);
-
     update();
-    console.log('Co-add demo loaded.');
 })();
