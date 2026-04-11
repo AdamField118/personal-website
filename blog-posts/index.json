@@ -1,0 +1,154 @@
+[
+  {
+    "title": "I made Dean's List!",
+    "date": "2025-06-17",
+    "tags": [
+      "Merit Award"
+    ],
+    "snippet": "I made the Dean's list in Spring 2025.",
+    "href": "/pages/posts/blog-1.html"
+  },
+  {
+    "title": "Quantum Games Research",
+    "date": "2025-08-07",
+    "tags": [
+      "Research",
+      "Quantum Games"
+    ],
+    "snippet": "Zero-sum Rock Paper Scissors Simulation",
+    "href": "/pages/posts/blog-2.html"
+  },
+  {
+    "title": "Part 1: My Main Research",
+    "date": "2025-08-07",
+    "tags": [
+      "Research",
+      "Astrophysics"
+    ],
+    "snippet": "Developing a nueral network based solution for galaxy shear estimation",
+    "href": "/pages/posts/blog-3.html"
+  },
+  {
+    "title": "Part 2: ShearNet's Progress",
+    "date": "2025-08-07",
+    "tags": [
+      "Research",
+      "Astrophysics"
+    ],
+    "snippet": "My past and current work on ShearNet.",
+    "href": "/pages/posts/blog-4.html"
+  },
+  {
+    "title": "ShearNet: DeconvNet Development",
+    "date": "2025-09-13",
+    "tags": [
+      "Research",
+      "Astrophysics"
+    ],
+    "snippet": "Developing a secondary neural network for psf deconvolution from galaxy observations.",
+    "href": "/pages/posts/blog-5.html"
+  },
+  {
+    "title": "Orthogonal Polynomials: From Theory to Your Name",
+    "date": "2025-11-15",
+    "tags": [
+      "Mathematics",
+      "Special Functions"
+    ],
+    "snippet": "A systematic derivation of orthogonal polynomials and their completeness, with an interactive tool to approximate your name using a complete set.",
+    "href": "/pages/posts/blog-6.html"
+  },
+  {
+    "title": "Conservation of Energy: Why \u0394(v\u00b2) \u2260 (\u0394v)\u00b2",
+    "date": "2025-11-17",
+    "tags": [
+      "Classical Mechanics",
+      "Education"
+    ],
+    "snippet": "A rigorous demonstration of a common misconception in applying conservation of energy to moving particles.",
+    "href": "/pages/posts/blog-7.html"
+  },
+  {
+    "title": "Deriving the Lorentz Force from First Principles",
+    "date": "2025-11-25",
+    "tags": [
+      "Classical Mechanics",
+      "Electromagnetism"
+    ],
+    "snippet": "A complete derivation of F = q(E + v\u00d7B) using Lagrangian and Hamiltonian mechanics, showing how electromagnetic forces emerge from minimal coupling to gauge potentials.",
+    "href": "/pages/posts/blog-8.html"
+  },
+  {
+    "title": "Solving the 1D Wave Equation: Classical and Transform Methods",
+    "date": "2025-11-28",
+    "tags": [
+      "Mathematics",
+      "Wave Mechanics"
+    ],
+    "snippet": "Analytical solutions to the 1D wave equation via d'Alembert and Fourier\u2013Laplace methods, with interactive visualization.",
+    "href": "/pages/posts/blog-9.html"
+  },
+  {
+    "title": "Solving the 2D Wave Equation: Separation of Variables and Mode Analysis",
+    "date": "2025-11-28",
+    "tags": [
+      "Mathematics",
+      "Wave Mechanics"
+    ],
+    "snippet": "Analytical solution to the two-dimensional wave equation via separation of variables, with normal mode analysis and interactive visualization.",
+    "href": "/pages/posts/blog-10.html"
+  },
+  {
+    "title": "Deriving Schr\u00f6dinger's Equation from First Principles",
+    "date": "2025-11-29",
+    "tags": [
+      "Quantum Mechanics",
+      "Mathematical Physics"
+    ],
+    "snippet": "A rigorous derivation of Schr\u00f6dinger's equation starting from Hamilton's optics-mechanics analogy, through the Hamilton-Jacobi equation, to the wave equation of quantum mechanics.",
+    "href": "/pages/posts/blog-11.html"
+  },
+  {
+    "title": "Noether's Theorems: The Deep Connection Between Symmetry and Conservation",
+    "date": "2025-11-30",
+    "tags": [
+      "Theoretical Physics",
+      "Symmetry",
+      "Conservation Laws"
+    ],
+    "snippet": "A rigorous derivation of Noether's first and second theorems from the calculus of variations, revealing how every continuous symmetry gives rise to a conserved quantity and connecting to gauge theories, quantum mechanics, and general relativity.",
+    "href": "/pages/posts/blog-12.html"
+  },
+  {
+    "title": "Weak Gravitational Lensing: From the Geodesic Equation to Mass Reconstruction",
+    "date": "2025-12-03",
+    "tags": [
+      "Astrophysics",
+      "Gravitational Lensing",
+      "Research"
+    ],
+    "snippet": "A rigorous derivation of weak gravitational lensing from first principles\u2014starting with photon geodesics in curved spacetime and building to modern shear estimation techniques used in cosmological surveys.",
+    "href": "/pages/posts/blog-13.html"
+  },
+  {
+    "title": "From Wavefunctions to Field Operators: The Necessity of Quantum Field Theory",
+    "date": "2025-12-04",
+    "tags": [
+      "Quantum Field Theory",
+      "Mathematical Physics"
+    ],
+    "snippet": "Why single-particle quantum mechanics fails at high energies, and how promoting wavefunctions to field operators resolves the crisis. A rigorous bridge from Schr\u00f6dinger to Klein-Gordon.",
+    "href": "/pages/posts/blog-14.html"
+  },
+  {
+    "title": "Weak Lensing: Investigating Dark Matter in Galaxy Clusters",
+    "date": "2026-04-06",
+    "tags": [
+      "Astrophysics",
+      "Gravitational Lensing",
+      "Research"
+    ],
+    "snippet": "A companion blog to our undergraduate talk on weak gravitational lensing: covering dark matter motivation, the SuperBIT telescope, the full data pipeline from co-addition to mass reconstruction, and active research directions including ShearNet and FEMMI.",
+    "href": "/pages/posts/blog-15.html"
+  }
+]

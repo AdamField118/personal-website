@@ -1172,6 +1172,24 @@ a:focus, button:focus {
     color: #d32f2f;
 }
 
+.post-static-page {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px 60px;
+}
+
+.back-link {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #00458b;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
 @media (prefers-color-scheme: dark) {
     /* Safari-specific fixes */
     :root {
@@ -1624,5 +1642,9 @@ a:focus, button:focus {
     .code-container .error {
         background-color: #2a1a1a;
         color: #ff6b6b;
+    }
+    
+    .back-link {
+        color: #7db3f0;
     }
 }

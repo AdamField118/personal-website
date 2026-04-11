@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <title>Part 2: ShearNet's Progress</title>
+    <link rel="stylesheet" href="/styles/style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-python.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-java.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-c.min.js" defer></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Adam's Blog Page</h1>
+    </header>
+    <nav>
+        <a href="/index.html">Welcome Page</a>
+        <a href="/pages/blog.html">Blog Page</a>
+        <a href="/pages/resume.html">Dynamic Resume</a>
+    </nav>
+
+    <div class="post-static-page">
+        <div class="post-full-content">
+            <div class="post-full-header">
+                <a href="/pages/blog.html" class="back-link">← Back to Blog</a>
+                <h1 class="post-full-title">Part 2: ShearNet's Progress</h1>
+                <div class="post-full-meta">
+                    <span><i class="far fa-calendar"></i> 2025-08-07</span>
+                    <span><i class="far fa-clock"></i> 1 min read</span>
+                </div>
+                <div class="post-tags"><span class="tag">Research</span><span class="tag">Astrophysics</span></div>
+            </div>
+            <div class="post-full-body">
+                <h1>What Have I Actually Done?</h1><p>If you read "Part 1: My Main Research", then you may be wondering what I've contributed to the project.  <br>Since Dr. Sayan is <em>VERY</em> busy in preparation for SuperBIT's data collection (see <a href="https://arxiv.org/abs/2210.09182">Shaaban et. al.</a> and <a href="Lensing in the Blue II: Estimating the Sensitivity of Stratospheric Balloons to Weak Gravitational Lensing">McCleary et. al.</a> for context), I have been the primary developer for ShearNet over this summer. I have been havig a blast learning so much new stuff, but let's get on to what I've implemented.  </p><h2>Model Architectures</h2><p>The first step was to research and improve the CNN model's architecture. This is a rapidly expanding field of computer science that seems very daunting at first, but with some time I think it's a very cool thing to learn.  </p><p>My first improvements came from multi-scale pattern detection. In model architecture there is something called a <strong>kernel</strong> which is a difficult concept to understand mathematically, but abstractly a kernel is like a tiny pattern-recognition stamp that slides across an image asking "Do I see my specific pattern here?"  Originally the kernel was very small, so I changed it to have three kernels per layer, concatenateing the results. This drastically enhanced the performance, the CNN to functionally "see the bigger picture".  </p><p>My next big improvement was what I call the research-backed model. This model has a citation for every single line of code. This research-backed model sports:  <br><ol><li>Multi-scale processing: Inspired by galaxy morphology having features at different scales also loosely inspired by <a href="https://arxiv.org/pdf/1602.07261">"Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning" (Szegedy et al., 2017)</a></li><li>Residual learning: <a href="https://arxiv.org/pdf/1512.03385">"Deep Residual Learning for Image Recognition" (He et al., CVPR 2016)</a></li><li>Attention mechanisms: <a href="https://arxiv.org/pdf/1807.06521">"CBAM: Convolutional Block Attention Module" (Woo et al., ECCV 2018)</a></li><li>Batch Normalization: <a href="https://arxiv.org/pdf/1502.03167">"Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift" (Ioffe & Szegedy, ICML 2015)</a></li></ol><p>With all this fancy tech I achieved a very sizable increase in performance.  </p><h2>Training and Fundamental Architecture</h2><p>The most recent improvement I have made follows the work of <a href="https://arxiv.org/pdf/2301.02986">forklens</a>. To do this I had to add PSF images into the training data. Forklens' primary advance is that we now parrallel process galaxy and psf images through separate CNNs, concatenating the features just before the final dense layers. This results in a physics-informed model, basically it understands what is blurring the image.<br>In this advance, I also added a model straight from the <a href="https://github.com/zhangzzk/forklens">forklens repo</a> for psf processing, since it performed better than models in ShearNet on the task of learning psf.</p><h2>PSF Shear</h2><p>Very recently I introduce shear into our simulated psf. This is far from an improvement to the performance of ShearNet, but it is a step toward realistic galaxy and psf images. <br>This change did decrease the performance of the model slightly.  </p><h1>What Will I Do?</h1><p>In the future I plan to add <strong>metacalibration</strong> (see <a href="https://arxiv.org/pdf/1702.02601">"Practical Weak-lensing Shear Measurement with Metacalibration" by Erin S. Sheldon and Eric M. Huff</a>) to the pipeline!   </p><p>This is a very complex task. I will need to tackle three huge hurdles:</p><ol><li>Deconvolution: make a nueral net that deconvolves the galaxy images to get clean galaxy images</li><li>Differentiable Shearing: apply shear transformations in a way that maintains gradients through coordinate transformations</li><li>Neural Metacalibrator: implement the response measurement and calibration correction components of metacalibration using neural networks</li></ol><p>This won't be easy, but I have high hopes for <em>really</em> good results afterward!</p><h1>Conclusion</h1><p>I am really excited to keep working on this project into my junior year of college, I am really passionate about this work and the work adjacent to it. I hope to even continue on to my MQP and PhD in a similar/related topic!</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>Created by Adam Field</p>
+            <div class="footer-socials">
+                <span class="contact-label">Contact me:</span>
+                <div class="social-icons">
+                    <a href="mailto:adfield@wpi.edu" title="Email">
+                        <img src="/assets/email_logo.svg" alt="email logo">
+                    </a>
+                    <a href="https://www.linkedin.com/in/adfield/" target="_blank" title="LinkedIn">
+                        <img src="/assets/linkedin_logo.png" alt="linkedin logo">
+                    </a>
+                    <a href="https://github.com/AdamField118" target="_blank" title="GitHub">
+                        <img src="/assets/github_logo.svg" alt="github logo">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (async () => {
+            const containers = document.querySelectorAll('.code-container[data-script]');
+            for (const container of containers) {
+                window.currentCodeContainer   = container;
+                window.currentCodeContainerId = container.id;
+                await new Promise((resolve, reject) => {
+                    const s   = document.createElement('script');
+                    s.src     = container.dataset.script;
+                    s.onload  = resolve;
+                    s.onerror = reject;
+                    document.head.appendChild(s);
+                });
+            }
+        })();
+    </script>
+</body>
+</html>
