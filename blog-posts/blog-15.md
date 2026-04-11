@@ -49,7 +49,7 @@ This apparent displacement is gravitational lensing. Its strength depends on how
 
 $$\boldsymbol{\beta} = \boldsymbol{\theta} - \frac{D_{LS}}{D_S} \boldsymbol{\alpha}(\boldsymbol{\theta}), \qquad\boldsymbol{(1)}$$
 
-where $\boldsymbol{\alpha}$ is the physical deflection angle. See my earlier post on [Weak Gravitational Lensing from first principles](https://adamfield.org/pages/blog.html?blog=Weak+Gravitational+Lensing%3A+From+the+Geodesic+Equation+to+Mass+Reconstruction) for the full derivation starting from the geodesic equation.
+where $\boldsymbol{\alpha}$ is the physical deflection angle. See my earlier post on [Weak Gravitational Lensing from first principles](https://adamfield.org/pages/posts/weak-gravitational-lensing-from-the-geodesic-equation-to-mass-reconstruction.html) for the full derivation starting from the geodesic equation.
 
 ### 4.2 The Convergence and Shear
 
