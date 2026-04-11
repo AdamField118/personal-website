@@ -175,6 +175,13 @@ def render_markdown(content):
 
     return html
 
+def make_slug(title):
+    slug = title.lower()
+    slug = re.sub(r'[^a-z0-9\s-]', '', slug)
+    slug = re.sub(r'\s+', '-', slug.strip())
+    slug = re.sub(r'-+', '-', slug)
+    return slug
+
 
 def build_page(title, date, tags, body_html):
     tags_html = ''.join(f'<span class="tag">{t}</span>' for t in tags)
@@ -284,7 +291,7 @@ for filename in MARKDOWN_FILES:
     date    = meta.get('date',    '1970-01-01')
     tags    = [t.strip() for t in meta.get('tags', '').split(',') if t.strip()]
     snippet = meta.get('snippet', '')
-    slug    = filename.replace('.md', '')
+    slug    = make_slug(title)
     href    = f'/pages/posts/{slug}.html'
 
     body_html = fix_paths(render_markdown(content))

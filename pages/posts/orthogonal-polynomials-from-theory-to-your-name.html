@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <title>Orthogonal Polynomials: From Theory to Your Name</title>
+    <link rel="stylesheet" href="/styles/style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-python.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-java.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-c.min.js" defer></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Adam's Blog Page</h1>
+    </header>
+    <nav>
+        <a href="/index.html">Welcome Page</a>
+        <a href="/pages/blog.html">Blog Page</a>
+        <a href="/pages/resume.html">Dynamic Resume</a>
+    </nav>
+
+    <div class="post-static-page">
+        <div class="post-full-content">
+            <div class="post-full-header">
+                <a href="/pages/blog.html" class="back-link">← Back to Blog</a>
+                <h1 class="post-full-title">Orthogonal Polynomials: From Theory to Your Name</h1>
+                <div class="post-full-meta">
+                    <span><i class="far fa-calendar"></i> 2025-11-15</span>
+                    <span><i class="far fa-clock"></i> 3 min read</span>
+                </div>
+                <div class="post-tags"><span class="tag">Mathematics</span><span class="tag">Special Functions</span></div>
+            </div>
+            <div class="post-full-body">
+                <h1>Orthogonal Polynomials: From Theory to Your Name</h1><h2>Introduction</h2><p>Following our study of special functions, asymptotic series, and Stirling's formula (Boas Chapter 11), we now explore one of the most powerful tools in mathematical physics: <strong>orthogonal polynomials</strong>. These functions form complete sets that can represent <em>any</em> reasonable function—including, as we'll see, your name written as a mathematical object.</p><p>This discussion follows the methodology of Boas's <em>Mathematical Methods in the Physical Sciences</em> (3rd Edition), Chapter 12.</p><h2>1. Inner Products and Orthogonality</h2><h3>1.1 The Inner Product</h3><p>Following Boas (Section 12.1), we begin by defining an <strong>inner product</strong> for functions. For two functions <span class="latex-inline">$f(x)$</span> and <span class="latex-inline">$g(x)$</span> on an interval <span class="latex-inline">$[a, b]$</span> with weight function <span class="latex-inline">$w(x) > 0$</span>, we define:</p><p><div class="latex-display">$$\langle f, g \rangle = \int_a^b f(x) g(x) w(x) \, dx$$</div></p><p>This is the continuous analog of the dot product for vectors. The weight function <span class="latex-inline">$w(x)$</span> allows us to emphasize different regions of the domain.</p><h3>1.2 Orthogonality</h3><p>Two functions <span class="latex-inline">$f$</span> and <span class="latex-inline">$g$</span> are <strong>orthogonal</strong> with respect to weight <span class="latex-inline">$w(x)$</span> if:</p><p><div class="latex-display">$$\langle f, g \rangle = 0$$</div></p><p>A set of functions <span class="latex-inline">$\{\phi_n(x)\}_{n=0}^{\infty}$</span> is <strong>orthogonal</strong> if:</p><p><div class="latex-display">$$\langle \phi_n, \phi_m \rangle = 0 \quad \text{for all } n \neq m$$</div></p><p>If additionally <span class="latex-inline">$\langle \phi_n, \phi_n \rangle = 1$</span> for all <span class="latex-inline">$n$</span>, the set is <strong>orthonormal</strong>.</p><h3>1.3 Normalization</h3><p>For an orthogonal set, we can normalize each function:</p><p><div class="latex-display">$$\tilde{\phi}_n(x) = \frac{\phi_n(x)}{\sqrt{\langle \phi_n, \phi_n \rangle}}$$</div></p><p>The normalization constant involves integrals often expressible in terms of the Gamma function we studied in Chapter 11.</p><h2>2. The Legendre Polynomials</h2><h3>2.1 Definition</h3><p>The <strong>Legendre polynomials</strong> <span class="latex-inline">$P_n(x)$</span> are orthogonal on <span class="latex-inline">$[-1, 1]$</span> with weight function <span class="latex-inline">$w(x) = 1$</span>. Following Boas (Section 12.2), they can be defined by <strong>Rodrigues' formula</strong>:</p><p><div class="latex-display">$$P_n(x) = \frac{1}{2^n n!} \frac{d^n}{dx^n} \left[(x^2 - 1)^n\right]$$</div></p><p>The first few polynomials are:<br><ol><li><span class="latex-inline">$P_0(x) = 1$</span></li><li><span class="latex-inline">$P_1(x) = x$</span></li><li><span class="latex-inline">$P_2(x) = \frac{1}{2}(3x^2 - 1)$</span></li><li><span class="latex-inline">$P_3(x) = \frac{1}{2}(5x^3 - 3x)$</span></li><li><span class="latex-inline">$P_4(x) = \frac{1}{8}(35x^4 - 30x^2 + 3)$</span></li></ol><h3>2.2 Orthogonality Relation</h3><p>The Legendre polynomials satisfy (Boas, Section 12.3):</p><p><div class="latex-display">$$\int_{-1}^{1} P_n(x) P_m(x) \, dx = \begin{cases} 
+0 & \text{if } n \neq m \\
+\frac{2}{2n+1} & \text{if } n = m
+\end{cases}$$</div></p><p>This orthogonality is fundamental to their use as a basis.</p><h3>2.3 Recurrence Relations</h3><p>The Legendre polynomials satisfy the three-term recurrence relation (Boas, Equation 12.15):</p><p><div class="latex-display">$$(n+1)P_{n+1}(x) = (2n+1)xP_n(x) - nP_{n-1}(x)$$</div></p><p>This allows efficient computation of high-degree polynomials.</p><h2>3. Completeness and Function Expansion</h2><h3>3.1 The Completeness Theorem</h3><p>The key result (Boas, Section 12.4) is that orthogonal polynomials form a <strong>complete set</strong>: any piecewise continuous function <span class="latex-inline">$f(x)$</span> on <span class="latex-inline">$[a, b]$</span> can be represented as:</p><p><div class="latex-display">$$f(x) = \sum_{n=0}^{\infty} a_n \phi_n(x)$$</div></p><p>where the series converges in the mean-square sense:</p><p><div class="latex-display">$$\lim_{N \to \infty} \int_a^b \left[f(x) - \sum_{n=0}^N a_n \phi_n(x)\right]^2 w(x) \, dx = 0$$</div></p><h3>3.2 Computing the Coefficients</h3><p>For an orthogonal set, the coefficients are found by exploiting orthogonality. Multiply both sides by <span class="latex-inline">$\phi_m(x) w(x)$</span> and integrate:</p><p><div class="latex-display">$$\int_a^b f(x) \phi_m(x) w(x) \, dx = \sum_{n=0}^{\infty} a_n \int_a^b \phi_n(x) \phi_m(x) w(x) \, dx$$</div></p><p>By orthogonality, only the <span class="latex-inline">$n = m$</span> term survives:</p><p><div class="latex-display">$$\langle f, \phi_m \rangle = a_m \langle \phi_m, \phi_m \rangle$$</div></p><p>Therefore:</p><p><div class="latex-display">$$a_n = \frac{\langle f, \phi_n \rangle}{\langle \phi_n, \phi_n \rangle} = \frac{\int_a^b f(x) \phi_n(x) w(x) \, dx}{\int_a^b \phi_n^2(x) w(x) \, dx}$$</div></p><p>This is the <strong>Fourier-Legendre coefficient</strong> for Legendre polynomials (Boas, Section 12.4).</p><h3>3.3 Partial Sums and Convergence</h3><p>The partial sum:</p><p><div class="latex-display">$$S_N(x) = \sum_{n=0}^{N} a_n \phi_n(x)$$</div></p><p>is the <strong>best approximation</strong> to <span class="latex-inline">$f(x)$</span> in the least-squares sense using polynomials up to degree <span class="latex-inline">$N$</span>. As <span class="latex-inline">$N \to \infty$</span>, we have <span class="latex-inline">$S_N(x) \to f(x)$</span> in the mean-square sense.</p><h3>3.4 Properties of the Expansion</h3><p>Following Boas (Section 12.5):</p><ol><li><strong>Best approximation</strong>: The partial sum <span class="latex-inline">$S_N(x)$</span> minimizes the integral:</li></ol><br>   <div class="latex-display">$$\int_a^b [f(x) - p_N(x)]^2 w(x) \, dx$$</div><br>   over all polynomials <span class="latex-inline">$p_N(x)$</span> of degree at most <span class="latex-inline">$N$</span>.</p><ol><li><strong>Parseval's relation</strong>: For a complete orthonormal set:</li></ol><br>   <div class="latex-display">$$\int_a^b |f(x)|^2 w(x) \, dx = \sum_{n=0}^{\infty} |a_n|^2$$</div></p><ol><li><strong>Gibbs phenomenon</strong>: At discontinuities, the series may exhibit overshoot, analogous to Fourier series.</li></ol><h2>4. Two-Dimensional Extensions</h2><p>To represent images or text, we extend to two dimensions using <strong>tensor products</strong>. Following the same methodology:</p><p><div class="latex-display">$$f(x, y) = \sum_{m=0}^{\infty} \sum_{n=0}^{\infty} a_{mn} \phi_m(x) \psi_n(y)$$</div></p><p>For separable bases like Legendre polynomials:</p><p><div class="latex-display">$$\phi_m(x) \psi_n(y) = P_m(x) P_n(y)$$</div></p><p>The coefficients are:</p><p><div class="latex-display">$$a_{mn} = \frac{\int_{-1}^{1} \int_{-1}^{1} f(x,y) P_m(x) P_n(y) \, dx \, dy}{\int_{-1}^{1} P_m^2(x) \, dx \int_{-1}^{1} P_n^2(y) \, dy}$$</div></p><p>Using the normalization <span class="latex-inline">$\int_{-1}^{1} P_n^2(x) \, dx = \frac{2}{2n+1}$</span>:</p><p><div class="latex-display">$$a_{mn} = \frac{(2m+1)(2n+1)}{4} \int_{-1}^{1} \int_{-1}^{1} f(x,y) P_m(x) P_n(y) \, dx \, dy$$</div></p><h2>5. Interactive Demonstration: Your Name in Orthogonal Polynomials</h2><p>Now we put theory into practice. The simulation below:</p><ol><li>Takes your name as input</li><li>Renders it as a function <span class="latex-inline">$f(x, y)$</span> on <span class="latex-inline">$[-1, 1] \times [-1, 1]$</span></li><li>Projects it onto the Legendre polynomial basis</li><li>Reconstructs the image using partial sums up to degree <span class="latex-inline">$N$</span></li><li>Displays your personal complete set of coefficients</li></ol><p>This demonstrates that orthogonal polynomials truly form a complete set—capable of representing even arbitrary text!</p><p><div class="code-container" data-script="/scripts/blog-post-scripts/orthogonal-name.js" id="codeContainer-0"></div></p><h2>6. Physical Applications</h2><p>Orthogonal polynomials appear throughout physics (Boas, Chapter 12):</p><h3>6.1 Legendre Polynomials</h3><br><ol><li><strong>Electrostatics</strong>: Multipole expansions of potentials</li><li><strong>Quantum mechanics</strong>: Angular momentum eigenstates</li><li><strong>Scattering theory</strong>: Partial wave expansions</li></ol><h3>6.2 Hermite Polynomials</h3><br><ol><li><strong>Quantum harmonic oscillator</strong>: Energy eigenfunctions</li><li><strong>Probability theory</strong>: Edgeworth expansions</li><li><strong>Signal processing</strong>: Hermite-Gaussian beams</li></ol><p>They arise naturally because they are eigenfunctions of Sturm-Liouville differential equations.</p><h3>6.3 Laguerre Polynomials</h3><br><ol><li><strong>Hydrogen atom</strong>: Radial wave functions</li><li><strong>Quantum field theory</strong>: Coherent states</li></ol><h2>7. Connection to Previous Material</h2><p>This material connects deeply to our earlier studies:</p><h3>7.1 Gamma and Beta Functions (Chapter 11)</h3><br>The normalization integrals for orthogonal polynomials often involve:</p><p><div class="latex-display">$$\int_0^{\infty} x^n e^{-x} \, dx = n! = \Gamma(n+1)$$</div></p><p>For Hermite polynomials with weight <span class="latex-inline">$w(x) = e^{-x^2}$</span>:</p><p><div class="latex-display">$$\int_{-\infty}^{\infty} H_n^2(x) e^{-x^2} \, dx = 2^n n! \sqrt{\pi}$$</div></p><p>The <span class="latex-inline">$\sqrt{\pi}$</span> factor comes from the Gaussian integral <span class="latex-inline">$\Gamma(1/2) = \sqrt{\pi}$</span>.</p><h3>7.2 Asymptotic Series (Chapter 11)</h3><br>For large <span class="latex-inline">$n$</span>, Stirling's formula gives the asymptotic behavior:</p><p><div class="latex-display">$$n! \sim \sqrt{2\pi n} \left(\frac{n}{e}\right)^n$$</div></p><p>This allows us to estimate the normalization for high-degree polynomials and understand convergence rates.</p><h3>7.3 Error Function</h3><br>The error function <span class="latex-inline">$\text{erf}(x)$</span> with weight <span class="latex-inline">$e^{-x^2}$</span> led us to Hermite polynomials, which are orthogonal with respect to that same Gaussian weight.</p><h2>8. Computational Considerations</h2><p>When implementing these expansions numerically:</p><h3>8.1 Discrete vs Continuous</h3><br>We approximate the continuous integral:</p><p><div class="latex-display">$$a_n = \frac{2n+1}{2} \int_{-1}^{1} f(x) P_n(x) \, dx$$</div></p><p>with a discrete sum:</p><p><div class="latex-display">$$a_n \approx \frac{2n+1}{2} \cdot \frac{2}{M} \sum_{i=1}^{M} f(x_i) P_n(x_i)$$</div></p><p>where <span class="latex-inline">$x_i$</span> are uniformly spaced points in <span class="latex-inline">$[-1, 1]$</span>.</p><h3>8.2 Stability</h3><br>The three-term recurrence relation is numerically stable for computing Legendre polynomials:</p><p><div class="latex-display">$$P_{n+1}(x) = \frac{(2n+1)xP_n(x) - nP_{n-1}(x)}{n+1}$$</div></p><p>starting from <span class="latex-inline">$P_0(x) = 1$</span> and <span class="latex-inline">$P_1(x) = x$</span>.</p><h3>8.3 Truncation Error</h3><br>The approximation error using <span class="latex-inline">$N$</span> terms satisfies:</p><p><div class="latex-display">$$E_N = \int_{-1}^{1} \left[f(x) - \sum_{n=0}^{N} a_n P_n(x)\right]^2 dx = \sum_{n=N+1}^{\infty} a_n^2 \frac{2}{2n+1}$$</div></p><p>This decreases as <span class="latex-inline">$N$</span> increases, demonstrating convergence.</p><h2>9. Conclusion</h2><p>We have shown that orthogonal polynomials:</p><ol><li>Form a complete orthogonal basis on their domain</li><li>Allow any function to be expanded as a series</li><li>Provide the best polynomial approximation in the least-squares sense</li><li>Connect deeply to special functions through normalization</li><li>Arise naturally in physical problems</li></ol><p>The interactive demonstration shows this isn't just abstract mathematics—these functions can literally reconstruct arbitrary patterns, including your name! Each coefficient <span class="latex-inline">$a_{mn}$</span> in your complete set represents how much of that particular polynomial "mode" is needed to build your unique pattern.</p><p>As Boas emphasizes throughout Chapter 12, orthogonal polynomials are not merely mathematical curiosities but essential tools for solving differential equations, evaluating integrals, and approximating functions in physics and engineering.</p><h2>References</h2><ol><li>Boas, M. L. (2006). <em>Mathematical Methods in the Physical Sciences</em> (3rd ed.). Wiley. Chapter 12: Orthogonal Polynomials and Special Functions.</li><li>Arfken, G. B., Weber, H. J., & Harris, F. E. (2013). <em>Mathematical Methods for Physicists</em> (7th ed.). Academic Press.</li><li>Jackson, J. D. (1999). <em>Classical Electrodynamics</em> (3rd ed.). Wiley. Chapter 3: Multipole Expansion.</li><li>Szegö, G. (1939). <em>Orthogonal Polynomials</em>. American Mathematical Society.</li></ol><p>---</p><p><em>Thank you Professor Zozulya for the idea to make this code!</em></p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>Created by Adam Field</p>
+            <div class="footer-socials">
+                <span class="contact-label">Contact me:</span>
+                <div class="social-icons">
+                    <a href="mailto:adfield@wpi.edu" title="Email">
+                        <img src="/assets/email_logo.svg" alt="email logo">
+                    </a>
+                    <a href="https://www.linkedin.com/in/adfield/" target="_blank" title="LinkedIn">
+                        <img src="/assets/linkedin_logo.png" alt="linkedin logo">
+                    </a>
+                    <a href="https://github.com/AdamField118" target="_blank" title="GitHub">
+                        <img src="/assets/github_logo.svg" alt="github logo">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (async () => {
+            const containers = document.querySelectorAll('.code-container[data-script]');
+            for (const container of containers) {
+                window.currentCodeContainer   = container;
+                window.currentCodeContainerId = container.id;
+                await new Promise((resolve, reject) => {
+                    const s   = document.createElement('script');
+                    s.src     = container.dataset.script;
+                    s.onload  = resolve;
+                    s.onerror = reject;
+                    document.head.appendChild(s);
+                });
+            }
+        })();
+    </script>
+</body>
+</html>

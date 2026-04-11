@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <title>Conservation of Energy: Why Δ(v²) ≠ (Δv)²</title>
+    <link rel="stylesheet" href="/styles/style.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-python.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-java.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-c.min.js" defer></script>
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$']],
+                displayMath: [['$$', '$$']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js" defer></script>
+</head>
+<body>
+    <header>
+        <h1>Adam's Blog Page</h1>
+    </header>
+    <nav>
+        <a href="/index.html">Welcome Page</a>
+        <a href="/pages/blog.html">Blog Page</a>
+        <a href="/pages/resume.html">Dynamic Resume</a>
+    </nav>
+
+    <div class="post-static-page">
+        <div class="post-full-content">
+            <div class="post-full-header">
+                <a href="/pages/blog.html" class="back-link">← Back to Blog</a>
+                <h1 class="post-full-title">Conservation of Energy: Why Δ(v²) ≠ (Δv)²</h1>
+                <div class="post-full-meta">
+                    <span><i class="far fa-calendar"></i> 2025-11-17</span>
+                    <span><i class="far fa-clock"></i> 1 min read</span>
+                </div>
+                <div class="post-tags"><span class="tag">Classical Mechanics</span><span class="tag">Education</span></div>
+            </div>
+            <div class="post-full-body">
+                <h1>Conservation of Energy: Why Δ(v²) ≠ (Δv)²</h1><h2>The Problem</h2><p>Consider an electron moving from point A with initial speed v₀ to point B in an electric field created by two point charges (+Q and -q) placed at opposite corners of a rectangle with dimensions l (height) × 2l (width):</p><p><img src="/assets/energy-conservation-setup.jpg" alt="Physical Setup"></p><p><strong>Setting up coordinates:</strong> Origin at bottom-left corner<br><ol><li>-q is at (0, 0) - bottom-left</li><li>+Q is at (2l, l) - top-right</li><li>Point A is at (0, l) - top-left (electron starts here)</li><li>Point B is at (2l, 0) - bottom-right (electron ends here)</li></ol><p><strong>Question:</strong> What is the electron's speed when it reaches point B?</p><h2>Solution Using Conservation of Energy</h2><p>Energy conservation states that the total mechanical energy remains constant:</p><p><div class="latex-display">$$U_A + K_A = U_B + K_B$$</div></p><p>where U is potential energy and K is kinetic energy.</p><h3>Computing the Potential Energies</h3><p>The electron has charge -e. At each point, the potential energy is the sum of contributions from both charges.</p><p><strong>At point A (0, l):</strong><br><ol><li>Distance to -q: l</li><li>Distance to +Q: 2l</li></ol><p><div class="latex-display">$$U_A = k\frac{(-e)(-q)}{l} + k\frac{(-e)(+Q)}{2l} = \frac{keq}{l} - \frac{keQ}{2l} = \frac{ke(2q - Q)}{2l}$$</div></p><p><strong>At point B (2l, 0):</strong><br><ol><li>Distance to -q: 2l  </li><li>Distance to +Q: l</li></ol><p><div class="latex-display">$$U_B = k\frac{(-e)(-q)}{2l} + k\frac{(-e)(+Q)}{l} = \frac{keq}{2l} - \frac{keQ}{l} = \frac{ke(q - 2Q)}{2l}$$</div></p><p><strong>Change in potential energy:</strong></p><p><div class="latex-display">$$\Delta U = U_B - U_A = \frac{ke(q - 2Q)}{2l} - \frac{ke(2q - Q)}{2l} = \frac{-ke(q + Q)}{2l}$$</div></p><h3>Solving for Final Velocity</h3><p>The kinetic energy is <span class="latex-inline">$K = \frac{1}{2}m_e v^2$</span>. From conservation of energy:</p><p><div class="latex-display">$$\frac{1}{2}m_e v_A^2 + U_A = \frac{1}{2}m_e v_B^2 + U_B$$</div></p><p>Rearranging:</p><p><div class="latex-display">$$\frac{1}{2}m_e v_B^2 = \frac{1}{2}m_e v_A^2 + U_A - U_B$$</div></p><p><div class="latex-display">$$\frac{1}{2}m_e v_B^2 = \frac{1}{2}m_e v_A^2 - \Delta U$$</div></p><p><div class="latex-display">$$v_B^2 = v_A^2 - \frac{2\Delta U}{m_e}$$</div></p><p>Therefore, the final speed is:</p><p><div class="latex-display">$$v_B = \sqrt{v_A^2 - \frac{2\Delta U}{m_e}}$$</div></p><p>Substituting our expression for ΔU:</p><p><div class="latex-display">$$v_B = \sqrt{v_A^2 + \frac{ke(q + Q)}{l \cdot m_e}}$$</div></p><p>This is the correct answer.</p><h2>The Disagreement</h2><p>An alternative approach was proposed that leads to a different result. This approach claims that the change in kinetic energy can be written as:</p><p><div class="latex-display">$$\Delta K = \frac{1}{2}m_e(\Delta v)^2 = \frac{1}{2}m_e(v_B - v_A)^2$$</div></p><p>This would lead to:</p><p><div class="latex-display">$$\frac{1}{2}m_e(v_B - v_A)^2 = -\Delta U$$</div></p><p><div class="latex-display">$$(v_B - v_A)^2 = -\frac{2\Delta U}{m_e}$$</div></p><p><div class="latex-display">$$v_B - v_A = \pm\sqrt{-\frac{2\Delta U}{m_e}}$$</div></p><p><div class="latex-display">$$v_B = v_A \pm \sqrt{-\frac{2\Delta U}{m_e}}$$</div></p><p><strong>This gives a fundamentally different answer.</strong></p><h2>Why Are These Different?</h2><p>The error lies in confusing <strong>Δ(v²)</strong> with <strong>(Δv)²</strong>. Let me prove these are not equal.</p><h3>Mathematical Proof</h3><p>The correct change in kinetic energy is:</p><p><div class="latex-display">$$\Delta K = \frac{1}{2}m_e(v_B^2 - v_A^2) = \frac{1}{2}m_e \cdot \Delta(v^2)$$</div></p><p>The incorrect approach uses:</p><p><div class="latex-display">$$\Delta K \stackrel{?}{=} \frac{1}{2}m_e(v_B - v_A)^2 = \frac{1}{2}m_e \cdot (\Delta v)^2$$</div></p><p>For these to be equal, we would need:</p><p><div class="latex-display">$$v_B^2 - v_A^2 = (v_B - v_A)^2$$</div></p><p>Let's expand both sides:</p><p><strong>Left side (correct):</strong><br><div class="latex-display">$$v_B^2 - v_A^2 = (v_B - v_A)(v_B + v_A)$$</div></p><p><strong>Right side (incorrect):</strong><br><div class="latex-display">$$(v_B - v_A)^2 = v_B^2 - 2v_Av_B + v_A^2$$</div></p><p>Setting them equal:</p><p><div class="latex-display">$$(v_B - v_A)(v_B + v_A) = v_B^2 - 2v_Av_B + v_A^2$$</div></p><p><div class="latex-display">$$v_B^2 + v_Av_B - v_Av_B - v_A^2 = v_B^2 - 2v_Av_B + v_A^2$$</div></p><p><div class="latex-display">$$v_B^2 - v_A^2 = v_B^2 - 2v_Av_B + v_A^2$$</div></p><p><div class="latex-display">$$0 = -2v_Av_B$$</div></p><p><strong>This is only true when v_A = 0 or v_B = 0.</strong></p><p>Since our electron starts with v₀ ≠ 0 and ends with some non-zero velocity, these two expressions give <strong>completely different numerical results</strong>.</p><h2>Interactive Demonstration</h2><p>The simulation below demonstrates this difference quantitatively. It shows both methods side-by-side with the same initial conditions, so you can see that they predict different final velocities.</p><p><div class="code-container" data-script="/scripts/blog-post-scripts/energy-conservation-demo.js" id="codeContainer-0"></div></p><p>Adjust the sliders to explore different scenarios. You'll see that except when the initial velocity is zero, the two methods <strong>always disagree</strong>.</p><h2>Conclusion</h2><p>The correct change in kinetic energy is:</p><p><div class="latex-display">$$\Delta K = \frac{1}{2}m_e(v_B^2 - v_A^2) = \frac{1}{2}m_e \cdot \Delta(v^2)$$</div></p><p>NOT:</p><p><div class="latex-display">$$\Delta K \neq \frac{1}{2}m_e(v_B - v_A)^2 = \frac{1}{2}m_e \cdot (\Delta v)^2$$</div></p><p>The distinction between <strong>Δ(v²)</strong> and <strong>(Δv)²</strong> is not mathematical pedantry—it leads to quantitatively different predictions. The simulation above proves this beyond doubt: the two methods give different numerical answers for the same physical situation.</p><p>This is a fundamental principle that applies to all applications of conservation of energy in mechanics.</p><h2>References</h2><ol><li>Halliday, D., Resnick, R., & Walker, J. (2013). <em>Fundamentals of Physics</em> (10th ed.). Wiley.</li><li>Serway, R. A., & Jewett, J. W. (2018). <em>Physics for Scientists and Engineers</em> (10th ed.). Cengage Learning.</li><li>Griffiths, D. J. (2017). <em>Introduction to Electrodynamics</em> (4th ed.). Cambridge University Press.</li></ol><p>---</p><p><em>Feel free to reach out at adfield@wpi.edu</em></p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>Created by Adam Field</p>
+            <div class="footer-socials">
+                <span class="contact-label">Contact me:</span>
+                <div class="social-icons">
+                    <a href="mailto:adfield@wpi.edu" title="Email">
+                        <img src="/assets/email_logo.svg" alt="email logo">
+                    </a>
+                    <a href="https://www.linkedin.com/in/adfield/" target="_blank" title="LinkedIn">
+                        <img src="/assets/linkedin_logo.png" alt="linkedin logo">
+                    </a>
+                    <a href="https://github.com/AdamField118" target="_blank" title="GitHub">
+                        <img src="/assets/github_logo.svg" alt="github logo">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (async () => {
+            const containers = document.querySelectorAll('.code-container[data-script]');
+            for (const container of containers) {
+                window.currentCodeContainer   = container;
+                window.currentCodeContainerId = container.id;
+                await new Promise((resolve, reject) => {
+                    const s   = document.createElement('script');
+                    s.src     = container.dataset.script;
+                    s.onload  = resolve;
+                    s.onerror = reject;
+                    document.head.appendChild(s);
+                });
+            }
+        })();
+    </script>
+</body>
+</html>
