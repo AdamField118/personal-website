@@ -11,7 +11,7 @@ snippet: "A rigorous demonstration of a common misconception in applying conserv
 
 Consider an electron moving from point A with initial speed v₀ to point B in an electric field created by two point charges (+Q and -q) placed at opposite corners of a rectangle with dimensions l (height) × 2l (width):
 
-![Physical Setup](../assets/energy-conservation-setup.png)
+![Physical Setup](../assets/energy-conservation-setup.jpg)
 
 **Setting up coordinates:** Origin at bottom-left corner
 - -q is at (0, 0) - bottom-left

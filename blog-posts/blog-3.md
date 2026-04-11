@@ -43,7 +43,7 @@ The network takes in an image of a galaxy and outputs four numbers:
 We train it on simulated galaxy images (see [GalSim](https://github.com/GalSim-developers/GalSim)) where we know the "true" answers, so the network learns to recognize the subtle patterns that correspond to different amounts of shear.
 
 Here is a real example straight from the pipeline of galaxies we train the model on:
-![sample galaxy plots](../assets/samples_galaxy_plot.png)
+![sample galaxy plots](../assets/samples_galaxy_plot.jpg)
 ### Why This Matters
 The beauty of this approach is speed. Once trained, our neural network can process a galaxy image in milliseconds instead of minutes. We're talking about speedups of 100x or more compared to traditional methods.
 
