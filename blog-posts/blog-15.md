@@ -7,7 +7,7 @@ snippet: "A companion blog to our undergraduate talk on weak gravitational lensi
 
 # Weak Lensing: Investigating Dark Matter in Galaxy Clusters
 
-This post is a written companion to the talk I gave with my collaborator **Natalie** for Professor Källan Berglund's class, covering the weak gravitational lensing pipeline we worked on together with Northeastern University. The talk had two halves: Natalie presented the physics motivation, the nature of dark matter, and how gravitational lensing works conceptually, while I covered the computational pipeline and active research directions. I have tried to preserve that structure here. **Sections 1 through 4 cover Natalie's material** and closely follow her presentation, so the intellectual content, framing, and explanations there are hers. Sections 5 onwards cover my portion.
+This post is a written companion to the talk I gave with my collaborator **Natalie** for Professor Källan Berglund's class [linked here](https://youtube/0vm9ev15PZw), covering the weak gravitational lensing pipeline we worked on together with Northeastern University. The talk had two halves: Natalie presented the physics motivation, the nature of dark matter, and how gravitational lensing works conceptually, while I covered the computational pipeline and active research directions. I have tried to preserve that structure here. **Sections 1 through 4 cover Natalie's material** and closely follow her presentation, so the intellectual content, framing, and explanations there are hers. Sections 5 onwards cover my portion.
 
 ## 1. Why Study Dark Matter? *(Natalie's section)*
 
