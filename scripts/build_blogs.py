@@ -8,6 +8,7 @@ Run: python scripts/build_blogs.py
 
 import os
 import re
+import glob
 import json
 from datetime import datetime
 
@@ -15,13 +16,24 @@ ROOT    = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MD_DIR  = os.path.join(ROOT, 'blog-posts')
 OUT_DIR = os.path.join(ROOT, 'pages', 'posts')
 
+SITE_URL = 'https://www.adamfield.org'
+
+# Auto-discover blog-N.md files and sort them numerically (blog-2 before blog-10).
+def _blog_num(path):
+    m = re.search(r'blog-(\d+)\.md$', path)
+    return int(m.group(1)) if m else 1 << 30
+
 MARKDOWN_FILES = [
-    'blog-1.md',  'blog-2.md',  'blog-3.md',  'blog-4.md',  'blog-5.md',
-    'blog-6.md',  'blog-7.md',  'blog-8.md',  'blog-9.md',  'blog-10.md',
-    'blog-11.md', 'blog-12.md', 'blog-13.md', 'blog-14.md', 'blog-15.md'
+    os.path.basename(p)
+    for p in sorted(glob.glob(os.path.join(MD_DIR, 'blog-*.md')), key=_blog_num)
 ]
 
 os.makedirs(OUT_DIR, exist_ok=True)
+
+
+def html_escape(s):
+    return (s.replace('&', '&amp;').replace('<', '&lt;')
+             .replace('>', '&gt;').replace('"', '&quot;'))
 
 
 def parse_front_matter(raw):
@@ -183,16 +195,41 @@ def make_slug(title):
     return slug
 
 
-def build_page(title, date, tags, body_html):
+def build_page(title, date, tags, body_html, snippet='', slug=''):
     tags_html = ''.join(f'<span class="tag">{t}</span>' for t in tags)
     read_time = max(1, len(body_html) // 4000)
+    esc_title = html_escape(title)
+    desc      = html_escape(snippet) if snippet else esc_title
+    canonical = f'{SITE_URL}/pages/posts/{slug}.html'
+    keywords  = html_escape(', '.join(tags))
     return f'''<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{esc_title}</title>
+    <meta name="description" content="{desc}">
+    <meta name="author" content="Adam Field">
+    <meta name="keywords" content="{keywords}">
+    <link rel="canonical" href="{canonical}">
+
+    <!-- Icons -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <title>{title}</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <!-- Open Graph / social cards -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{esc_title}">
+    <meta property="og:description" content="{desc}">
+    <meta property="og:url" content="{canonical}">
+    <meta property="og:image" content="{SITE_URL}/assets/adam.jpg">
+    <meta property="article:published_time" content="{date}">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{esc_title}">
+    <meta name="twitter:description" content="{desc}">
+
     <link rel="stylesheet" href="/styles/style.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css">
@@ -295,7 +332,7 @@ for filename in MARKDOWN_FILES:
     href    = f'/pages/posts/{slug}.html'
 
     body_html = fix_paths(render_markdown(content))
-    page_html = build_page(title, date, tags, body_html)
+    page_html = build_page(title, date, tags, body_html, snippet=snippet, slug=slug)
 
     out_path = os.path.join(OUT_DIR, f'{slug}.html')
     open(out_path, 'w', encoding='utf8').write(page_html)
@@ -307,3 +344,31 @@ open(os.path.join(MD_DIR, 'index.json'), 'w', encoding='utf8').write(
     json.dumps(index, indent=2)
 )
 print(f'  wrote index.json ({len(index)} posts)')
+
+
+# ── sitemap.xml ──────────────────────────────────────────────────────────────
+def sitemap_url(loc, lastmod=None):
+    parts = [f'    <loc>{loc}</loc>']
+    if lastmod:
+        parts.append(f'    <lastmod>{lastmod}</lastmod>')
+    return '  <url>\n' + '\n'.join(parts) + '\n  </url>'
+
+latest = max((p['date'] for p in index), default=None)
+urls = [
+    sitemap_url(f'{SITE_URL}/', latest),
+    sitemap_url(f'{SITE_URL}/pages/blog.html', latest),
+    sitemap_url(f'{SITE_URL}/pages/resume.html'),
+]
+for p in index:
+    urls.append(sitemap_url(f"{SITE_URL}{p['href']}", p['date']))
+
+sitemap = ('<?xml version="1.0" encoding="UTF-8"?>\n'
+           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+           + '\n'.join(urls) + '\n</urlset>\n')
+open(os.path.join(ROOT, 'sitemap.xml'), 'w', encoding='utf8').write(sitemap)
+print(f'  wrote sitemap.xml ({len(urls)} urls)')
+
+# ── robots.txt ───────────────────────────────────────────────────────────────
+robots = (f'User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}/sitemap.xml\n')
+open(os.path.join(ROOT, 'robots.txt'), 'w', encoding='utf8').write(robots)
+print('  wrote robots.txt')

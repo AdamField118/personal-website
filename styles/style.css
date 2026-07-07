@@ -750,72 +750,6 @@ footer {
     display: block;
 }
 
-stage-footer {
-    background-color: #00458b;
-    color: #fff;
-    padding: 15px 20px;
-    bottom: 0;
-    width: 100%;
-    position: fixed;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-stage-footer .footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    width: 100%;
-}
-
-stage-footer .footer-content p {
-    margin: 0;
-    font-size: 1rem;
-}
-
-stage-footer .footer-socials {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-stage-footer .contact-label {
-    font-size: 0.85rem;
-    color: #ccc;
-    margin-right: 0;
-}
-
-stage-footer .social-icons {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-}
-
-stage-footer .social-icons a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.2s ease, opacity 0.2s ease;
-    opacity: 0.9;
-}
-
-stage-footer .social-icons a:hover {
-    transform: scale(1.1);
-    opacity: 1;
-}
-
-stage-footer .social-icons img {
-    width: 24px;
-    height: 24px;
-    filter: brightness(0) invert(1);
-    display: block;
-}
-
 a:focus, button:focus {
     outline: 2px dashed #ffdd57;
     outline-offset: 4px;
@@ -952,25 +886,6 @@ a:focus, button:focus {
         height: 20px;
     }
 
-    stage-footer .footer-content {
-        flex-direction: column;
-        text-align: center;
-        gap: 10px;
-    }
-    
-    stage-footer .footer-socials {
-        justify-content: center;
-    }
-    
-    stage-footer .contact-label {
-        font-size: 0.8rem;
-    }
-    
-    stage-footer .social-icons img {
-        width: 20px;
-        height: 20px;
-    }
-
     .code-container {
         padding: 15px;
         margin: 20px 0;
@@ -1024,24 +939,12 @@ a:focus, button:focus {
     footer {
         padding: 12px 15px;
     }
-    
+
     .footer-content p {
         font-size: 0.9rem;
     }
-    
-    .contact-label {
-        font-size: 0.75rem;
-    }
 
-    stage-footer {
-        padding: 12px 15px;
-    }
-    
-    stage-footer .footer-content p {
-        font-size: 0.9rem;
-    }
-    
-    stage-footer .contact-label {
+    .contact-label {
         font-size: 0.75rem;
     }
 }
@@ -1065,7 +968,7 @@ a:focus, button:focus {
        url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.ttf") format("truetype");
 }
 :root {
-    color-scheme: light dark;  /* Required for Safari dark mode support :cite[7] */
+    color-scheme: light dark;  /* Enables native light/dark form controls & scrollbars */
 }
 
 .code-container {
@@ -1582,18 +1485,6 @@ a:focus, button:focus {
     }
     
     .social-icons img {
-        filter: brightness(0) invert(1);
-    }
-
-    stage-footer {
-        background-color: #2d5aa0;
-    }
-    
-    stage-footer .contact-label {
-        color: #b8d4ff;
-    }
-    
-    stage-footer .social-icons img {
         filter: brightness(0) invert(1);
     }
 

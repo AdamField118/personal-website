@@ -1,10 +1,13 @@
 const postsContainer = document.getElementById('postsContainer');
 const sortNewestBtn = document.getElementById('sort-newest');
 const sortOldestBtn = document.getElementById('sort-oldest');
+const tagFilter = document.getElementById('tag-filter');
 const loadingIndicator = document.getElementById('loadingIndicator');
 const urlParams = new URLSearchParams(window.location.search);
 
 let allPosts = [];
+let currentSort = 'newest';
+let currentTag = 'all';
 
 function parseDate(dateString) {
     const parts = dateString.split('-');
@@ -50,6 +53,26 @@ function sortOldestFirst(posts) {
         const diff = parseDate(a.date) - parseDate(b.date);
         return diff !== 0 ? diff : a.title.localeCompare(b.title);
     });
+}
+
+function populateTagFilter(posts) {
+    const tags = new Set();
+    posts.forEach(p => (p.tags || []).forEach(t => tags.add(t)));
+    [...tags].sort((a, b) => a.localeCompare(b)).forEach(tag => {
+        const opt = document.createElement('option');
+        opt.value = tag;
+        opt.textContent = tag;
+        tagFilter.appendChild(opt);
+    });
+}
+
+// Apply the active tag filter, then the active sort order.
+function applyView() {
+    let posts = currentTag === 'all'
+        ? allPosts
+        : allPosts.filter(p => (p.tags || []).includes(currentTag));
+    posts = currentSort === 'newest' ? sortNewestFirst(posts) : sortOldestFirst(posts);
+    renderPosts(posts);
 }
 
 function renderPosts(posts) {
@@ -114,20 +137,36 @@ fetch('/blog-posts/index.json')
         }
 
         allPosts = posts;
-        renderPosts(sortNewestFirst(allPosts));
+        populateTagFilter(allPosts);
+
+        // Allow deep-linking to a tag via ?tag=Research
+        const tagParam = urlParams.get('tag');
+        if (tagParam && [...tagFilter.options].some(o => o.value === tagParam)) {
+            currentTag = tagParam;
+            tagFilter.value = tagParam;
+        }
+
+        applyView();
     })
     .catch(err => {
         loadingIndicator.innerHTML = `<div class="error">Error loading posts: ${err.message}</div>`;
     });
 
 sortNewestBtn.addEventListener('click', () => {
-    renderPosts(sortNewestFirst(allPosts));
+    currentSort = 'newest';
     sortNewestBtn.classList.add('active');
     sortOldestBtn.classList.remove('active');
+    applyView();
 });
 
 sortOldestBtn.addEventListener('click', () => {
-    renderPosts(sortOldestFirst(allPosts));
+    currentSort = 'oldest';
     sortOldestBtn.classList.add('active');
     sortNewestBtn.classList.remove('active');
+    applyView();
+});
+
+tagFilter.addEventListener('change', () => {
+    currentTag = tagFilter.value;
+    applyView();
 });

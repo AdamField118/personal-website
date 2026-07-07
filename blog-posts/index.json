@@ -150,5 +150,16 @@
     ],
     "snippet": "A companion blog to our undergraduate talk on weak gravitational lensing: covering dark matter motivation, the SuperBIT telescope, the full data pipeline from co-addition to mass reconstruction, and active research directions including ShearNet and FEMMI.",
     "href": "/pages/posts/weak-lensing-investigating-dark-matter-in-galaxy-clusters.html"
+  },
+  {
+    "title": "FEMMI: Mass Map Inversion by Finite Elements and Boundary Integrals",
+    "date": "2026-07-06",
+    "tags": [
+      "Gravitational Lensing",
+      "Numerical Methods",
+      "Research"
+    ],
+    "snippet": "A deep dive into FEMMI, my finite-element approach to weak-lensing mass reconstruction: why the boundary condition is the whole problem, why shear demands cubic P3 elements, how FEM-BEM coupling fixes the far field exactly, and how Morozov's principle removes the last free parameter.",
+    "href": "/pages/posts/femmi-mass-map-inversion-by-finite-elements-and-boundary-integrals.html"
   }
 ]

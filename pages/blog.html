@@ -3,8 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog — Adam Field</title>
+    <meta name="description" content="Physics and mathematics blog by Adam Field: gravitational lensing, quantum field theory, wave equations, Noether's theorems, and computational astrophysics research notes.">
+    <meta name="author" content="Adam Field">
+    <link rel="canonical" href="https://www.adamfield.org/pages/blog.html">
+
+    <!-- Icons -->
     <link rel="icon" type="image/x-icon" href="../favicon.ico">
-    <title>Adam's Blog Page</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png">
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+
+    <!-- Open Graph / social cards -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Blog — Adam Field">
+    <meta property="og:description" content="Physics and mathematics blog: gravitational lensing, quantum field theory, wave equations, and computational astrophysics research notes.">
+    <meta property="og:url" content="https://www.adamfield.org/pages/blog.html">
+    <meta property="og:image" content="https://www.adamfield.org/assets/adam.jpg">
+    <meta name="twitter:card" content="summary">
+
     <link rel="stylesheet" href="../styles/style.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css">
@@ -47,6 +64,13 @@
         <div class="controls">
             <button class="sort-btn active" id="sort-newest">Newest First</button>
             <button class="sort-btn" id="sort-oldest">Oldest First</button>
+        </div>
+
+        <div class="filter-section">
+            <label for="tag-filter">Filter by Tag:</label>
+            <select id="tag-filter" class="filter-select">
+                <option value="all">All Topics</option>
+            </select>
         </div>
 
         <section class="card-container" id="postsContainer">

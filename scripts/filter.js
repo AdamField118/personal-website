@@ -128,51 +128,10 @@ function handleResize() {
     });
 }
 
-// Improved alternative using viewport units for ultra-responsive behavior
-function adjustSelectWidthViewport(selectElement) {
-    const measurer = document.getElementById('measurer');
-    const selectedOption = selectElement.options[selectElement.selectedIndex];
-    const text = selectedOption ? selectedOption.text : '';
-    
-    const computedStyle = window.getComputedStyle(selectElement);
-    measurer.style.font = computedStyle.font;
-    measurer.textContent = text;
-    
-    const textWidth = measurer.offsetWidth;
-    const viewportWidth = window.innerWidth;
-    const extraSpace = 20; // Consistent with main function
-    
-    // Calculate as viewport width units (vw)
-    let vwWidth = ((textWidth + extraSpace) / viewportWidth) * 100;
-    
-    // Constrain viewport-based width with improved ranges
-    const screenWidth = window.innerWidth;
-    let maxVw;
-    
-    if (screenWidth < 480) {
-        maxVw = 85;
-    } else if (screenWidth < 768) {
-        maxVw = 70;
-    } else {
-        maxVw = 50;
-    }
-    
-    vwWidth = Math.min(maxVw, vwWidth);
-    selectElement.style.width = vwWidth + 'vw';
-}
-
 // Orientation change handler for mobile devices
 function handleOrientationChange() {
     // Small delay to allow for orientation change to complete
     setTimeout(handleResize, 150);
-}
-
-// Performance monitoring (optional - remove in production)
-function logPerformance(functionName, startTime) {
-    const endTime = performance.now();
-    if (endTime - startTime > 16) { // Log if takes longer than 1 frame (16ms)
-        console.log(`${functionName} took ${endTime - startTime} milliseconds`);
-    }
 }
 
 // Enhanced initialization with error handling and card animation setup
@@ -203,28 +162,14 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Initialize dynamic selects
         initializeDynamicSelects();
-        
+
         // Add event listeners with error handling
         const debouncedResize = debounce(handleResize, 250);
-        
+
         window.addEventListener('resize', debouncedResize);
         window.addEventListener('orientationchange', handleOrientationChange);
-        
-        // Optional: Log successful initialization
-        console.log('Filter and dynamic select functionality initialized successfully');
-        
+
     } catch (error) {
         console.error('Error initializing filter functionality:', error);
     }
 });
-
-// Utility function to manually trigger width recalculation (useful for dynamic content)
-function recalculateAllSelectWidths() {
-    const selects = document.querySelectorAll('.filter-select');
-    selects.forEach(select => {
-        adjustSelectWidth(select);
-    });
-}
-
-// Export function for potential use in other scripts
-window.recalculateSelectWidths = recalculateAllSelectWidths;
