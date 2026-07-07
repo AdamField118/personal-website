@@ -2,7 +2,7 @@
 title: "Part 1: My Main Research"
 date: "2025-08-07"
 tags: "Research, Astrophysics"
-snippet: "Developing a nueral network based solution for galaxy shear estimation"
+snippet: "Developing a neural network based solution for galaxy shear estimation"
 ---
 
 # ShearNet
@@ -13,7 +13,7 @@ I am very fortunate to have had a connection to Professor Jacqueline McCleary at
 Dr. Sayan had me immediately start work on ShearNet, a neural network based, gpu accelerated, shear estimator. This research is so cool to me, it's directly adjacent to the superbit-lensing project that I'm very interested in and it is solving a real problem for researchers in the field of weak lensing.  
 
 ## Okay... but what is it?  
-So at first a nueral network based shear estimator sounds ambiguous, what is it doing? Is it just another AI?  
+So at first a neural network based shear estimator sounds ambiguous, what is it doing? Is it just another AI?  
 Here is the [github repo](https://github.com/s-Sayan/ShearNet/tree/main).  
 First let me lay out the goal of ShearNet.  
 ### ShearNet's Goal

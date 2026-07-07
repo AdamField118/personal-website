@@ -25,29 +25,53 @@
     <meta name="twitter:description" content="Physics undergraduate at WPI specializing in computational astrophysics, gravitational lensing, and neural networks.">
     <meta name="twitter:image" content="https://www.adamfield.org/assets/adam.jpg">
 
+    <link rel="alternate" type="application/rss+xml" title="Adam Field's Blog" href="/feed.xml">
     <link rel="stylesheet" href="./styles/style.css">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Adam Field",
+      "url": "https://www.adamfield.org/",
+      "image": "https://www.adamfield.org/assets/adam.jpg",
+      "email": "mailto:adfield@wpi.edu",
+      "jobTitle": "Physics Undergraduate & Computational Astrophysics Researcher",
+      "affiliation": {
+        "@type": "CollegeOrUniversity",
+        "name": "Worcester Polytechnic Institute"
+      },
+      "knowsAbout": ["Gravitational Lensing", "Computational Cosmology", "Neural Networks", "Physics"],
+      "sameAs": [
+        "https://www.linkedin.com/in/adfield/",
+        "https://github.com/AdamField118",
+        "https://portfolio.adamfield.org/"
+      ]
+    }
+    </script>
 </head>
 <body>
 
     <header>
-        <h1>Adam's Website</h1>
+        <h1>Adam Field</h1>
+        <p class="tagline">Computational Physics &amp; Cosmology -- WPI '27</p>
     </header>
-    
+
     <nav>
-        <a href="./index.html">Welcome Page</a>
-        <a href="./pages/blog.html">Blog Page</a>
-        <a href="./pages/resume.html">Dynamic Resume</a>
+        <a href="./index.html">Home</a>
+        <a href="./pages/blog.html">Blog</a>
+        <a href="./pages/resume.html">Resume</a>
     </nav>
     <div class="container">
 
         <aside class="sidebar">
             <h2>Profile</h2>
-            <img src="./assets/adam.jpg" alt="Portrait of Adam Field" height="200" width="200" loading="lazy">
+            <img src="./assets/adam.jpg" alt="Portrait of Adam Field" height="200" width="200">
             <p>
                 <b>Name:</b> Adam Field
             </p>
             <p>
-                <b>Education:</b> WPI Class of 27'
+                <b>Education:</b> WPI Class of '27
             </p>
             <p>
                 <b>Major:</b> Physics; <b>Minor:</b> Mathematics
@@ -55,10 +79,31 @@
             <p>
                 <b>Research Interests:</b> Gravitational Lensing, Computational Cosmology, Neural Networks
             </p>
+            <h2>Quick Links</h2>
+            <ul>
+                <li><a href="./assets/CV-25A.pdf">My CV</a></li>
+                <li><a href="./assets/Resume-25A.pdf">My Resume (PDF)</a></li>
+                <li><a href="https://portfolio.adamfield.org" target="_blank">Physics Portfolio</a></li>
+                <li><a href="/feed.xml">Blog RSS Feed</a></li>
+            </ul>
         </aside>
 
         <section class="content">
             <h2>Welcome!</h2>
+            <p>
+                I'm Adam, a physics undergraduate at WPI specializing in computational cosmology,
+                gravitational lensing, and neural networks. I'm currently developing ShearNet, a
+                neural network for galaxy shear estimation, with Northeastern University, and I write a
+                physics blog and build interactive simulations along the way.
+            </p>
+
+            <h2>Latest from the Blog</h2>
+            <section class="card-container latest-posts" id="latestPosts">
+                <noscript><p>JavaScript is disabled -- browse all posts on the <a href="./pages/blog.html">blog page</a>.</p></noscript>
+            </section>
+            <p class="view-all-link"><a href="./pages/blog.html">View all posts →</a></p>
+
+            <h2>Projects &amp; Research</h2>
             <p>
                 Below you can find a bunch of projects I've done that I am proud of!
             </p>
@@ -106,7 +151,10 @@
                 </div>
                 <div class="card" data-topic="research">
                     <a href="https://github.com/jacksonhenry3/RPS_GPU_webui" target="_blank">
-                        <img src="./assets/rps.gif" alt="Animated rock-paper-scissors zero-sum game simulation" loading="lazy">
+                        <video autoplay loop muted playsinline poster="./assets/rps-poster.jpg" aria-label="Animated rock-paper-scissors zero-sum game simulation">
+                            <source src="./assets/rps.webm" type="video/webm">
+                            <source src="./assets/rps.mp4" type="video/mp4">
+                        </video>
                         <div class="card-content">
                             <h3>Computational Thermodynamics</h3>
                             <p>Extending research on community formation, implementing zero-sum game simulations. Working on alternative characterizations of system entropy, new network topologies, and better visualizations of evolution.</p>
@@ -141,7 +189,10 @@
                     </a>
                 </div>
                 <div class="card" data-topic="video">
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/aL-T0qftY9s?si=0mY3-pyOp2QvvedZ" title="How to use SRS Synthesized Function Generator and RIGOL Oscilloscope" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen loading="lazy"></iframe>
+                    <div class="yt-facade" data-video-id="aL-T0qftY9s" data-title="How to use SRS Synthesized Function Generator and RIGOL Oscilloscope">
+                        <img src="https://i.ytimg.com/vi/aL-T0qftY9s/hqdefault.jpg" alt="Video: How to use SRS Synthesized Function Generator and RIGOL Oscilloscope" loading="lazy" width="480" height="360">
+                        <button type="button" class="yt-facade-play" aria-label="Play video: How to use SRS Synthesized Function Generator and RIGOL Oscilloscope"></button>
+                    </div>
                     <div class="card-content">
                         <h3>How to use SRS Synthesized Function Generator and RIGOL Oscilloscope</h3>
                         <p>For my Oscillation & Waves course as a project alternative to quiz 3</p>
@@ -184,6 +235,8 @@
     </footer>
 
     <script src="./scripts/filter.js"></script>
+    <script src="./scripts/latest-posts.js"></script>
+    <script src="./scripts/yt-facade.js"></script>
 
 </body>
 </html>

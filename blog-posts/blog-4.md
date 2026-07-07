@@ -40,7 +40,7 @@ In the future I plan to add **metacalibration** (see ["Practical Weak-lensing Sh
 
 This is a very complex task. I will need to tackle three huge hurdles:
 
-- Deconvolution: make a nueral net that deconvolves the galaxy images to get clean galaxy images
+- Deconvolution: make a neural net that deconvolves the galaxy images to get clean galaxy images
 - Differentiable Shearing: apply shear transformations in a way that maintains gradients through coordinate transformations
 - Neural Metacalibrator: implement the response measurement and calibration correction components of metacalibration using neural networks
 

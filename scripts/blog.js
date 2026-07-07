@@ -87,6 +87,12 @@ function renderPosts(posts) {
         }
 
         posts.forEach(post => {
+            // A real link (not a click handler) so posts are keyboard-accessible,
+            // middle-clickable, and crawlable.
+            const link = document.createElement('a');
+            link.className = 'card-link';
+            link.href = post.href;
+
             const card = document.createElement('div');
             card.className = 'card';
             card.innerHTML = `
@@ -103,11 +109,8 @@ function renderPosts(posts) {
                 </div>
             `;
 
-            card.addEventListener('click', () => {
-                window.location.href = post.href;
-            });
-
-            postsContainer.appendChild(card);
+            link.appendChild(card);
+            postsContainer.appendChild(link);
         });
 
         const newCards = Array.from(postsContainer.querySelectorAll('.card'));

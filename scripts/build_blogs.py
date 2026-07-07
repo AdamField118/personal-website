@@ -195,6 +195,26 @@ def make_slug(title):
     return slug
 
 
+CALENDAR_SVG = ('<svg class="meta-icon" viewBox="0 0 16 16" aria-hidden="true">'
+                '<path d="M4 1v1H2.5A1.5 1.5 0 0 0 1 3.5v10A1.5 1.5 0 0 0 2.5 15h11'
+                'a1.5 1.5 0 0 0 1.5-1.5v-10A1.5 1.5 0 0 0 13.5 2H12V1h-1.5v1h-5V1H4z'
+                'm-1.5 4h11v8.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5V5z"/></svg>')
+CLOCK_SVG    = ('<svg class="meta-icon" viewBox="0 0 16 16" aria-hidden="true">'
+                '<path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 1.5a6.5 6.5 0 1 1 0 13'
+                ' 6.5 6.5 0 0 1 0-13zM7.25 3v5.31l3.97 2.29.75-1.3-3.22-1.86V3h-1.5z"/></svg>')
+
+
+def first_image(body_html):
+    """First image in the post body (absolute URL), for social cards."""
+    m = re.search(r'<img[^>]+src="([^"]+)"', body_html)
+    if not m:
+        return None
+    src = m.group(1)
+    if src.startswith('http'):
+        return src
+    return SITE_URL + src if src.startswith('/') else None
+
+
 def build_page(title, date, tags, body_html, snippet='', slug=''):
     tags_html = ''.join(f'<span class="tag">{t}</span>' for t in tags)
     read_time = max(1, len(body_html) // 4000)
@@ -202,6 +222,19 @@ def build_page(title, date, tags, body_html, snippet='', slug=''):
     desc      = html_escape(snippet) if snippet else esc_title
     canonical = f'{SITE_URL}/pages/posts/{slug}.html'
     keywords  = html_escape(', '.join(tags))
+    og_image  = first_image(body_html) or f'{SITE_URL}/assets/adam.jpg'
+    json_ld   = json.dumps({
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        'headline': title,
+        'description': snippet or title,
+        'datePublished': date,
+        'url': canonical,
+        'image': og_image,
+        'keywords': tags,
+        'author': {'@type': 'Person', 'name': 'Adam Field',
+                   'url': SITE_URL + '/'},
+    }, indent=2)
     return f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -224,19 +257,25 @@ def build_page(title, date, tags, body_html, snippet='', slug=''):
     <meta property="og:title" content="{esc_title}">
     <meta property="og:description" content="{desc}">
     <meta property="og:url" content="{canonical}">
-    <meta property="og:image" content="{SITE_URL}/assets/adam.jpg">
+    <meta property="og:image" content="{og_image}">
     <meta property="article:published_time" content="{date}">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="{esc_title}">
     <meta name="twitter:description" content="{desc}">
+    <meta name="twitter:image" content="{og_image}">
 
+    <script type="application/ld+json">
+{json_ld}
+    </script>
+
+    <link rel="alternate" type="application/rss+xml" title="Adam Field's Blog" href="/feed.xml">
     <link rel="stylesheet" href="/styles/style.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-python.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-java.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-c.min.js" defer></script>
+    <link rel="stylesheet" href="/assets/vendor/prism/prism.min.css">
+    <script src="/assets/vendor/prism/prism.min.js" defer></script>
+    <script src="/assets/vendor/prism/prism-python.min.js" defer></script>
+    <script src="/assets/vendor/prism/prism-java.min.js" defer></script>
+    <script src="/assets/vendor/prism/prism-c.min.js" defer></script>
+    <script src="/assets/vendor/prism/prism-latex.min.js" defer></script>
     <script>
         window.MathJax = {{
             tex: {{
@@ -256,9 +295,9 @@ def build_page(title, date, tags, body_html, snippet='', slug=''):
         <h1>Adam\'s Blog Page</h1>
     </header>
     <nav>
-        <a href="/index.html">Welcome Page</a>
-        <a href="/pages/blog.html">Blog Page</a>
-        <a href="/pages/resume.html">Dynamic Resume</a>
+        <a href="/index.html">Home</a>
+        <a href="/pages/blog.html">Blog</a>
+        <a href="/pages/resume.html">Resume</a>
     </nav>
 
     <div class="post-static-page">
@@ -267,8 +306,8 @@ def build_page(title, date, tags, body_html, snippet='', slug=''):
                 <a href="/pages/blog.html" class="back-link">← Back to Blog</a>
                 <h1 class="post-full-title">{title}</h1>
                 <div class="post-full-meta">
-                    <span><i class="far fa-calendar"></i> {format_date(date)}</span>
-                    <span><i class="far fa-clock"></i> {read_time} min read</span>
+                    <span>{CALENDAR_SVG} {format_date(date)}</span>
+                    <span>{CLOCK_SVG} {read_time} min read</span>
                 </div>
                 <div class="post-tags">{tags_html}</div>
             </div>
@@ -372,3 +411,34 @@ print(f'  wrote sitemap.xml ({len(urls)} urls)')
 robots = (f'User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}/sitemap.xml\n')
 open(os.path.join(ROOT, 'robots.txt'), 'w', encoding='utf8').write(robots)
 print('  wrote robots.txt')
+
+# ── feed.xml (RSS 2.0) ───────────────────────────────────────────────────────
+def rfc822(date_str):
+    return datetime.strptime(date_str, '%Y-%m-%d').strftime('%a, %d %b %Y 00:00:00 +0000')
+
+items = []
+for p in sorted(index, key=lambda p: p['date'], reverse=True):
+    link = f"{SITE_URL}{p['href']}"
+    cats = ''.join(f'\n      <category>{html_escape(t)}</category>' for t in p['tags'])
+    items.append(f'''    <item>
+      <title>{html_escape(p['title'])}</title>
+      <link>{link}</link>
+      <guid>{link}</guid>
+      <pubDate>{rfc822(p['date'])}</pubDate>
+      <description>{html_escape(p['snippet'])}</description>{cats}
+    </item>''')
+
+feed = f'''<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Adam Field's Blog</title>
+    <link>{SITE_URL}/pages/blog.html</link>
+    <atom:link href="{SITE_URL}/feed.xml" rel="self" type="application/rss+xml"/>
+    <description>Physics and mathematics blog by Adam Field: gravitational lensing, quantum field theory, wave equations, and computational astrophysics research notes.</description>
+    <language>en-us</language>
+{chr(10).join(items)}
+  </channel>
+</rss>
+'''
+open(os.path.join(ROOT, 'feed.xml'), 'w', encoding='utf8').write(feed)
+print(f'  wrote feed.xml ({len(items)} items)')

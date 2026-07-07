@@ -22,14 +22,14 @@
     <meta property="og:image" content="https://www.adamfield.org/assets/adam.jpg">
     <meta name="twitter:card" content="summary">
 
+    <link rel="alternate" type="application/rss+xml" title="Adam Field's Blog" href="/feed.xml">
     <link rel="stylesheet" href="../styles/style.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-python.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-java.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-c.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-latex.min.js"></script>
+    <link rel="stylesheet" href="../assets/vendor/prism/prism.min.css">
+    <script src="../assets/vendor/prism/prism.min.js" defer></script>
+    <script src="../assets/vendor/prism/prism-python.min.js" defer></script>
+    <script src="../assets/vendor/prism/prism-java.min.js" defer></script>
+    <script src="../assets/vendor/prism/prism-c.min.js" defer></script>
+    <script src="../assets/vendor/prism/prism-latex.min.js" defer></script>
     <script>
         window.MathJax = {
             tex: {
@@ -55,9 +55,9 @@
     
     <!-- Navigation Bar -->
     <nav>
-        <a href="../index.html">Welcome Page</a>
-        <a href="./blog.html">Blog Page</a>
-        <a href="./resume.html">Dynamic Resume</a>
+        <a href="../index.html">Home</a>
+        <a href="./blog.html">Blog</a>
+        <a href="./resume.html">Resume</a>
     </nav>
 
     <div class="content-container">
@@ -75,14 +75,12 @@
 
         <section class="card-container" id="postsContainer">
             <div class="loading" id="loadingIndicator">
-                <i class="fas fa-spinner fa-spin"></i> Loading blog posts...
+                <span class="spinner" aria-hidden="true"></span> Loading blog posts...
             </div>
         </section>
     </div>
     
-    <div class="close-btn" id="closeBtn">
-        <i class="fas fa-times"></i>
-    </div>
+    <div class="close-btn" id="closeBtn" role="button" aria-label="Close post">&times;</div>
 
     <!-- Footer -->
     <footer>
