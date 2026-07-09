@@ -1,0 +1,128 @@
+[
+  {
+    "title": "Black Hole Gravitational Lensing",
+    "description": "Explore Schwarzschild spacetime with real-time ray tracing and accretion disk physics.",
+    "topic": "astro",
+    "image": "/images/black_hole.jpg",
+    "href": "/pages/simulations/black-hole-gravitational-lensing.html"
+  },
+  {
+    "title": "Reflection and Refraction",
+    "description": "Snell's law in action: change the incident angle and watch light reflect and refract at an interface.",
+    "topic": "ocw",
+    "image": "/images/reflrefr.jpg",
+    "href": "/pages/simulations/reflection-and-refraction.html"
+  },
+  {
+    "title": "Newton's First Law",
+    "description": "Law of Inertia \u2014 objects remain at rest or in uniform motion unless acted upon by a force.",
+    "topic": "mechanics",
+    "image": "/images/newtons_first.jpg",
+    "href": "/pages/simulations/newtons-first-law.html"
+  },
+  {
+    "title": "Newton's Second Law",
+    "description": "Force equals mass times acceleration. Visualize how force, mass, and acceleration relate.",
+    "topic": "mechanics",
+    "image": "/images/newtons_second.jpg",
+    "href": "/pages/simulations/newtons-second-law.html"
+  },
+  {
+    "title": "Newton's Third Law",
+    "description": "For every action there is an equal and opposite reaction.",
+    "topic": "mechanics",
+    "image": "/images/newtons_third.jpg",
+    "href": "/pages/simulations/newtons-third-law.html"
+  },
+  {
+    "title": "Momentum and Collisions",
+    "description": "Explore elastic and inelastic collisions. See momentum conservation in action.",
+    "topic": "mechanics",
+    "image": "/images/momentum_collision.jpg",
+    "href": "/pages/simulations/momentum-and-collisions.html"
+  },
+  {
+    "title": "Energy Conservation",
+    "description": "Watch potential energy transform into kinetic energy, with air resistance and bouncing.",
+    "topic": "mechanics",
+    "image": "/images/energy_conservation.jpg",
+    "href": "/pages/simulations/energy-conservation.html"
+  },
+  {
+    "title": "Friction Forces",
+    "description": "Understand static and kinetic friction with different surfaces and inclined planes.",
+    "topic": "mechanics",
+    "image": "/images/friction.jpg",
+    "href": "/pages/simulations/friction-forces.html"
+  },
+  {
+    "title": "Pendulum Motion",
+    "description": "Simple harmonic motion and energy transfer in a pendulum, with damping effects.",
+    "topic": "ocw",
+    "image": "/images/pendulum.jpg",
+    "href": "/pages/simulations/pendulum-motion.html"
+  },
+  {
+    "title": "Faraday's Law",
+    "description": "A changing magnetic field induces current in a coil \u2014 electromagnetic induction.",
+    "topic": "em",
+    "image": "/images/faradays.jpg",
+    "href": "/pages/simulations/faradays-law.html"
+  },
+  {
+    "title": "Newton's Law of Gravitation",
+    "description": "Universal gravitation: every mass attracts every other with an inverse-square force.",
+    "topic": "astro",
+    "image": "/images/newtonian_gravity.jpg",
+    "href": "/pages/simulations/newtons-law-of-gravitation.html"
+  },
+  {
+    "title": "Hooke's Law",
+    "description": "A mass on a spring: restoring force proportional to displacement gives simple harmonic motion.",
+    "topic": "ocw",
+    "image": "/images/hookes.jpg",
+    "href": "/pages/simulations/hookes-law.html"
+  },
+  {
+    "title": "Kepler's Second Law",
+    "description": "A planet sweeps out equal areas in equal times \u2014 angular momentum conservation made visible.",
+    "topic": "astro",
+    "image": "/images/keplers_second.jpg",
+    "href": "/pages/simulations/keplers-second-law.html"
+  },
+  {
+    "title": "Resistors in Series and Parallel",
+    "description": "See how equivalent resistance builds up in series and parallel circuit configurations.",
+    "topic": "em",
+    "image": "/images/resistors.jpg",
+    "href": "/pages/simulations/resistors-in-series-and-parallel.html"
+  },
+  {
+    "title": "Capacitors in Series and Parallel",
+    "description": "See how equivalent capacitance builds up \u2014 the mirror image of the resistor rules.",
+    "topic": "em",
+    "image": "/images/capacitors.jpg",
+    "href": "/pages/simulations/capacitors-in-series-and-parallel.html"
+  },
+  {
+    "title": "Gauss' Law",
+    "description": "The electric flux through a closed surface depends only on the charge inside it.",
+    "topic": "em",
+    "image": "/images/gauss.jpg",
+    "href": "/pages/simulations/gauss-law.html"
+  },
+  {
+    "title": "Coulomb's Law",
+    "description": "The inverse-square force between charges: attraction, repulsion, and superposition.",
+    "topic": "em",
+    "image": "/images/coulomb.jpg",
+    "href": "/pages/simulations/coulombs-law.html"
+  },
+  {
+    "title": "Relativistic Aberration",
+    "description": "Fly through a star field near light speed and watch relativistic aberration, Doppler shift, and beaming distort the sky.",
+    "topic": "astro",
+    "image": "/images/relativistic-aberration.svg",
+    "href": "/pages/simulations/relativistic-aberration.html"
+  }
+]

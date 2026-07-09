@@ -1,0 +1,30 @@
+# systemd unit for the adamfield.org FastAPI backend.
+# Install: sudo cp deploy/adamfield-api.service /etc/systemd/system/
+#          sudo systemctl daemon-reload && sudo systemctl enable --now adamfield-api
+#
+# Adjust User, WorkingDirectory, and the EnvironmentFile path to your box.
+
+[Unit]
+Description=adamfield.org API (FastAPI/uvicorn)
+After=network.target
+
+[Service]
+Type=simple
+User=adam
+Group=adam
+WorkingDirectory=/var/www/personal-website/server
+# Secrets and config (AF_ADMIN_PASSWORD_HASH, AF_SECRET_KEY, AF_DB_PATH, …).
+# A plain KEY=VALUE file — systemd does NOT do shell expansion, so the "$"
+# characters in the pbkdf2 hash are safe here (unlike `source`-ing it in bash).
+EnvironmentFile=/etc/adamfield/api.env
+ExecStart=/usr/bin/python3 -m uvicorn app:app --host 127.0.0.1 --port 8000
+Restart=on-failure
+RestartSec=3
+
+# Hardening: the DB dir must be writable; the repo dir is needed for blog edits.
+NoNewPrivileges=true
+PrivateTmp=true
+ReadWritePaths=/var/lib/adamfield /var/www/personal-website
+
+[Install]
+WantedBy=multi-user.target

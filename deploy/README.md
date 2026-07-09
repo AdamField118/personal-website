@@ -55,3 +55,9 @@ tunnel goes down.
 - Blog: add `blog-posts/blog-N.md`, then run `python3 scripts/build_blogs.py`.
   This regenerates the static post pages, `blog-posts/index.json`,
   `sitemap.xml`, `robots.txt`, and `feed.xml` (RSS).
+- Navigation / footer: the top nav and footer are defined once in
+  `scripts/layout.py`. After editing them (e.g. adding a tab), run
+  `python3 scripts/build_site.py` to sync every page's `SITE-NAV` / `SITE-FOOTER`
+  marker region. `build_blogs.py` shares the same layout, so post pages stay in
+  sync automatically. Pages without the markers (e.g. the 3D `resume.html`) opt
+  out and are left untouched. Both build scripts are idempotent.

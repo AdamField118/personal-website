@@ -1,0 +1,44 @@
+[
+  {
+    "title": "Magic 8-Ball",
+    "description": "Ask anything and let the ball decide — click, press Enter, or shake your phone.",
+    "image": "/images/magic-8-ball.svg",
+    "href": "/pages/games/magic-8-ball.html",
+    "status": "live"
+  },
+  {
+    "title": "Wordle",
+    "description": "Guess the five-letter word in six tries.",
+    "status": "soon"
+  },
+  {
+    "title": "Strands",
+    "description": "Find the themed words hidden in the letter grid.",
+    "status": "soon"
+  },
+  {
+    "title": "Connections",
+    "description": "Sort sixteen words into four secret groups.",
+    "status": "soon"
+  },
+  {
+    "title": "Tango",
+    "description": "Fill the grid with suns and moons under the balance rules.",
+    "status": "soon"
+  },
+  {
+    "title": "Sudoku",
+    "description": "Classic nine-by-nine number placement.",
+    "status": "soon"
+  },
+  {
+    "title": "Crossword",
+    "description": "A hand-built crossword puzzle.",
+    "status": "soon"
+  },
+  {
+    "title": "Tank Game",
+    "description": "Two-player artillery duel.",
+    "status": "soon"
+  }
+]

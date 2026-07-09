@@ -1,1 +1,8 @@
 .vscode
+__pycache__/
+*.pyc
+
+# Backend secrets and local data (never commit)
+server/.env
+server/data/
+*.db

@@ -12,6 +12,8 @@ import glob
 import json
 from datetime import datetime
 
+import layout  # shared nav/footer (scripts/ is on sys.path when run as a script)
+
 ROOT    = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MD_DIR  = os.path.join(ROOT, 'blog-posts')
 OUT_DIR = os.path.join(ROOT, 'pages', 'posts')
@@ -294,11 +296,9 @@ def build_page(title, date, tags, body_html, snippet='', slug=''):
     <header>
         <h1>Adam\'s Blog Page</h1>
     </header>
-    <nav>
-        <a href="/index.html">Home</a>
-        <a href="/pages/blog.html">Blog</a>
-        <a href="/pages/resume.html">Resume</a>
-    </nav>
+    {layout.NAV_START}
+{layout.render_nav(active_href='/pages/blog.html')}
+    {layout.NAV_END}
 
     <div class="post-static-page">
         <div class="post-full-content">
@@ -317,25 +317,9 @@ def build_page(title, date, tags, body_html, snippet='', slug=''):
         </div>
     </div>
 
-    <footer>
-        <div class="footer-content">
-            <p>Created by Adam Field</p>
-            <div class="footer-socials">
-                <span class="contact-label">Contact me:</span>
-                <div class="social-icons">
-                    <a href="mailto:adfield@wpi.edu" title="Email">
-                        <img src="/assets/email_logo.svg" alt="email logo">
-                    </a>
-                    <a href="https://www.linkedin.com/in/adfield/" target="_blank" title="LinkedIn">
-                        <img src="/assets/linkedin_logo.svg" alt="linkedin logo">
-                    </a>
-                    <a href="https://github.com/AdamField118" target="_blank" title="GitHub">
-                        <img src="/assets/github_logo.svg" alt="github logo">
-                    </a>
-                </div>
-            </div>
-        </div>
-    </footer>
+    {layout.FOOTER_START}
+{layout.render_footer()}
+    {layout.FOOTER_END}
 
     <script>
         (async () => {{
@@ -396,10 +380,22 @@ latest = max((p['date'] for p in index), default=None)
 urls = [
     sitemap_url(f'{SITE_URL}/', latest),
     sitemap_url(f'{SITE_URL}/pages/blog.html', latest),
+    sitemap_url(f'{SITE_URL}/pages/sims.html'),
+    sitemap_url(f'{SITE_URL}/pages/games.html'),
+    sitemap_url(f'{SITE_URL}/pages/courses.html'),
+    sitemap_url(f'{SITE_URL}/pages/library.html'),
     sitemap_url(f'{SITE_URL}/pages/resume.html'),
 ]
 for p in index:
     urls.append(sitemap_url(f"{SITE_URL}{p['href']}", p['date']))
+
+# Simulation pages (from simulations.json, written by build_sims.py).
+try:
+    with open(os.path.join(MD_DIR, '..', 'simulations.json'), encoding='utf8') as f:
+        for s in json.load(f):
+            urls.append(sitemap_url(f"{SITE_URL}{s['href']}"))
+except FileNotFoundError:
+    pass
 
 sitemap = ('<?xml version="1.0" encoding="UTF-8"?>\n'
            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
