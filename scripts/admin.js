@@ -58,6 +58,14 @@ window.AF = (function () {
     function isAdmin() { return authed; }
     function fire() { listeners.forEach(cb => { try { cb(authed); } catch (e) {} }); }
 
+    // Pages register their "add" actions here; they appear in the pill menu so
+    // every content type is added the same way. Reset on each page load.
+    const pageActions = [];
+    function registerAdminAction(label, run) {
+        pageActions.push({ label, run });
+        if (ready && authed) render();
+    }
+
     // ── modal ────────────────────────────────────────────────────────────────
     function openModal(title, innerHTML, onSave, afterClose, opts = {}) {
         const overlay = document.createElement('div');
@@ -184,22 +192,27 @@ window.AF = (function () {
             document.body.appendChild(root);
         }
         if (authed) {
+            const actions = pageActions.map((a, i) =>
+                `<button data-pa="${i}">✎ ${escapeHtml(a.label)}</button>`).join('');
             root.innerHTML = `
                 <button class="af-adm-btn is-in" id="af-adm-toggle" aria-haspopup="true">
                     <span class="af-dot"></span> Admin ▾</button>
                 <div class="af-menu" id="af-adm-menu">
-                    <button id="af-m-newpost">✎ New blog post</button>
+                    ${actions ? actions + '<div class="af-sep"></div>' : ''}
                     <button id="af-m-blog">☰ Manage blog posts</button>
                     <div class="af-sep"></div>
                     <button id="af-m-logout">⎋ Log out</button>
                 </div>`;
             const menu = root.querySelector('#af-adm-menu');
             root.querySelector('#af-adm-toggle').onclick = () => menu.classList.toggle('open');
-            root.querySelector('#af-m-newpost').onclick = () => { menu.classList.remove('open'); editBlog(null); };
             root.querySelector('#af-m-blog').onclick = () => { menu.classList.remove('open'); manageBlog(); };
             root.querySelector('#af-m-logout').onclick = async () => {
                 menu.classList.remove('open'); await logout(); await refresh();
             };
+            menu.querySelectorAll('[data-pa]').forEach(btn => btn.onclick = () => {
+                menu.classList.remove('open');
+                pageActions[+btn.dataset.pa].run();
+            });
             document.addEventListener('click', e => { if (!root.contains(e.target)) menu.classList.remove('open'); });
         } else {
             root.innerHTML = `<button class="af-adm-btn" id="af-adm-login">🔒 Admin</button>`;
@@ -239,5 +252,6 @@ window.AF = (function () {
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
     else init();
 
-    return { me, login, logout, api, escapeHtml, onAuth, isAdmin, openModal, mdEditor, manageBlog, editBlog };
+    return { me, login, logout, api, escapeHtml, onAuth, isAdmin, registerAdminAction,
+             openModal, mdEditor, manageBlog, editBlog };
 })();

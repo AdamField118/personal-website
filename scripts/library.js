@@ -81,7 +81,6 @@ async function load() {
         const data = await AF.api('GET', '/api/books');
         allBooks = data.books;
         isAdmin = data.admin;
-        document.getElementById('add-book-wrap').style.display = isAdmin ? '' : 'none';
         render();
     } catch (e) {
         container.innerHTML =
@@ -144,6 +143,6 @@ if (searchInput) {
     });
 }
 if (sortSelect) sortSelect.addEventListener('change', render);
-document.getElementById('add-book-btn').onclick = () => openBookForm(null);
 
+AF.registerAdminAction('Add book', () => openBookForm(null));
 AF.onAuth(() => load());

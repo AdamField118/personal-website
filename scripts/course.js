@@ -8,7 +8,6 @@ const titleEl = document.getElementById('course-title');
 const metaEl  = document.getElementById('course-meta');
 const listEl  = document.getElementById('note-list');
 const bodyEl  = document.getElementById('note-body');
-const addWrap = document.getElementById('add-note-wrap');
 
 let course = null;
 let isAdmin = false;
@@ -71,7 +70,6 @@ async function load() {
         document.title = `${course.title} — Adam Field`;
         titleEl.textContent = course.title;
         metaEl.textContent = [course.code, course.term].filter(Boolean).join(' · ');
-        addWrap.style.display = isAdmin ? '' : 'none';
         // keep current selection if still present, else first note
         const keep = course.notes.find(n => n.id === currentNoteId);
         const sel = keep || course.notes[0] || null;
@@ -129,5 +127,7 @@ async function deleteNote(note) {
     await load();
 }
 
-document.getElementById('add-note-btn').onclick = () => openNoteForm(null);
+AF.registerAdminAction('Add note', () => {
+    if (course) openNoteForm(null);
+});
 AF.onAuth(() => load());

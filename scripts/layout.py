@@ -18,7 +18,7 @@ SITE_URL = 'https://www.adamfield.org'
 # Cache-busting version appended to local JS/CSS URLs. HTML is served
 # must-revalidate, so bumping this makes browsers/Cloudflare fetch fresh assets
 # without a manual cache purge. BUMP THIS whenever shared JS/CSS changes.
-ASSET_VERSION = '3'
+ASSET_VERSION = '4'
 
 # Top navigation. `admin=True` marks a tab whose *private* contents are gated
 # behind admin auth (Phase 3); the tab itself is still listed publicly.

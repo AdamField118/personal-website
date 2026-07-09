@@ -52,7 +52,6 @@ async function load() {
     try {
         const data = await AF.api('GET', '/api/courses');
         isAdmin = data.admin;
-        document.getElementById('add-course-wrap').style.display = isAdmin ? '' : 'none';
         render(data.courses);
     } catch (e) {
         coursesContainer.innerHTML = '<div class="error">The courses service is unavailable right now.</div>';
@@ -100,5 +99,5 @@ async function deleteCourse(course) {
     await load();
 }
 
-document.getElementById('add-course-btn').onclick = () => openCourseForm(null);
+AF.registerAdminAction('Add course', () => openCourseForm(null));
 AF.onAuth(() => load());
