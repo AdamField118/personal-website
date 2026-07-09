@@ -62,7 +62,12 @@ function render() {
     if (!list.length) {
         container.innerHTML = '<div class="error">No books found.</div>';
     } else {
-        list.forEach(b => container.appendChild(bookCard(b)));
+        list.forEach((b, i) => {
+            const card = bookCard(b);
+            container.appendChild(card);
+            // .card starts at opacity:0; reveal it (staggered fade-in).
+            setTimeout(() => card.classList.add('card-visible'), i * 30);
+        });
     }
     if (resultCount) {
         resultCount.textContent =

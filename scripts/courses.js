@@ -40,7 +40,12 @@ function render(courses) {
             : '<div class="error">No courses published yet.</div>';
         return;
     }
-    courses.forEach(c => coursesContainer.appendChild(courseCard(c)));
+    courses.forEach((c, i) => {
+        const card = courseCard(c);
+        coursesContainer.appendChild(card);
+        // .card starts at opacity:0; reveal it (staggered fade-in).
+        setTimeout(() => card.classList.add('card-visible'), i * 30);
+    });
 }
 
 async function load() {
