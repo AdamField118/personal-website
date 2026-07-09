@@ -130,4 +130,4 @@ async function deleteNote(note) {
 }
 
 document.getElementById('add-note-btn').onclick = () => openNoteForm(null);
-AF.mountAdminBar(document.getElementById('admin-bar'), () => load());
+AF.onAuth(() => load());

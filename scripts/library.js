@@ -146,4 +146,4 @@ if (searchInput) {
 if (sortSelect) sortSelect.addEventListener('change', render);
 document.getElementById('add-book-btn').onclick = () => openBookForm(null);
 
-AF.mountAdminBar(document.getElementById('admin-bar'), () => load());
+AF.onAuth(() => load());

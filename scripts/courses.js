@@ -101,4 +101,4 @@ async function deleteCourse(course) {
 }
 
 document.getElementById('add-course-btn').onclick = () => openCourseForm(null);
-AF.mountAdminBar(document.getElementById('admin-bar'), () => load());
+AF.onAuth(() => load());

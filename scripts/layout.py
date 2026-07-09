@@ -15,6 +15,11 @@ import re
 
 SITE_URL = 'https://www.adamfield.org'
 
+# Cache-busting version appended to local JS/CSS URLs. HTML is served
+# must-revalidate, so bumping this makes browsers/Cloudflare fetch fresh assets
+# without a manual cache purge. BUMP THIS whenever shared JS/CSS changes.
+ASSET_VERSION = '3'
+
 # Top navigation. `admin=True` marks a tab whose *private* contents are gated
 # behind admin auth (Phase 3); the tab itself is still listed publicly.
 NAV = [
@@ -65,7 +70,10 @@ def render_footer(indent='    '):
 {indent}            </div>
 {indent}        </div>
 {indent}    </div>
-{indent}</footer>'''
+{indent}</footer>
+{indent}<!-- Global admin widget (persistent login button + blog editing on every page) -->
+{indent}<script src="/scripts/render-markdown.js?v={ASSET_VERSION}"></script>
+{indent}<script src="/scripts/admin.js?v={ASSET_VERSION}"></script>'''
 
 
 def _replace_region(html, start, end, new_body):
