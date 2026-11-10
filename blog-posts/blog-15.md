@@ -131,11 +131,11 @@ This matters enormously for weak lensing because the PSF introduces spurious ell
 
 The standard correction uses **stars** as calibration objects. Stars are unresolved point sources, so their observed profile is the PSF at their location. For each exposure, stars are identified from the size-magnitude diagram (the stellar locus is a flat horizontal feature at the PSF size, whereas galaxies are larger). The PSF model is fit spatially across the field using PSFEx (Bertin 2011), with 80% of selected stars used for fitting and 20% reserved for validation (Saha et al. 2026). The validated PSF model then deconvolves each galaxy stamp.
 
-One subtlety with SuperBIT is that its stratospheric PSF has significant high-frequency structure, because there is no atmospheric seeing to smooth things out. Gaussian mixture models (used by NGMIX for forward modeling) do not fully capture this structure, but Saha et al. (2026) validate that the residuals fall within the "safe zone" for the science analysis.
+One subtlety with SuperBIT is that its stratospheric PSF has significant high-frequency structure, because there is no atmospheric seeing to smooth things out. Gaussian mixture models (used by ngmix for forward modeling) do not fully capture this structure, but Saha et al. (2026) validate that the residuals fall within the "safe zone" for the science analysis.
 
-### 6.4 Shape Measurement with NGMIX
+### 6.4 Shape Measurement with ngmix
 
-With PSF-corrected galaxy stamps in hand, we run a **shape measurer**. The standard tool in this pipeline is **NGMIX** (Sheldon 2014), which fits a Gaussian mixture model to each galaxy's light profile across all exposures simultaneously via Bayesian forward modeling. The fit returns the ellipticity components $(e_1, e_2)$, the half-light radius, flux, and signal-to-noise ratio.
+With PSF-corrected galaxy stamps in hand, we run a **shape measurer**. The standard tool in this pipeline is **ngmix** (Sheldon 2014), which fits a Gaussian mixture model to each galaxy's light profile across all exposures simultaneously via Bayesian forward modeling. The fit returns the ellipticity components $(e_1, e_2)$, the half-light radius, flux, and signal-to-noise ratio.
 
 The ellipticity $(e_1, e_2)$ is related to the **reduced shear** $g_i = \gamma_i / (1 - \kappa)$ by
 
@@ -155,13 +155,13 @@ This is why weak lensing requires wide-field surveys with high source density. S
 
 ### 6.5 Metacalibration
 
-NGMIX, like any shape estimator, has **bias**: it does not return the true shear, but something systematically offset from it. Schematically,
+ngmix, like any shape estimator, has **bias**: it does not return the true shear, but something systematically offset from it. Schematically,
 
-$$\hat{g} = (1 + m)\, g_{\mathrm{true}} + c, \qquad\boldsymbol{(10)}$$
+$$\widehat{g} = (1 + m)\, g_{\mathrm{true}} + c, \qquad\boldsymbol{(10)}$$
 
 where $m$ is the multiplicative bias and $c$ is the additive bias.
 
-**Metacalibration** (Huff & Mandelbaum 2017; Sheldon & Huff 2017) is an elegant self-calibration technique that measures this bias directly from the data. For each galaxy, NGMIX deconvolves the PSF from the observed image, applies a small artificial shear $\delta g = 0.01$ in each of four directions, and then reconvolves with a slightly dilated version of the PSF. Running the shape estimator on each artificially sheared image gives the **response matrix**
+**Metacalibration** (Huff & Mandelbaum 2017; Sheldon & Huff 2017) is an elegant self-calibration technique that measures this bias directly from the data. For each galaxy, ngmix deconvolves the PSF from the observed image, applies a small artificial shear $\delta g = 0.01$ in each of four directions, and then reconvolves with a slightly dilated version of the PSF. Running the shape estimator on each artificially sheared image gives the **response matrix**
 
 $$R^\gamma_{ij} = \frac{e^+_i - e^-_i}{\Delta \gamma_j}, \qquad\boldsymbol{(11)}$$
 
@@ -169,7 +169,7 @@ which encodes how sensitive the estimator is to shear. This is a property of the
 
 $$\langle \gamma \rangle \approx \langle R^\gamma \rangle^{-1} \left( \langle e \rangle - \langle c^{\mathrm{total}} \rangle \right). \qquad\boldsymbol{(12)}$$
 
-Metacalibration works because real galaxies have no preferred orientation on average, so any average ellipticity must arise from shear. Saha et al. (2026) introduce a refinement: rather than using a single global response value, they compute the response in a 2D grid over signal-to-noise ratio and galaxy-to-PSF size ratio, assigning each galaxy a response from its grid cell. This gridded calibration reduces the overall multiplicative shear bias from about 6.3% to 1.1% in their fiducial simulations, with a final measured bias of $(1.1 \pm 7.8)$% on the real data.
+Metacalibration works because real galaxies have no preferred orientation on average, so any average ellipticity must arise from shear. Saha et al. (2026) introduce a refinement: rather than using a single global response value, they compute the response in a 2D grid over signal-to-noise ratio and galaxy-to-PSF size ratio, assigning each galaxy a response from its grid cell. This gridded calibration reduces the overall multiplicative shear bias from about 6.3% to 1.1% in their fiducial simulations, with a final measured bias of $(1.54 \pm 6.0)$% on the real data.
 
 ### 6.6 Mass Map Reconstruction: Kaiser-Squires Inversion
 
@@ -177,9 +177,9 @@ After metacalibration, we have a catalog of calibrated shear estimates scattered
 
 The relationship between $\kappa$ and $\boldsymbol{\gamma}$ is non-local in real space (it is a convolution) but simplifies enormously in Fourier space. The **Kaiser-Squires (1993)** inversion formula is
 
-$$\tilde{\kappa}(\mathbf{k}) = \frac{k_1^2 - k_2^2}{k^2}\,\tilde{\gamma}_1(\mathbf{k}) + \frac{2k_1 k_2}{k^2}\,\tilde{\gamma}_2(\mathbf{k}), \qquad\boldsymbol{(13)}$$
+$$\widetilde{\kappa}(\mathbf{k}) = \frac{k_1^2 - k_2^2}{k^2}\,\widetilde{\gamma}_1(\mathbf{k}) + \frac{2k_1 k_2}{k^2}\,\widetilde{\gamma}_2(\mathbf{k}), \qquad\boldsymbol{(13)}$$
 
-where $\tilde{f}$ denotes the 2D Fourier transform. Given measured shear, we get the convergence at each Fourier mode by simple algebra: no matrix inversion, no iterative solver, just pointwise multiplication in Fourier space.
+where $\widetilde{f}$ denotes the 2D Fourier transform. Given measured shear, we get the convergence at each Fourier mode by simple algebra: no matrix inversion, no iterative solver, just pointwise multiplication in Fourier space.
 
 This inversion naturally separates the convergence into two independent maps. The **E-mode** (curl-free) captures the physically expected gravitational signal: a mass concentration produces a peak. The **B-mode** (divergence-free) cannot be produced by gravity at leading order. A large B-mode signals residual systematics. In the SuperBIT results, the E-mode showed a clear peak at the cluster center while the B-mode was consistent with noise, indicating systematics were roughly under control (Saha et al. 2026).
 
@@ -201,7 +201,7 @@ where $\rho_s$ is a characteristic density and $r_s$ is the scale radius. Fittin
 3. **De-blending** — separate overlapping galaxies; mask bright star artifacts
 4. **PSF estimation** — model PSF spatially from stars using PSFEx
 5. **PSF deconvolution** — remove instrumental blur from galaxy stamps
-6. **Shape measurement** — NGMIX fits ellipticity $(e_1, e_2)$, size, flux via Bayesian forward modeling
+6. **Shape measurement** — ngmix fits ellipticity $(e_1, e_2)$, size, flux via Bayesian forward modeling
 7. **Metacalibration** — measure response matrix $\mathcal{R}$, correct bias with gridded calibration
 8. **Kaiser-Squires inversion** — $(\gamma_1, \gamma_2) \to \kappa(\boldsymbol{\theta})$ via Fourier space
 9. **NFW profile fitting** — recover cluster mass $M_{200}$
@@ -210,11 +210,9 @@ where $\rho_s$ is a characteristic density and $r_s$ is the scale radius. Fittin
 
 ### 8.1 ShearNet
 
-**ShearNet** is a neural-network-based shear estimator I have been developing with Dr. Sayan Saha at Northeastern, with the goal of replacing NGMIX as the shape measurer in the pipeline. The input is a PSF-corrected galaxy stamp and a PSF image; the outputs are the shear components $(g_1, g_2)$, half-light radius, and flux.
+**ShearNet** is a neural-network-based shear estimator I have been developing with Dr. Sayan Saha at Northeastern, with the goal of replacing ngmix as the shape measurer in the pipeline. The input is a PSF-corrected galaxy stamp and a PSF image; the outputs are the shear components $(g_1, g_2)$, half-light radius, and flux.
 
-The main motivation is speed. NGMIX is a Bayesian forward modeler that takes on the order of minutes per thousand galaxies on CPU. A trained neural network running on GPU can process the same number in seconds, a speedup of 100 to 1000 times. Future surveys like LSST will observe billions of galaxies, so this kind of computational efficiency is non-negotiable.
-
-We implement metacalibration as a training-time and inference-time correction, measuring the response of the network to artificially applied shear and correcting the raw output accordingly. Current results show multiplicative bias $|m| \lesssim 0.005$ after metacalibration, approaching but not yet meeting the LSST requirement of $|m| < 0.003$. Active work focuses on improving calibration for low signal-to-noise galaxies and handling blended sources.
+The main motivation is PSF leakage. ngmix relies on accurate models of the PSF to deconvolve that model from the galaxy image along with metacalibration for PSF response to minimize leakage. A trained neural network can learn to minimize leakage at every train step, leading to a PSF leakage consistent with zero in both ellipticity components!
 
 ### 8.2 FEMMI
 
@@ -222,50 +220,37 @@ We implement metacalibration as a training-time and inference-time correction, m
 
 The algorithm works iteratively. Start with an initial guess at the convergence map $\kappa^{(0)}$. Solve the Poisson equation $\nabla^2 \psi = 2\kappa^{(0)}$ using FEM. Compute the predicted shear $\gamma^{(0)}$ from $\psi$ via equation (4). Compare predicted to observed shear, compute the residual, and update $\kappa$ using adjoint-based gradients with Tikhonov regularization. Repeat until convergence.
 
-Advantages over Kaiser-Squires: FEMMI handles irregular survey boundaries naturally (no windowing artifacts), accommodates non-uniform galaxy density, and can incorporate physically motivated regularization. Disadvantages: it is much more computationally expensive and requires careful regularization to avoid overfitting noise.
+Advantages over Kaiser-Squires: FEMMI handles irregular survey boundaries and masks naturally, is able to be catalog native (avoiding an imprecise interpolation step), and often needs less galaxy density for a comparable convergence map. Disadvantages: it is much more computationally expensive and not as rigorously backed by decades of usage.
 
 ### 8.3 Future Pipeline: My MQP
 
-My undergraduate thesis project at WPI aims to build a complete end-to-end pipeline using neural networks. The components are a neural network source extractor and de-blender (detecting galaxies and separating overlapping sources in one step, replacing Source Extractor), a PSF deconvolution network called DeconvNet (largely built, benchmarking pending), ShearNet for shape measurement, and FEMMI for the inversion step.
+My undergraduate thesis project at WPI will be to apply ShearNet to real SuperBIT, Euclid, Roman, and even Rubin data if time permits. The goal will be to use ShearNet as the primary shape estimator to produce convergence maps. 
 
-Chaining these together produces a full pipeline from co-added telescope images to mass maps, driven predominantly by neural networks rather than classical algorithms. Whether this pipeline outperforms the classical one in practice (particularly for faint, blended, and low signal-to-noise sources) is the central scientific question.
+PSK leakage is the primary improvement ShearNet has over methods like ngmix with metacalibration, so this could result in some of the best convergence maps corresponding to the data accessible, since PSF leakage propegates into spurious structure in the output convergence map.
 
 ## 9. Conclusions
 
 Weak gravitational lensing offers one of the few direct, mass-model-independent probes of dark matter. By measuring the tiny coherent distortions that galaxy clusters imprint on the shapes of background galaxies, we can reconstruct the projected mass distribution, including the dark matter that contributes the majority of it.
 
-The pipeline to do this is long. Telescope, co-addition, source detection, PSF correction, shape measurement, metacalibration, mass inversion, NFW fitting, cluster mass. Each step involves real complications (de-blending, PSF variability, shape noise, estimator bias) and each step is fertile ground for research. The SuperBIT collaboration has now processed 30 merging galaxy clusters from the 2023 flight, and Saha et al. (2026) present the resulting shape catalogs with a final multiplicative shear bias of $(1.1 \pm 7.8)$%.
+The pipeline to do this is long. Telescope, co-addition, source detection, PSF correction, shape measurement, metacalibration, mass inversion, NFW fitting, cluster mass. Each step involves real complications (de-blending, PSF variability, shape noise, estimator bias) and each step is fertile ground for research. The SuperBIT collaboration has now processed 30 merging galaxy clusters from the 2023 flight, and Saha et al. (2026) present the resulting shape catalogs with a final multiplicative shear bias of $(1.54 \pm 6.0)$%.
 
 Natalie's section gave the conceptual foundation: dark matter's gravitational nature, the spacetime curvature picture, and how lensing translates mass into observable galaxy shape distortions. My section covered the pipeline that extracts that information from telescope data, and the neural-network approaches that may make future surveys tractable.
 
 If you have questions about any of this, feel free to reach out.
 
----
-
 ## References
 
 1. **Shaaban, M. M., Gill, A. S., McCleary, J., et al. (2022).** "Weak Lensing in the Blue: A Counter-intuitive Strategy for Stratospheric Observations." *AJ*, 164, 245.
-
 2. **McCleary, J. E., Everett, S. W., Shaaban, M. M., et al. (2023).** "Lensing in the Blue. II. Estimating the Sensitivity of Stratospheric Balloons to Weak Gravitational Lensing." AJ, 166, 134.
-
 3. **Saha, S., McCleary, J. E., Everett, S. W., et al. (2026).** "Lensing in the Blue III: Weak Lensing Shape Catalogs of 30 Merging Galaxy Clusters." *arXiv:2603.18376*
-
 4. **Bertin, E. & Arnouts, S. (1996).** "SExtractor: Software for source extraction." *A&AS*, 117, 393.
-
 5. **Bertin, E. (2011).** PSFEx. Astronomical Data Analysis Software and Systems XX, 435.
-
 6. **Sheldon, E. S. (2014).** "An implementation of Bayesian lensing shear measurement." *MNRAS*, 444, L25.
-
 7. **Huff, E. & Mandelbaum, R. (2017).** "Metacalibration: Direct self-calibration of biases in shear measurement." *arXiv:1702.02600*
-
 8. **Sheldon, E. S. & Huff, E. M. (2017).** "Practical Weak-lensing Shear Measurement with Metacalibration." *ApJ*, 841, 24.
-
 9. **Kaiser, N. & Squires, G. (1993).** "Mapping the dark matter with weak gravitational lensing." *ApJ*, 404, 441.
-
 10. **Navarro, J. F., Frenk, C. S., & White, S. D. M. (1997).** "A Universal Density Profile from Hierarchical Clustering." *ApJ*, 490, 493.
-
 11. **Mandelbaum, R. (2018).** "Weak Lensing for Precision Cosmology." *ARAA*, 56, 393.
-
 12. **ShearNet GitHub:** [github.com/s-Sayan/ShearNet](https://github.com/s-Sayan/ShearNet)
 
 ---

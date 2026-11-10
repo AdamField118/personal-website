@@ -15,7 +15,7 @@ Gravitational lensing provides a direct probe of the matter distribution in the 
 
 Galaxy clusters are the largest gravitationally bound structures in the universe, with masses $M \sim 10^{14} - 10^{15} \, M_{\odot}$. Most of this mass ($\sim 85\%$) is **dark matter**, which does not emit, absorb, or scatter light. How do we measure it?
 
-**Gravitational lensing** provides the answer: massive objects curve spacetime, and this curvature affects the paths of photons traveling from distant sources to us. By measuring these deflections, we can reconstruct the mass distribution—including dark matter.
+**Gravitational lensing** provides the answer: massive objects curve spacetime, and this curvature affects the paths of photons traveling from distant sources to us. By measuring these deflections, we can reconstruct the mass distribution, including dark matter.
 
 This blog derives the theory from scratch and connects it to my research on neural network shear estimation (ShearNet).
 
@@ -73,7 +73,7 @@ $$\Phi(\mathbf{x}) = -\frac{GM}{|\mathbf{x}|} \qquad\boldsymbol{(8)}$$
 
 For a photon with impact parameter $b$ (closest approach distance), traveling from $z = -\infty$ to $z = +\infty$, the total deflection angle is:
 
-$$\boldsymbol{\hat{\alpha}} = -\frac{2}{c^2}\int_{-\infty}^{+\infty} \nabla_\perp \Phi \, dz \qquad\boldsymbol{(9)}$$
+$$\boldsymbol{\widehat{\alpha}} = -\frac{2}{c^2}\int_{-\infty}^{+\infty} \nabla_\perp \Phi \, dz \qquad\boldsymbol{(9)}$$
 
 where $\nabla_\perp = (\partial/\partial \xi_1, \partial/\partial \xi_2)$ is the gradient in the transverse plane.
 
@@ -83,17 +83,17 @@ $$\frac{\partial \Phi}{\partial \xi_i} = \frac{GM \xi_i}{r^3}$$
 
 The deflection in the radial direction (toward the mass) is:
 
-$$\hat{\alpha} = -\frac{2}{c^2}\int_{-\infty}^{+\infty} \frac{GM b}{(b^2 + z^2)^{3/2}} dz \qquad\boldsymbol{(10)}$$
+$$\widehat{\alpha} = -\frac{2}{c^2}\int_{-\infty}^{+\infty} \frac{GM b}{(b^2 + z^2)^{3/2}} dz \qquad\boldsymbol{(10)}$$
 
 **Evaluating the integral:**
 
 Let $z = b \tan\theta$, so $dz = b\sec^2\theta \, d\theta$ and $(b^2 + z^2)^{3/2} = b^3\sec^3\theta$:
 
-$$\hat{\alpha} = -\frac{2GM}{c^2 b^2}\int_{-\pi/2}^{\pi/2} \cos\theta \, d\theta = -\frac{2GM}{c^2 b^2}[\sin\theta]_{-\pi/2}^{\pi/2} = -\frac{4GM}{c^2 b}$$
+$$\widehat{\alpha} = -\frac{2GM}{c^2 b^2}\int_{-\pi/2}^{\pi/2} \cos\theta \, d\theta = -\frac{2GM}{c^2 b^2}[\sin\theta]_{-\pi/2}^{\pi/2} = -\frac{4GM}{c^2 b}$$
 
 The magnitude of the deflection angle is:
 
-$$\boxed{\hat{\alpha} = \frac{4GM}{c^2 b}} \qquad\boldsymbol{(11)}$$
+$$\boxed{\widehat{\alpha} = \frac{4GM}{c^2 b}} \qquad\boldsymbol{(11)}$$
 
 This is **Einstein's result** from 1915, which famously differs by a factor of 2 from the Newtonian prediction (which neglects the spatial metric perturbation $h_{ij}$).
 
@@ -101,15 +101,7 @@ This is **Einstein's result** from 1915, which famously differs by a factor of 2
 
 For a general mass distribution with density $\rho(\mathbf{x})$, we use the **superposition principle**. The deflection angle at transverse position $\boldsymbol{\xi}$ is:
 
-$$\boldsymbol{\hat{\alpha}}(\boldsymbol{\xi}) = \frac{4G}{c^2}\int \frac{(\boldsymbol{\xi} - \boldsymbol{\xi}')\rho(\boldsymbol{\xi}', z')}{|\boldsymbol{\xi} - \boldsymbol{\xi}'|^2} d^2\xi' \, dz' \qquad\boldsymbol{(12)}$$
-
-### 2.6 Interactive Demo: Light Bending
-
-Before proceeding to the thin-lens approximation, let's visualize the deflection:
-
-[codeContainer](../scripts/blog-post-scripts/light-bending-demo.js)
-
-**Physical check:** For the Sun ($M = M_{\odot}$, $b = R_{\odot}$), we get $\hat{\alpha} \approx 1.75''$, confirmed by Eddington in 1919.
+$$\boldsymbol{\widehat{\alpha}}(\boldsymbol{\xi}) = \frac{4G}{c^2}\int \frac{(\boldsymbol{\xi} - \boldsymbol{\xi}')\rho(\boldsymbol{\xi}', z')}{|\boldsymbol{\xi} - \boldsymbol{\xi}'|^2} d^2\xi' \, dz' \qquad\boldsymbol{(12)}$$
 
 ## 3. The Thin-Lens Approximation
 
@@ -137,7 +129,7 @@ $$\Sigma(\boldsymbol{\xi}) = \int_{-\infty}^{+\infty} \rho(\boldsymbol{\xi}, z) 
 
 The deflection angle (equation 12) becomes:
 
-$$\boldsymbol{\hat{\alpha}}(\boldsymbol{\xi}) = \frac{4G}{c^2}\int \frac{(\boldsymbol{\xi} - \boldsymbol{\xi}')\Sigma(\boldsymbol{\xi}')}{|\boldsymbol{\xi} - \boldsymbol{\xi}'|^2} d^2\xi' \qquad\boldsymbol{(14)}$$
+$$\boldsymbol{\widehat{\alpha}}(\boldsymbol{\xi}) = \frac{4G}{c^2}\int \frac{(\boldsymbol{\xi} - \boldsymbol{\xi}')\Sigma(\boldsymbol{\xi}')}{|\boldsymbol{\xi} - \boldsymbol{\xi}'|^2} d^2\xi' \qquad\boldsymbol{(14)}$$
 
 Converting to angular coordinates $\boldsymbol{\theta} = \boldsymbol{\xi}/D_L$:
 
@@ -165,7 +157,7 @@ This is the fundamental **lens equation** of gravitational lensing.
 
 Define the **scaled deflection angle**:
 
-$$\boldsymbol{\tilde{\alpha}}(\boldsymbol{\theta}) = \frac{D_{LS}}{D_S}\boldsymbol{\alpha}(\boldsymbol{\theta}) \qquad\boldsymbol{(18)}$$
+$$\boldsymbol{\widetilde{\alpha}}(\boldsymbol{\theta}) = \frac{D_{LS}}{D_S}\boldsymbol{\alpha}(\boldsymbol{\theta}) \qquad\boldsymbol{(18)}$$
 
 And the **critical surface density**:
 
@@ -179,7 +171,7 @@ $$\Sigma_{\text{crit}} \sim 10^{15} \, M_{\odot} \text{ Mpc}^{-2} \sim 0.3 \text
 
 The lens equation becomes:
 
-$$\boldsymbol{\beta} = \boldsymbol{\theta} - \boldsymbol{\tilde{\alpha}}(\boldsymbol{\theta}) \qquad\boldsymbol{(20)}$$
+$$\boldsymbol{\beta} = \boldsymbol{\theta} - \boldsymbol{\widetilde{\alpha}}(\boldsymbol{\theta}) \qquad\boldsymbol{(20)}$$
 
 ## 4. Lensing Potential and Convergence
 
@@ -191,7 +183,7 @@ $$\psi(\boldsymbol{\theta}) = \frac{D_{LS}}{D_L D_S}\frac{4G}{c^2}\int \Sigma(D_
 
 **Key property:** The scaled deflection angle is the gradient of $\psi$:
 
-$$\boldsymbol{\tilde{\alpha}}(\boldsymbol{\theta}) = \nabla \psi(\boldsymbol{\theta}) \qquad\boldsymbol{(22)}$$
+$$\boldsymbol{\widetilde{\alpha}}(\boldsymbol{\theta}) = \nabla \psi(\boldsymbol{\theta}) \qquad\boldsymbol{(22)}$$
 
 **Proof:** Using $\nabla \ln|\boldsymbol{\theta}| = \boldsymbol{\theta}/|\boldsymbol{\theta}|^2$:
 
@@ -223,9 +215,9 @@ This is the **2D Poisson equation for lensing**. The convergence is directly pro
 
 ### 5.1 Linearized Lens Mapping
 
-For small deflections ($|\boldsymbol{\tilde{\alpha}}| \ll 1$), we can expand the lens equation locally. The mapping from source plane to image plane is described by the **Jacobian matrix**:
+For small deflections ($|\boldsymbol{\widetilde{\alpha}}| \ll 1$), we can expand the lens equation locally. The mapping from source plane to image plane is described by the **Jacobian matrix**:
 
-$$\mathcal{A}_{ij}(\boldsymbol{\theta}) = \frac{\partial \beta_i}{\partial \theta_j} = \delta_{ij} - \frac{\partial \tilde{\alpha}_i}{\partial \theta_j} = \delta_{ij} - \psi_{,ij} \qquad\boldsymbol{(26)}$$
+$$\mathcal{A}_{ij}(\boldsymbol{\theta}) = \frac{\partial \beta_i}{\partial \theta_j} = \delta_{ij} - \frac{\partial \widetilde{\alpha}_i}{\partial \theta_j} = \delta_{ij} - \psi_{,ij} \qquad\boldsymbol{(26)}$$
 
 where $\psi_{,ij} = \partial^2 \psi/\partial \theta_i \partial \theta_j$.
 
@@ -352,15 +344,15 @@ This can be written as:
 
 $$\gamma_1 = \frac{1}{2}(\partial_1^2 - \partial_2^2)\psi, \qquad \gamma_2 = \partial_1\partial_2 \psi \qquad\boldsymbol{(41)}$$
 
-Taking Fourier transforms (define $\tilde{f}(\mathbf{k}) = \int f(\boldsymbol{\theta}) e^{i\mathbf{k}\cdot\boldsymbol{\theta}} d^2\theta$):
+Taking Fourier transforms (define $\widetilde{f}(\mathbf{k}) = \int f(\boldsymbol{\theta}) e^{i\mathbf{k}\cdot\boldsymbol{\theta}} d^2\theta$):
 
-$$\tilde{\kappa}(\mathbf{k}) = -\frac{k^2}{2}\tilde{\psi}(\mathbf{k})$$
-$$\tilde{\gamma}_1(\mathbf{k}) = -\frac{1}{2}(k_1^2 - k_2^2)\tilde{\psi}(\mathbf{k})$$
-$$\tilde{\gamma}_2(\mathbf{k}) = -k_1 k_2 \tilde{\psi}(\mathbf{k})$$
+$$\widetilde{\kappa}(\mathbf{k}) = -\frac{k^2}{2}\widetilde{\psi}(\mathbf{k})$$
+$$\widetilde{\gamma}_1(\mathbf{k}) = -\frac{1}{2}(k_1^2 - k_2^2)\widetilde{\psi}(\mathbf{k})$$
+$$\widetilde{\gamma}_2(\mathbf{k}) = -k_1 k_2 \widetilde{\psi}(\mathbf{k})$$
 
-Eliminating $\tilde{\psi}$:
+Eliminating $\widetilde{\psi}$:
 
-$$\boxed{\tilde{\kappa}(\mathbf{k}) = \frac{k_1^2 - k_2^2}{k^2}\tilde{\gamma}_1(\mathbf{k}) + \frac{2k_1 k_2}{k^2}\tilde{\gamma}_2(\mathbf{k})} \qquad\boldsymbol{(42)}$$
+$$\boxed{\widetilde{\kappa}(\mathbf{k}) = \frac{k_1^2 - k_2^2}{k^2}\widetilde{\gamma}_1(\mathbf{k}) + \frac{2k_1 k_2}{k^2}\widetilde{\gamma}_2(\mathbf{k})} \qquad\boldsymbol{(42)}$$
 
 This is the **Kaiser-Squires (1993) inversion formula**. Given the shear field, we can reconstruct the convergence (and thus mass) via Fourier transform!
 
@@ -428,7 +420,7 @@ $$I^{\text{obs}}(\boldsymbol{x}) = (I^{\text{true}} * \text{PSF})(\boldsymbol{x}
 
 **Problem:** The PSF itself has ellipticity $e^{\text{PSF}}$, which mimics shear! Even if $e^{\text{PSF}} \sim 1\%$, this contaminates the lensing signal ($g \sim 1\%$).
 
-**Requirements:** For Stage IV surveys (LSST, Euclid, Roman), PSF ellipticity must be known to $\Delta e^{\text{PSF}} \lesssim 10^{-4}$ — a factor of 100 below the signal!
+**Requirements:** For Stage IV surveys (LSST, Euclid, Roman), PSF ellipticity must be known to $\Delta e^{\text{PSF}} \lesssim 10^{-4}$: a factor of 100 below the signal!
 
 ### 9.2 Shape Measurement Methods
 
@@ -460,7 +452,7 @@ $$\text{Image pixels} \xrightarrow{\text{CNN}} (g_1, g_2, r_e, \text{flux}, \ldo
 
 ShearNet is a residual CNN (inspired by ResNet) that takes $64 \times 64$ pixel galaxy images (already PSF-corrected) and outputs:
 
-- Shear estimates $\hat{g}_1, \hat{g}_2$
+- Shear estimates $\widehat{ g }_1, \widehat{ g }_2$
 - Galaxy size $r_e$
 - Signal-to-noise ratio
 - Flux
@@ -474,12 +466,12 @@ To achieve the required precision, we implement **metacalibration** (Huff & Mand
 1. **Deconvolve PSF** from observed image $I^{\text{obs}}$ to get $I^{\text{clean}}$
 2. **Apply artificial shear** $g^{\text{test}}$ to $I^{\text{clean}}$ (known transformation)
 3. **Reconvolve with PSF** and add noise
-4. **Remeasure shear** $\hat{g}^{\text{out}}$
-5. **Calibrate:** The response $R = \partial \hat{g}^{\text{out}}/\partial g^{\text{test}}$ tells us how to correct the original measurement
+4. **Remeasure shear** $\widehat{ g }^{\text{out}}$
+5. **Calibrate:** The response $R = \partial \widehat{ g }^{\text{out}}/\partial g^{\text{test}}$ tells us how to correct the original measurement
 
-For a shear measurement $\hat{g}^{\text{raw}}$, the corrected estimate is:
+For a shear measurement $\widehat{ g }^{\text{raw}}$, the corrected estimate is:
 
-$$\hat{g}^{\text{corrected}} = R^{-1} \hat{g}^{\text{raw}} \qquad\boldsymbol{(48)}$$
+$$\widehat{ g }^{\text{corrected}} = R^{-1} \widehat{ g }^{\text{raw}} \qquad\boldsymbol{(48)}$$
 
 **Our implementation:** Use a separate **PSF-deconvolution network** before shear estimation network.
 
@@ -519,7 +511,7 @@ We're close but not there yet! Current work focuses on:
 We've derived weak gravitational lensing from first principles:
 
 1. **Geodesic equation** (GR) → photon deflection in curved spacetime
-2. **Weak-field limit** → deflection angle $\hat{\alpha} = 4GM/(c^2 b)$
+2. **Weak-field limit** → deflection angle $\widehat{\alpha} = 4GM/(c^2 b)$
 3. **Thin-lens approximation** → lens equation $\boldsymbol{\beta} = \boldsymbol{\theta} - D_{LS}/D_S \cdot \boldsymbol{\alpha}$
 4. **Lensing potential** $\psi$ → convergence $\kappa = \frac{1}{2}\nabla^2\psi$, shear $\gamma_i$ from second derivatives
 5. **Jacobian decomposition** → $\mathcal{A} = (1-\kappa)\mathbb{I} - \gamma \cdot (\text{traceless part})$
@@ -540,21 +532,13 @@ Weak lensing connects general relativity, cosmology, statistics, and machine lea
 ## References
 
 1. **Schneider, P., Ehlers, J., & Falco, E. E. (1992).** *Gravitational Lenses*. Springer. — The definitive textbook.
-
 2. **Bartelmann, M., & Schneider, P. (2001).** "Weak gravitational lensing." *Physics Reports*, 340(4-5), 291-472. [arXiv:astro-ph/9912508](https://arxiv.org/abs/astro-ph/9912508) — Comprehensive review.
-
 3. **Dodelson, S. (2003).** *Modern Cosmology*. Academic Press. Chapter 9: Gravitational Lensing.
-
 4. **Kaiser, N., & Squires, G. (1993).** "Mapping the dark matter with weak gravitational lensing." *ApJ*, 404, 441. — Original inversion formula.
-
 5. **Mandelbaum, R. (2018).** "Weak Lensing for Precision Cosmology." *ARAA*, 56, 393. [arXiv:1710.03235](https://arxiv.org/abs/1710.03235)
-
 6. **Huff, E., & Mandelbaum, R. (2017).** "Metacalibration: Direct Self-Calibration of Biases in Shear Measurement." [arXiv:1702.02600](https://arxiv.org/abs/1702.02600)
-
 7. **Kilbinger, M. (2015).** "Cosmology with cosmic shear observations: a review." *Rep. Prog. Phys.*, 78, 086901. [arXiv:1411.0115](https://arxiv.org/abs/1411.0115)
-
 8. **Weinberg, S. (1972).** *Gravitation and Cosmology*. Wiley. Section 11.8: Light deflection.
-
 9. **Software:** [github.com/s-Sayan/ShearNet](https://github.com/s-Sayan/ShearNet)
 
 ---
